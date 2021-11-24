@@ -154,6 +154,16 @@ public class FP_Controller : MonoBehaviour
 
     void Update()
     {
+        //Уничтожение снарядов.
+        if(this.bulletsForDelete.Count>0)
+        {
+            for(int i=0;i<this.bulletsForDelete.Count;i++)
+            {
+                Destroy(this.bulletsForDelete[i]);
+            }
+            this.bulletsForDelete = new System.Collections.Generic.List<GameObject>(10);
+        }
+
         if (!canControl)
             return;
 
@@ -252,4 +262,19 @@ public class FP_Controller : MonoBehaviour
     {
         return surfaceTag;
     }
+
+    #region Пули
+
+    /// <summary>
+    /// Список пуль.
+    /// </summary>
+    public System.Collections.Generic.HashSet<GameObject> bullets = new System.Collections.Generic.HashSet<GameObject>();
+    /// <summary>
+    /// Список пуль для удаления.
+    /// </summary>
+    public System.Collections.Generic.List<GameObject> bulletsForDelete = new System.Collections.Generic.List<GameObject>(10);
+
+
+
+    #endregion
 }
