@@ -16,7 +16,7 @@ public class FP_CameraLook : MonoBehaviour
     public float maximumY = 60.0F;              //Maximum look angle;
     public float Smooth = 25;                   //Look smoothing;
 
-
+    public GameObject canvas = null;
     private Vector2 lookAt;
     private float sensitivity;
     [HideInInspector]
