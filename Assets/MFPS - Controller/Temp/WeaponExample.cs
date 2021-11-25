@@ -42,14 +42,14 @@ public class WeaponExample : MonoBehaviour
     #region Стрельба
 
     public GameObject bulletPrefab = null;
-
+    public GameObject camera = null;
     void Shoot()
     {
         if (ammoCount > 0)
         {
             //Создание префаба и скрипта пули и заполнение их полей.
             {
-                GameObject bullet = Instantiate(bulletPrefab, transform.position + transform.forward * 1.5f, transform.rotation);
+                GameObject bullet = Instantiate(bulletPrefab, this.camera.transform.position + this.camera.transform.forward * 0.9f, this.camera.transform.rotation);
                 bullet.transform.forward = this.transform.forward;
                 BulletFly bulletFly = bullet.GetComponent<BulletFly>();
                 bulletFly.controller = this.controller;
