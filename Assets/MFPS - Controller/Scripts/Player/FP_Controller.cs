@@ -172,7 +172,6 @@ public class FP_Controller : MonoBehaviour
 		grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
     }
 
-    int shift=0;
     void Update()
     {
         //Уничтожение снарядов.
@@ -189,9 +188,9 @@ public class FP_Controller : MonoBehaviour
 
         //Создание нового врага.
         this.timerForSpawnEnemy += Time.deltaTime;
-        if (this.timerForSpawnEnemy - Time.deltaTime> 3)
+        if (this.timerForSpawnEnemy - Time.deltaTime> 0)
         {
-            Debug.Log(this.timerForSpawnEnemy.ToString());
+            //Debug.Log(this.timerForSpawnEnemy.ToString());
             this.timerForSpawnEnemy = Time.deltaTime;
             ReviveOneEnemyInRandomPlace();
         }
@@ -332,11 +331,79 @@ public class FP_Controller : MonoBehaviour
     /// Список живых врагов.
     /// </summary>
     public System.Collections.Generic.List<GameObject> aliveEnemy = new System.Collections.Generic.List<GameObject>(100);
+
+    /// <summary>
+    /// Оживить одного врага и поставить его в случайное место, где его не видно.
+    /// </summary>
     private void ReviveOneEnemyInRandomPlace()
     {
-        this.aliveEnemy.Add(this.deadEnemy[deadEnemy.Count - 1]);
-        this.deadEnemy.RemoveAt(deadEnemy.Count - 1);
-        this.aliveEnemy[this.aliveEnemy.Count - 1].transform.position = new Vector3(shift += 4, 2, 5); ;
+        GameObject newAliveEnemy = null;
+        if (this.deadEnemy.Count > 0)
+        {
+            newAliveEnemy = this.deadEnemy[deadEnemy.Count - 1];
+            this.deadEnemy.RemoveAt(deadEnemy.Count - 1);
+        }
+        else
+        {
+            newAliveEnemy = Instantiate(this.enemyPrefab);
+        }
+
+        this.aliveEnemy.Add(newAliveEnemy);
+        newAliveEnemy.transform.position = GetRandomPositionWithoutCameraVision();
+    }
+    /// <summary>
+    /// Ссылка на пол.
+    /// </summary>
+    private GameObject floor = null;
+    /// <summary>
+    /// Получить случайное местоположение вне зоны видимости камеры.
+    /// </summary>
+    /// <returns></returns>
+    private Vector3 GetRandomPositionWithoutCameraVision()
+    {
+        if(this.floor==null)
+        {
+            this.floor = GameObject.Find("Floor");
+        }
+        Single floorSize = this.floor.transform.localScale.x * 5;
+        Vector3 position = new Vector3(UnityEngine.Random.Range(-floorSize, floorSize), 1, UnityEngine.Random.Range(-floorSize, floorSize));
+
+        if(InViewportCamera(position))
+        {
+            position = new Vector3(-position.x, position.y, position.z);
+        }
+        if(InViewportCamera(position))
+        {
+            position = new Vector3(position.x, position.y, -position.z);
+        }
+        if(InViewportCamera(position))
+        {
+            position = new Vector3(-position.x, position.y, position.z);
+        }
+
+        return position;
+    }
+    /// <summary>
+    /// Ссылка на камеру игрока.
+    /// </summary>
+    private Camera mainCamera = null;
+    /// <summary>
+    /// Проверить находится ли точка в зоне видимости камеры камеры.
+    /// </summary>
+    /// <param name="position">Местоположение точки.</param>
+    /// <returns></returns>
+    private Boolean InViewportCamera(Vector3 position)
+    {
+        if(this.mainCamera==null)
+        {
+            this.mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        }
+        Vector3 viewPosition = this.mainCamera.WorldToViewportPoint(position);
+        if (viewPosition.x > -0.1 && viewPosition.x < 1.1 && viewPosition.z > 0)
+        {
+            return true;
+        }
+        return false;
     }
 
     #endregion
