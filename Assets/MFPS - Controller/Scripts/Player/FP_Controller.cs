@@ -72,6 +72,8 @@ public class FP_Controller : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<FP_Input>();
         footSteps = GetComponent<FP_FootSteps>();
+
+        
     }
 	
 	void Start() 
@@ -84,7 +86,25 @@ public class FP_Controller : MonoBehaviour
 		slideLimit = controller.slopeLimit - 0.1F;
 		jumpTimer = antiBunnyHopFactor;
         JumpLandSource = gameObject.AddComponent<AudioSource>();
-	}
+
+        this.timerForSpawnEnemy = Time.deltaTime;
+
+        if (this.enemyPrefab == null)
+        {
+            this.enemyPrefab = GameObject.Find("EnemyAdam");
+        }
+        //Создание первых мертвых врагов
+        {
+            System.Collections.Generic.List<GameObject> deadEnemy = this.deadEnemy;
+            GameObject enemy = null;
+            GameObject enemyPrefab = this.enemyPrefab;
+            for (int i = 0; i < countDeadEnemyInStartGame; i++)
+            {
+                enemy = Instantiate(this.enemyPrefab);
+                deadEnemy.Add(enemy);
+            }
+        }
+    }
 	
 	void FixedUpdate()
     {
@@ -152,6 +172,7 @@ public class FP_Controller : MonoBehaviour
 		grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
     }
 
+    int shift=0;
     void Update()
     {
         //Уничтожение снарядов.
@@ -162,6 +183,17 @@ public class FP_Controller : MonoBehaviour
                 Destroy(this.bulletsForDelete[i]);
             }
             this.bulletsForDelete = new System.Collections.Generic.List<GameObject>(10);
+        }
+
+        
+
+        //Создание нового врага.
+        this.timerForSpawnEnemy += Time.deltaTime;
+        if (this.timerForSpawnEnemy - Time.deltaTime> 3)
+        {
+            Debug.Log(this.timerForSpawnEnemy.ToString());
+            this.timerForSpawnEnemy = Time.deltaTime;
+            ReviveOneEnemyInRandomPlace();
         }
 
         if (!canControl)
@@ -263,7 +295,7 @@ public class FP_Controller : MonoBehaviour
         return surfaceTag;
     }
 
-    #region Пули
+    #region Пули.
 
     /// <summary>
     /// Список пуль.
@@ -274,7 +306,40 @@ public class FP_Controller : MonoBehaviour
     /// </summary>
     public System.Collections.Generic.List<GameObject> bulletsForDelete = new System.Collections.Generic.List<GameObject>(10);
 
+    #endregion
 
+    #region Враги.
+
+    /// <summary>
+    /// Таймер для отсчета времени перед появления нового врага.
+    /// </summary>
+    private Single timerForSpawnEnemy = 0;
+    /// <summary>
+    /// Поле для заготовки врага.
+    /// </summary>
+    public GameObject enemyPrefab = null;
+    /// <summary>
+    /// Количество мертвых врагов, которое будет создано в началае игры.
+    /// </summary>
+    private const Int32 countDeadEnemyInStartGame = 100;
+    /// <summary>
+    /// Список мертвых врагов.
+    /// В списке мертвых врагов хораняться еще или уже не задействованые враги.
+    /// Таким образом на их создание и уничтожение не тратиться время.
+    /// </summary>
+    public System.Collections.Generic.List<GameObject> deadEnemy = new System.Collections.Generic.List<GameObject>(100);
+    /// <summary>
+    /// Список живых врагов.
+    /// </summary>
+    public System.Collections.Generic.List<GameObject> aliveEnemy = new System.Collections.Generic.List<GameObject>(100);
+    private void ReviveOneEnemyInRandomPlace()
+    {
+        this.aliveEnemy.Add(this.deadEnemy[deadEnemy.Count - 1]);
+        this.deadEnemy.RemoveAt(deadEnemy.Count - 1);
+        this.aliveEnemy[this.aliveEnemy.Count - 1].transform.position = new Vector3(shift += 4, 2, 5); ;
+    }
 
     #endregion
+
+
 }
