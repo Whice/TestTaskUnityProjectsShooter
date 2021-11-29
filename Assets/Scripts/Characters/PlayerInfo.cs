@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -86,6 +87,10 @@ public class PlayerInfo : CharacterInfo
 	// Update is called once per frame
 	void Update()
 	{
+		if(isDead)
+        {
+			SceneManager.LoadSceneAsync(0);
+        }
 		//Вывести данные о состоянии игрока и его достижениях на экран.
 		{
 			StringBuilder text = this.stringBuilderForText;
