@@ -76,16 +76,16 @@ public class FP_Controller : MonoBehaviour
 
         
     }
-	
-	void Start() 
+
+    void Start()
     {
-		defaultHeight = controller.height;
+        defaultHeight = controller.height;
         minCrouchHeight = crouchHeight > controller.radius * 2 ? crouchHeight : controller.radius * 2;
-		myTransform = transform;
-		speed = walkSpeed;
-		rayDistance = controller.height * 0.5F + controller.radius;
-		slideLimit = controller.slopeLimit - 0.1F;
-		jumpTimer = antiBunnyHopFactor;
+        myTransform = transform;
+        speed = walkSpeed;
+        rayDistance = controller.height * 0.5F + controller.radius;
+        slideLimit = controller.slopeLimit - 0.1F;
+        jumpTimer = antiBunnyHopFactor;
         JumpLandSource = gameObject.AddComponent<AudioSource>();
 
         this.player = GameObject.Find("Player");
@@ -100,12 +100,19 @@ public class FP_Controller : MonoBehaviour
         for (int i = 0; i < countDeadEnemyInStartGame; i++)
         {
             GameObject newEnemy = CreateNewEnemy();
-            if(this.deadEnemy.Count>0)
+            if (this.deadEnemy.Count > 0)
                 newEnemy.transform.position = new Vector3(this.deadEnemy[this.deadEnemy.Count - 1].transform.position.x + 10, -99, 0);
             this.deadEnemy.Add(newEnemy);
         }
 
-}
+        //Создание ящиков вне арены.
+        this.gameBox = GameObject.Find("GameBox");
+        for (int i = 0; i < countDeadEnemyInStartGame; i++)
+        {
+            CreateNewGameBox();
+        }
+    }
+
 	
 	void FixedUpdate()
     {
@@ -361,6 +368,8 @@ public class FP_Controller : MonoBehaviour
         else
         {
             newAliveEnemy = CreateNewEnemy();
+            //Если врагов стало больше 100, то и количество язщиков надо увеличить.
+            CreateNewGameBox();
         }
 
         this.aliveEnemy.Add(newAliveEnemy);
@@ -383,7 +392,7 @@ public class FP_Controller : MonoBehaviour
             this.floor = GameObject.Find("Floor");
         }
         Single floorSize = this.floor.transform.localScale.x * 5;
-        Vector3 position = new Vector3(UnityEngine.Random.Range(-floorSize, floorSize), 1, UnityEngine.Random.Range(-floorSize, floorSize));
+        Vector3 position = new Vector3(UnityEngine.Random.Range(-floorSize, floorSize), 0.8f, UnityEngine.Random.Range(-floorSize, floorSize));
 
         if(InViewportCamera(position))
         {
@@ -425,5 +434,33 @@ public class FP_Controller : MonoBehaviour
 
     #endregion
 
+    #region Ящики
 
+    /// <summary>
+    /// Список ящиков вне арены.
+    /// </summary>
+    public System.Collections.Generic.List<GameObject> withoutArenaBoxes = new System.Collections.Generic.List<GameObject>(100);
+    /// <summary>
+    /// Список ящиков на арене.
+    /// </summary>
+    public System.Collections.Generic.List<GameObject> onArenaBoxes = new System.Collections.Generic.List<GameObject>(100);
+    /// <summary>
+    /// Объект ящика.
+    /// </summary>
+    public GameObject gameBox = null;
+    /// <summary>
+    /// Создать новый ящик вне арены.
+    /// </summary>
+    private void CreateNewGameBox()
+    {
+        GameObject box = Instantiate(this.gameBox);
+        GameBoxInfo boxInfo = box.transform.GetComponent<GameBoxInfo>();
+        boxInfo.withoutArenaBoxes = this.withoutArenaBoxes;
+        boxInfo.onArenaBoxes = this.onArenaBoxes;
+        if (this.withoutArenaBoxes.Count > 0)
+            box.transform.position = new Vector3(this.withoutArenaBoxes[this.withoutArenaBoxes.Count - 1].transform.position.x + 10, -99, 0);
+        this.withoutArenaBoxes.Add(box);
+    }
+
+    #endregion
 }

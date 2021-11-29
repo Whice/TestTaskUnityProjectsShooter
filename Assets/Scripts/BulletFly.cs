@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BulletFly : MonoBehaviour
@@ -25,6 +23,19 @@ public class BulletFly : MonoBehaviour
     /// Дальность полета. При превышении пуля уничтожается.
     /// </summary>
     private Single rangeOfFlight = 100f;
+
+    private Material bulletMaterial = null;
+    /// <summary>
+    /// Установить случайный цвет ящика.
+    /// </summary>
+    public void SetColor(Color color)
+    {
+        if (this.bulletMaterial == null)
+        {
+            this.bulletMaterial = this.GetComponent<Renderer>().material;
+        }
+        this.bulletMaterial.color = color;
+    }
     // Start is called before the first frame update
     void Start()
     {

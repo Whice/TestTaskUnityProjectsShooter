@@ -43,18 +43,24 @@ public class WeaponExample : MonoBehaviour
 
     public GameObject bulletPrefab = null;
     public GameObject camera = null;
+    public PlayerInfo playerInfo = null;
     void Shoot()
     {
         if (ammoCount > 0)
         {
             //Создание префаба и скрипта пули и заполнение их полей.
             {
+                if(this.playerInfo==null)
+                {
+                    this.playerInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
+                }
                 GameObject bullet = Instantiate(bulletPrefab, this.camera.transform.position + this.camera.transform.forward * 0.9f, this.camera.transform.rotation);
                 bullet.transform.forward = this.transform.forward;
                 BulletFly bulletFly = bullet.GetComponent<BulletFly>();
                 bulletFly.controller = this.controller;
                 bulletFly.numberInListController = this.controller.bullets.Count;
                 bulletFly.thisPerfab = bullet;
+                bulletFly.SetColor(this.playerInfo.bulletColor);
                 this.controller.bullets.Add(bullet);
             }
             ammoCount--;
