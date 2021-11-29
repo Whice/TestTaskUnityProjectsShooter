@@ -65,7 +65,8 @@ public class FP_Controller : MonoBehaviour
     private float slideLimit;
     private float speed;
     private string surfaceTag;
-    
+
+    private GameObject player = null;
 
     void Awake()
     {
@@ -87,6 +88,8 @@ public class FP_Controller : MonoBehaviour
 		jumpTimer = antiBunnyHopFactor;
         JumpLandSource = gameObject.AddComponent<AudioSource>();
 
+        this.player = GameObject.Find("Player");
+
         this.timerForSpawnEnemy = Time.deltaTime;
 
         if (this.enemyPrefab == null)
@@ -94,17 +97,15 @@ public class FP_Controller : MonoBehaviour
             this.enemyPrefab = GameObject.Find("EnemyAdam");
         }
         //Создание первых мертвых врагов
+        for (int i = 0; i < countDeadEnemyInStartGame; i++)
         {
-            System.Collections.Generic.List<GameObject> deadEnemy = this.deadEnemy;
-            GameObject enemy = null;
-            GameObject enemyPrefab = this.enemyPrefab;
-            for (int i = 0; i < countDeadEnemyInStartGame; i++)
-            {
-                enemy = Instantiate(this.enemyPrefab);
-                deadEnemy.Add(enemy);
-            }
+            GameObject newEnemy = CreateNewEnemy();
+            if(this.deadEnemy.Count>0)
+                newEnemy.transform.position = new Vector3(this.deadEnemy[this.deadEnemy.Count - 1].transform.position.x + 10, -99, 0);
+            this.deadEnemy.Add(newEnemy);
         }
-    }
+
+}
 	
 	void FixedUpdate()
     {
@@ -188,9 +189,8 @@ public class FP_Controller : MonoBehaviour
 
         //Создание нового врага.
         this.timerForSpawnEnemy += Time.deltaTime;
-        if (this.timerForSpawnEnemy - Time.deltaTime> 0)
+        if (this.timerForSpawnEnemy - Time.deltaTime> 3)
         {
-            //Debug.Log(this.timerForSpawnEnemy.ToString());
             this.timerForSpawnEnemy = Time.deltaTime;
             ReviveOneEnemyInRandomPlace();
         }
@@ -333,6 +333,21 @@ public class FP_Controller : MonoBehaviour
     public System.Collections.Generic.List<GameObject> aliveEnemy = new System.Collections.Generic.List<GameObject>(100);
 
     /// <summary>
+    /// Создать нового врага.
+    /// </summary>
+    /// <returns></returns>
+    private GameObject CreateNewEnemy()
+    {
+        GameObject enemy = Instantiate(this.enemyPrefab);
+        EnemyInfo info = enemy.GetComponent<EnemyInfo>();
+        info.deadEnemy = this.deadEnemy;
+        info.aliveEnemy = this.aliveEnemy;
+        enemy.transform.position = new Vector3(0, -99, 0);
+        info.player = this.player;
+        info.isDead = true;
+        return enemy;
+    }
+    /// <summary>
     /// Оживить одного врага и поставить его в случайное место, где его не видно.
     /// </summary>
     private void ReviveOneEnemyInRandomPlace()
@@ -345,10 +360,12 @@ public class FP_Controller : MonoBehaviour
         }
         else
         {
-            newAliveEnemy = Instantiate(this.enemyPrefab);
+            newAliveEnemy = CreateNewEnemy();
         }
 
         this.aliveEnemy.Add(newAliveEnemy);
+        EnemyInfo info = newAliveEnemy.GetComponent<EnemyInfo>();
+        info.isDead = false;
         newAliveEnemy.transform.position = GetRandomPositionWithoutCameraVision();
     }
     /// <summary>

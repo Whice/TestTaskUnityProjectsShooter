@@ -1,22 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class EnemyInfo : CharacterInfo
-{
-    /// <summary>
-    /// Поле для заготовки врага.
-    /// </summary>
-    public GameObject enemyPrefab;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
+﻿using System; using System.Collections; using System.Collections.Generic; using UnityEngine;  public class EnemyInfo : CharacterInfo {     /// <summary>     /// Список мертвых врагов.     /// В списке мертвых врагов хораняться еще или уже не задействованые враги.     /// Таким образом на их создание и уничтожение не тратиться время.     /// </summary>     public System.Collections.Generic.List<GameObject> deadEnemy =null;     /// <summary>     /// Список живых врагов.     /// </summary>     public System.Collections.Generic.List<GameObject> aliveEnemy = null;     /// <summary>
+    /// Объект игрока.
+    /// </summary>     public GameObject player = null;     /// <summary>
+    /// Объект с доп. инормацией об игроке.
+    /// </summary>     private PlayerInfo playerInfo = null;     // Start is called before the first frame update     void Start()     {         this.playerInfo = player.GetComponent<PlayerInfo>();     }      // Update is called once per frame     void Update()     {         if (!this.isDead)
+        {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, player.transform.position, 0.008f);
+            this.transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(this.transform.position, player.transform.position, 3.14f, 0));
+        }     }      public void OnTriggerEnter(Collider other)     {         Debug.Log(other.gameObject.name);         if (other.gameObject.name == "Bullet(Clone)")         {             Destroy(other.gameObject);             this.healthPoints -= this.playerInfo.damage;              if (this.healthPoints == 0)             {                 this.isDead = true;                 this.aliveEnemy.Remove(this.gameObject);                 this.deadEnemy.Add(this.gameObject);                 this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, -99, this.gameObject.transform.position.y);             }         }     } } 

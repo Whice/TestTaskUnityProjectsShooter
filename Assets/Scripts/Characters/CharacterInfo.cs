@@ -43,7 +43,21 @@ public class CharacterInfo : MonoBehaviour
     /// </summary>
     public Boolean isDead
     {
-        get => this.healthPoints == 0;
+        get
+        {
+            return this.healthPoints == 0;
+        }
+        set
+        {
+            if(value)
+            {
+                this.healthPoints = 0;
+            }
+            else
+            {
+                this.healthPoints = 10;
+            }
+        }
     }
 
     // Start is called before the first frame update

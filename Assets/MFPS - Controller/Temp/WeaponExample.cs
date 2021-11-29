@@ -57,8 +57,6 @@ public class WeaponExample : MonoBehaviour
                 bulletFly.thisPerfab = bullet;
                 this.controller.bullets.Add(bullet);
             }
-
-            Debug.Log("Shoot");
             ammoCount--;
         }
         else

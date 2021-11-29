@@ -28,7 +28,7 @@ public class BulletFly : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -38,13 +38,18 @@ public class BulletFly : MonoBehaviour
         this.transform.position = this.transform.position + this.transform.forward * this.speed;
 
         //”ничтожение снар€да, если он улетел далеко.
-        if(this.transform.position.x>this.rangeOfFlight || 
-            this.transform.position.y> this.rangeOfFlight || 
-            this.transform.position.z> this.rangeOfFlight
+        if (this.transform.position.x > this.rangeOfFlight ||
+            this.transform.position.y > this.rangeOfFlight ||
+            this.transform.position.z > this.rangeOfFlight
             )
         {
             this.controller.bullets.Remove(this.thisPerfab);
             this.controller.bulletsForDelete.Add(this.thisPerfab);
         }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        
     }
 }
