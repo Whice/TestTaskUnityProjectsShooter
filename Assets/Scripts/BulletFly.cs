@@ -31,6 +31,10 @@ public class BulletFly : MonoBehaviour
     /// </summary>
     private Material bulletMaterial = null;
     /// <summary>
+    /// Звук выстрела.
+    /// </summary>
+    private AudioSource shotSound = null;
+    /// <summary>
     /// Установить случайный цвет ящика.
     /// </summary>
     public void SetColor(Color color)
@@ -40,6 +44,13 @@ public class BulletFly : MonoBehaviour
             this.bulletMaterial = this.GetComponent<Renderer>().material;
         }
         this.bulletMaterial.color = color;
+    }
+
+    private void Start()
+    {
+        if(this.shotSound==null)
+            this.shotSound = GetComponent<AudioSource>();
+        this.shotSound.Play();
     }
 
     void Update()

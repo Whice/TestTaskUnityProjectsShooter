@@ -22,6 +22,10 @@ public class GameBoxInfo : MonoBehaviour
     /// </summary>
     private Material boxMaterial = null;
     /// <summary>
+    /// Звук всасывания ящика.
+    /// </summary>
+    private AudioSource suckOFThisBox=null;
+    /// <summary>
     /// Установить случайный цвет ящика.
     /// </summary>
     public void SetRandomColorForThisBox()
@@ -64,12 +68,14 @@ public class GameBoxInfo : MonoBehaviour
     void Start()
     {
         this.playerInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
+        this.suckOFThisBox = GetComponent<AudioSource>();
     }
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Player")
         {
+            this.suckOFThisBox.Play();
             this.playerInfo.AddColoredCube(this.boxColor);
             this.onArenaBoxes.Remove(this.gameObject);
             this.withoutArenaBoxes.Add(this.gameObject);
