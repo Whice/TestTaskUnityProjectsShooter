@@ -1,9 +1,113 @@
-﻿using System; using System.Collections; using System.Collections.Generic; using UnityEngine;  public class EnemyInfo : CharacterInfo {     public GameObject gameBox = null;     /// <summary>     /// Список мертвых врагов.     /// В списке мертвых врагов хораняться еще или уже не задействованые враги.     /// Таким образом на их создание и уничтожение не тратиться время.     /// </summary>     public System.Collections.Generic.List<GameObject> deadEnemy =null;     /// <summary>     /// Список живых врагов.     /// </summary>     public System.Collections.Generic.List<GameObject> aliveEnemy = null;     /// <summary>     /// Объект игрока.     /// </summary>     public GameObject player = null;     /// <summary>     /// Объект с доп. инормацией об игроке.     /// </summary>     private PlayerInfo playerInfo = null;     /// <summary>     /// Ссылка на объект камеры.     /// </summary>     private GameObject camera = null;     /// <summary>     /// Таймер для сдерживания атаки.     /// </summary>     private Single timerAtack = 0;     /// <summary>     /// Скорость движения врагов.     /// </summary>     public Single speed = 0.008f;     // Start is called before the first frame update     void Start()     {         this.playerInfo = player.GetComponent<PlayerInfo>();         this.camera = GameObject.Find("Main Camera");         this.gameBox = GameObject.Find("GameBox");     }      // Update is called once per frame     void Update()     {         //Если этот враг жив, то он может стремиться к убийству игрока.         if (!this.isDead)         {                          Vector3 thisPosition = this.transform.position;             Vector3 playerPosition = this.player.transform.position;             //Двигаться к игроку             if (Math.Abs(thisPosition.x - playerPosition.x) + Math.Abs(thisPosition.y - playerPosition.y) > 2)             {                 this.transform.position = Vector3.MoveTowards(thisPosition, playerPosition, this.speed);             }             //Либо атаковать раз в секунду             else             {                 if (this.transform.position.y > 0)
+﻿using System;
+using UnityEngine;
+
+/// <summary>
+/// Информация о враге.
+/// </summary>
+public class EnemyInfo : CharacterInfo
+{
+    /// <summary>
+    /// Игровой ящик.
+    /// </summary>
+    public GameObject gameBox = null;
+    /// <summary>
+    /// Список мертвых врагов.
+    /// В списке мертвых врагов хораняться еще или уже не задействованые враги.
+    /// Таким образом на их создание и уничтожение не тратиться время.
+    /// </summary>
+    public System.Collections.Generic.List<GameObject> deadEnemy =null;
+    /// <summary>
+    /// Список живых врагов.
+    /// </summary>
+    public System.Collections.Generic.List<GameObject> aliveEnemy = null;
+    /// <summary>
+    /// Объект игрока.
+    /// </summary>
+    public GameObject player = null;
+    /// <summary>
+    /// Объект с доп. инормацией об игроке.
+    /// </summary>
+    private PlayerInfo playerInfo = null;
+    /// <summary>
+    /// Ссылка на объект камеры.
+    /// </summary>
+    private GameObject camera = null;
+    /// <summary>
+    /// Таймер для сдерживания атаки.
+    /// </summary>
+    private Single timerAtack = 0;
+    /// <summary>
+    /// Скорость движения врагов.
+    /// </summary>
+    public Single speed = 0.008f;
+    
+
+    void Start()
+    {
+        this.playerInfo = player.GetComponent<PlayerInfo>();
+        this.camera = GameObject.Find("Main Camera");
+        this.gameBox = GameObject.Find("GameBox");
+    }
+
+    void Update()
+    {
+        //Если этот враг жив, то он может стремиться к убийству игрока.
+        if (!this.isDead)
+        {
+            
+            Vector3 thisPosition = this.transform.position;
+            Vector3 playerPosition = this.player.transform.position;
+            //Двигаться к игроку
+            if (Math.Abs(thisPosition.x - playerPosition.x) + Math.Abs(thisPosition.y - playerPosition.y) > 2)
+            {
+                this.transform.position = Vector3.MoveTowards(thisPosition, playerPosition, this.speed);
+            }
+            //Либо атаковать раз в секунду
+            else
+            {
+                if (this.transform.position.y > 0)
                 {
                     this.timerAtack += Time.deltaTime;
                     if (this.timerAtack > 1)
                     {
                         this.playerInfo.healthPoints -= this.damage;
                         this.timerAtack = 0;
-                    }                 }             }              //Повернуться к игроку             this.transform.LookAt(new Vector3                 (                 this.camera.transform.position.x,                  1,                  this.camera.transform.position.z                  ));         }     }      public void OnTriggerEnter(Collider other)     {         //При столкновении с пулей умертвить врага.         if (other.gameObject.name == "Bullet(Clone)")         {             Destroy(other.gameObject);             this.healthPoints -= this.playerInfo.damage;              if (this.healthPoints == 0)             {                 GameObject box = Instantiate(this.gameBox);                 box.transform.position = this.transform.position;                 box.transform.position = new Vector3(box.transform.position.x, 0.5f, box.transform.position.z);
-                GameBoxInfo boxInfo = box.GetComponent<GameBoxInfo>();                 boxInfo.SetRandomColorForThisBox();                 this.isDead = true;                 this.aliveEnemy.Remove(this.gameObject);                 this.deadEnemy.Add(this.gameObject);                 this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, -99, this.gameObject.transform.position.y);               }         }     } } 
+                    }
+                }
+            }
+
+            //Повернуться к игроку
+            this.transform.LookAt(new Vector3
+                (
+                this.camera.transform.position.x, 
+                1, 
+                this.camera.transform.position.z 
+                ));
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        //При столкновении с пулей умертвить врага.
+        if (other.gameObject.name == "Bullet(Clone)")
+        {
+            Destroy(other.gameObject);
+            this.healthPoints -= this.playerInfo.damage;
+
+            if (this.healthPoints == 0)
+            {
+                GameObject box = Instantiate(this.gameBox);
+                box.transform.position = this.transform.position;
+                box.transform.position = new Vector3(box.transform.position.x, 0.5f, box.transform.position.z);
+                GameBoxInfo boxInfo = box.GetComponent<GameBoxInfo>();
+                boxInfo.SetRandomColorForThisBox();
+                this.isDead = true;
+                this.aliveEnemy.Remove(this.gameObject);
+                this.deadEnemy.Add(this.gameObject);
+                this.gameObject.transform.position = new Vector3(this.gameObject.transform.position.x, -99, this.gameObject.transform.position.y);
+
+
+            }
+        }
+    }
+}

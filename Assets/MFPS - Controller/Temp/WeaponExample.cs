@@ -10,7 +10,7 @@ public class WeaponExample : MonoBehaviour
 
     public float shootRate = 0.15F;
     public float reloadTime = 1.0F;
-    public int ammoCount = 15;
+    public int ammoCount = 30;
 
     /// <summary>
     /// Ссылка для доступа к общему контроллеру.
@@ -41,8 +41,17 @@ public class WeaponExample : MonoBehaviour
 
     #region Стрельба
 
+    /// <summary>
+    /// Объект пули.
+    /// </summary>
     public GameObject bulletPrefab = null;
+    /// <summary>
+    /// Объект камеры.
+    /// </summary>
     public GameObject camera = null;
+    /// <summary>
+    /// Информация об игроке.
+    /// </summary>
     public PlayerInfo playerInfo = null;
     void Shoot()
     {

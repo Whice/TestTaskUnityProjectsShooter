@@ -1,32 +1,37 @@
-using System;
+п»їusing System;
 using UnityEngine;
 
+/// <summary>
+/// РРЅС„РѕСЂРјР°С†РёСЏ Рѕ Р»РµС‚СЏС‰РµР№ РїСѓР»Рµ.
+/// </summary>
 public class BulletFly : MonoBehaviour
 {
     /// <summary>
-    /// Указывает на объект-заготовку пули, которому принадлежит этот скрипт
+    /// РЈРєР°Р·С‹РІР°РµС‚ РЅР° РѕР±СЉРµРєС‚-Р·Р°РіРѕС‚РѕРІРєСѓ РїСѓР»Рё, РєРѕС‚РѕСЂРѕРјСѓ РїСЂРёРЅР°РґР»РµР¶РёС‚ СЌС‚РѕС‚ СЃРєСЂРёРїС‚.
     /// </summary>
     public GameObject thisPerfab;
     /// <summary>
-    /// Скорость движения пули.
+    /// РЎРєРѕСЂРѕСЃС‚СЊ РґРІРёР¶РµРЅРёСЏ РїСѓР»Рё.
     /// </summary>
     public Single speed = 0.1f;
     /// <summary>
-    /// Ссылка для доступа к общему контроллеру.
+    /// РЎСЃС‹Р»РєР° РґР»СЏ РґРѕСЃС‚СѓРїР° Рє РѕР±С‰РµРјСѓ РєРѕРЅС‚СЂРѕР»Р»РµСЂСѓ.
     /// </summary>
     public FP_Controller controller;
     /// <summary>
-    /// Номер в списке пуль контроллера.
+    /// РќРѕРјРµСЂ РІ СЃРїРёСЃРєРµ РїСѓР»СЊ РєРѕРЅС‚СЂРѕР»Р»РµСЂР°.
     /// </summary>
     public Int32 numberInListController = 0;
     /// <summary>
-    /// Дальность полета. При превышении пуля уничтожается.
+    /// Р”Р°Р»СЊРЅРѕСЃС‚СЊ РїРѕР»РµС‚Р°. РџСЂРё РїСЂРµРІС‹С€РµРЅРёРё РїСѓР»СЏ СѓРЅРёС‡С‚РѕР¶Р°РµС‚СЃСЏ.
     /// </summary>
     private Single rangeOfFlight = 100f;
-
+    /// <summary>
+    /// РњР°С‚РµСЂРёР°Р» РѕР±СЉРµРєС‚Р° РїСѓР»Рё.
+    /// </summary>
     private Material bulletMaterial = null;
     /// <summary>
-    /// Установить случайный цвет ящика.
+    /// РЈСЃС‚Р°РЅРѕРІРёС‚СЊ СЃР»СѓС‡Р°Р№РЅС‹Р№ С†РІРµС‚ СЏС‰РёРєР°.
     /// </summary>
     public void SetColor(Color color)
     {
@@ -36,19 +41,13 @@ public class BulletFly : MonoBehaviour
         }
         this.bulletMaterial.color = color;
     }
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        //Движение пули каждый кадр.
+        //Р”РІРёР¶РµРЅРёРµ РїСѓР»Рё РєР°Р¶РґС‹Р№ РєР°РґСЂ.
         this.transform.position = this.transform.position + this.transform.forward * this.speed;
 
-        //Уничтожение снаряда, если он улетел далеко.
+        //РЈРЅРёС‡С‚РѕР¶РµРЅРёРµ СЃРЅР°СЂСЏРґР°, РµСЃР»Рё РѕРЅ СѓР»РµС‚РµР» РґР°Р»РµРєРѕ.
         if (this.transform.position.x > this.rangeOfFlight ||
             this.transform.position.y > this.rangeOfFlight ||
             this.transform.position.z > this.rangeOfFlight
@@ -57,10 +56,5 @@ public class BulletFly : MonoBehaviour
             this.controller.bullets.Remove(this.thisPerfab);
             this.controller.bulletsForDelete.Add(this.thisPerfab);
         }
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-        
     }
 }
