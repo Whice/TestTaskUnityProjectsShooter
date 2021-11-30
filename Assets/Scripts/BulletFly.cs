@@ -13,7 +13,11 @@ public class BulletFly : MonoBehaviour
     /// <summary>
     /// Скорость движения пули.
     /// </summary>
-    public Single speed = 0.1f;
+    public Single speed = 100f;
+    /// <summary>
+    /// Таймер для подсчета растояния на основе скорости.
+    /// </summary>
+    private Single timerForSpeed = 0f;
     /// <summary>
     /// Ссылка для доступа к общему контроллеру.
     /// </summary>
@@ -55,8 +59,10 @@ public class BulletFly : MonoBehaviour
 
     void Update()
     {
+        this.timerForSpeed += Time.deltaTime;
         //Движение пули каждый кадр.
-        this.transform.position = this.transform.position + this.transform.forward * this.speed;
+        this.transform.position = this.transform.position + this.transform.forward * this.speed*timerForSpeed;
+        this.timerForSpeed = 0f;
 
         //Уничтожение снаряда, если он улетел далеко.
         if (this.transform.position.x > this.rangeOfFlight ||

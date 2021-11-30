@@ -26,6 +26,7 @@ public class WeaponExample : MonoBehaviour
         GameObject gameObject = GameObject.Find("Player");
         this.controller = gameObject.GetComponent<FP_Controller>();
         ammo = ammoCount;
+        this.reloadBulletSound = GetComponent<AudioSource>();
 	}
 	
 	void Update () 
@@ -82,8 +83,14 @@ public class WeaponExample : MonoBehaviour
 
     #endregion
 
+
+    /// <summary>
+    /// Звук перезарядки пуль.
+    /// </summary>
+    private AudioSource reloadBulletSound = null;
     IEnumerator Reload()
     {
+        this.reloadBulletSound.Play();
         reloading = true;
         Debug.Log("Reloading");
         yield return new WaitForSeconds(reloadTime);

@@ -39,7 +39,11 @@ public class EnemyInfo : CharacterInfo
     /// <summary>
     /// Скорость движения врагов.
     /// </summary>
-    public Single speed = 0.008f;
+    public Single speed = 0.016f;
+    /// <summary>
+    /// Высота, на которой ходят живые враги.
+    /// </summary>
+    public const Single startPositionY = 0.6f;
     
 
     void Start()
@@ -56,23 +60,26 @@ public class EnemyInfo : CharacterInfo
         {
             
             Vector3 thisPosition = this.transform.position;
-            Vector3 playerPosition = this.player.transform.position;
+            Vector3 targetPosition = new Vector3
+                (
+                this.player.transform.position.x,
+                startPositionY,
+                this.player.transform.position.z
+                );
+
             //Двигаться к игроку
-            if (Math.Abs(thisPosition.x - playerPosition.x) + Math.Abs(thisPosition.y - playerPosition.y) > 2)
+            if (Math.Abs(thisPosition.x - targetPosition.x) + Math.Abs(thisPosition.z - targetPosition.z) > 1.5f)
             {
-                this.transform.position = Vector3.MoveTowards(thisPosition, playerPosition, this.speed);
+                this.transform.position = Vector3.MoveTowards(thisPosition, targetPosition, this.speed);
             }
             //Либо атаковать раз в секунду
             else
             {
-                if (this.transform.position.y > 0)
+                this.timerAtack += Time.deltaTime;
+                if (this.timerAtack > 1)
                 {
-                    this.timerAtack += Time.deltaTime;
-                    if (this.timerAtack > 1)
-                    {
-                        this.playerInfo.healthPoints -= this.damage;
-                        this.timerAtack = 0;
-                    }
+                    this.playerInfo.healthPoints -= this.damage;
+                    this.timerAtack = 0;
                 }
             }
 
@@ -80,7 +87,7 @@ public class EnemyInfo : CharacterInfo
             this.transform.LookAt(new Vector3
                 (
                 this.camera.transform.position.x, 
-                1, 
+                startPositionY, 
                 this.camera.transform.position.z 
                 ));
         }

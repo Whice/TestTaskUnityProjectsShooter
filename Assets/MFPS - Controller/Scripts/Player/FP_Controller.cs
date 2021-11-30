@@ -392,7 +392,11 @@ public class FP_Controller : MonoBehaviour
             this.floor = GameObject.Find("Floor");
         }
         Single floorSize = this.floor.transform.localScale.x * 5;
-        Vector3 position = new Vector3(UnityEngine.Random.Range(-floorSize, floorSize), 0.8f, UnityEngine.Random.Range(-floorSize, floorSize));
+        Vector3 position = new Vector3(
+                                        /*X*/ UnityEngine.Random.Range(-floorSize, floorSize),
+                                        /*Y*/ EnemyInfo.startPositionY,
+                                        /*Z*/ UnityEngine.Random.Range(-floorSize, floorSize)
+                                        );
 
         if(InViewportCamera(position))
         {
