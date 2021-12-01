@@ -117,10 +117,9 @@ public class EnemyInfo : CharacterInfo
 
             }
         }
-        else if (other.gameObject.name == "PlayerFront")
+        if (other.gameObject.name == "PlayerFront")
         {
-
-            Debug.Log("Yes");
+            this.playerInfo.healthPoints -= this.damage;
         }
     }
 }
