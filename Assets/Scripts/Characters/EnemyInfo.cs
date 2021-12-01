@@ -95,6 +95,7 @@ public class EnemyInfo : CharacterInfo
 
     public void OnTriggerEnter(Collider other)
     {
+
         //При столкновении с пулей умертвить врага.
         if (other.gameObject.name == "Bullet(Clone)")
         {
@@ -115,6 +116,11 @@ public class EnemyInfo : CharacterInfo
 
 
             }
+        }
+        else if (other.gameObject.name == "PlayerFront")
+        {
+
+            Debug.Log("Yes");
         }
     }
 }

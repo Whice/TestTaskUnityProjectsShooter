@@ -24,10 +24,12 @@ public class WeaponExample : MonoBehaviour
 	void Start () 
     {
         GameObject gameObject = GameObject.Find("Player");
+        this.playerInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
+        this.playerInfo.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
         this.controller = gameObject.GetComponent<FP_Controller>();
         ammo = ammoCount;
         this.reloadBulletSound = GetComponent<AudioSource>();
-	}
+    }
 	
 	void Update () 
     {
@@ -72,11 +74,11 @@ public class WeaponExample : MonoBehaviour
                 bulletFly.thisPerfab = bullet;
                 bulletFly.SetColor(this.playerInfo.bulletColor);
                 this.controller.bullets.Add(bullet);
+
+                this.ammoCount--;
+                this.playerInfo.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
             }
-            ammoCount--;
         }
-        else
-            Debug.Log("Empty");
 
         delay = Time.time + shootRate;
     }
@@ -91,16 +93,16 @@ public class WeaponExample : MonoBehaviour
     IEnumerator Reload()
     {
         this.reloadBulletSound.Play();
-        reloading = true;
+        this.reloading = true;
         Debug.Log("Reloading");
         yield return new WaitForSeconds(reloadTime);
-        ammoCount = ammo;
+        this.ammoCount = this.ammo;
         Debug.Log("Reloading Complete");
         reloading = false;
     }
 
     void OnGUI()
     {
-        GUILayout.Label("AMMO: " + ammoCount);
+       // GUILayout.Label("AMMO: " + ammoCount);
     }
 }

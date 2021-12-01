@@ -18,6 +18,10 @@ public class PlayerInfo : CharacterInfo
 	/// <summary>
 	/// Текст для отображения очков жизни.
 	/// </summary>
+	public Text textAmmoCount = null;
+	/// <summary>
+	/// Текст для отображения очков жизни.
+	/// </summary>
 	public Text textHealthAndCountCubes = null;
 	/// <summary>
 	/// Текст для отображения количества красных кубов.
