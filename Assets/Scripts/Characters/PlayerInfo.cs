@@ -78,6 +78,23 @@ public class PlayerInfo : CharacterInfo
 			++this.yellowCubesCount;
         }
 
+		//Пополнение очков жизни при накоплении ящиков.
+		if (this.healthPoints < 100)
+		{
+			if (cubeColor == Color.green && this.greenCubesCount % 10 == 0)
+			{
+				this.healthPoints += 10;
+			}
+			else if (cubeColor == Color.red && this.redCubesCount % 10 == 0)
+			{
+				this.healthPoints += 10;
+			}
+			else if (cubeColor == Color.yellow && this.yellowCubesCount % 10 == 0)
+			{
+				this.healthPoints += 10;
+			}
+		}
+
 	}
 
 	#endregion    
