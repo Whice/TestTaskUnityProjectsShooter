@@ -402,7 +402,7 @@ public class FP_Controller : MonoBehaviour
                                         /*Z*/ UnityEngine.Random.Range(0, floorSize+10)
                                         );
 
-        while (InViewportCamera(position))
+        //while (InViewportCamera(position))
         {
             if (InViewportCamera(position))
             {
