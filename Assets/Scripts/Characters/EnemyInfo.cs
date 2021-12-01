@@ -117,6 +117,7 @@ public class EnemyInfo : CharacterInfo
 
             }
         }
+        //При столкновении с игроком ему сразу наноситься один удар.
         if (other.gameObject.name == "PlayerFront")
         {
             this.playerInfo.healthPoints -= this.damage;

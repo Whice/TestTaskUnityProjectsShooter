@@ -10,7 +10,7 @@ public class WeaponExample : MonoBehaviour
 
     public float shootRate = 0.15F;
     public float reloadTime = 1.0F;
-    public int ammoCount = 30;
+    public int ammoCount = 37;
 
     /// <summary>
     /// Ссылка для доступа к общему контроллеру.
@@ -99,6 +99,7 @@ public class WeaponExample : MonoBehaviour
         this.ammoCount = this.ammo;
         Debug.Log("Reloading Complete");
         reloading = false;
+        this.playerInfo.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
     }
 
     void OnGUI()

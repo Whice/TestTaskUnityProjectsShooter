@@ -304,6 +304,10 @@ public class FP_Controller : MonoBehaviour
     #region Пули.
 
     /// <summary>
+    /// Звук выстрела.
+    /// </summary>
+    public AudioSource shotSound = null;
+    /// <summary>
     /// Список пуль.
     /// </summary>
     public System.Collections.Generic.HashSet<GameObject> bullets = new System.Collections.Generic.HashSet<GameObject>();
