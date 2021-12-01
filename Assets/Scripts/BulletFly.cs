@@ -7,6 +7,10 @@ using UnityEngine;
 public class BulletFly : MonoBehaviour
 {
     /// <summary>
+    /// Информация об игроке.
+    /// </summary>
+    private PlayerInfo playerInfo = null;
+    /// <summary>
     /// Указывает на объект-заготовку пули, которому принадлежит этот скрипт.
     /// </summary>
     public GameObject thisPerfab;
@@ -61,7 +65,7 @@ public class BulletFly : MonoBehaviour
         this.timerForSpeed = 0f;
 
         //Уничтожение снаряда, если он улетел далеко.
-        if (this.transform.position.y<-1||//Снаряд под землей.
+        if (//this.transform.position.y<-1||//Снаряд под землей.
             this.transform.position.x > this.rangeOfFlight ||
             this.transform.position.y > this.rangeOfFlight ||
             this.transform.position.z > this.rangeOfFlight

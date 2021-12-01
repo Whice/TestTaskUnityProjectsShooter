@@ -66,7 +66,16 @@ public class WeaponExample : MonoBehaviour
                 {
                     this.playerInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
                 }
-                GameObject bullet = Instantiate(bulletPrefab, this.camera.transform.position + this.camera.transform.forward * 0.9f, this.camera.transform.rotation);
+
+                GameObject bullet = Instantiate(bulletPrefab,
+                    this.camera.transform.position + new Vector3
+                    (
+                        this.camera.transform.forward.x * 0.9f,
+                        -0.6f,
+                        this.camera.transform.forward.z * 0.9f
+                        ),
+                        this.camera.transform.rotation);
+
                 bullet.transform.forward = this.transform.forward;
                 BulletFly bulletFly = bullet.GetComponent<BulletFly>();
                 bulletFly.controller = this.controller;

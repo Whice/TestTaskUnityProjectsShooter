@@ -397,22 +397,26 @@ public class FP_Controller : MonoBehaviour
         }
         Single floorSize = this.floor.transform.localScale.x * 5;
         Vector3 position = new Vector3(
-                                        /*X*/ UnityEngine.Random.Range(-floorSize, floorSize),
+                                        /*X*/ UnityEngine.Random.Range(0, floorSize+10),
                                         /*Y*/ EnemyInfo.startPositionY,
-                                        /*Z*/ UnityEngine.Random.Range(-floorSize, floorSize)
+                                        /*Z*/ UnityEngine.Random.Range(0, floorSize+10)
                                         );
 
-        if(InViewportCamera(position))
+        while (InViewportCamera(position))
         {
-            position = new Vector3(-position.x, position.y, position.z);
-        }
-        if(InViewportCamera(position))
-        {
-            position = new Vector3(position.x, position.y, -position.z);
-        }
-        if(InViewportCamera(position))
-        {
-            position = new Vector3(-position.x, position.y, position.z);
+            if (InViewportCamera(position))
+            {
+                position = new Vector3(-position.x, position.y, position.z);
+            }
+            if (InViewportCamera(position))
+            {
+                position = new Vector3(position.x, position.y, -position.z);
+            }
+            if (InViewportCamera(position))
+            {
+                position = new Vector3(-position.x, position.y, position.z);
+            }
+            position = new Vector3(position.x-5, position.y, -position.z-5);
         }
 
         return position;
