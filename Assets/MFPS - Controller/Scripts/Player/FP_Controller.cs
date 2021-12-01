@@ -402,7 +402,7 @@ public class FP_Controller : MonoBehaviour
                                         /*Z*/ UnityEngine.Random.Range(0, floorSize+10)
                                         );
 
-        //while (InViewportCamera(position))
+        while (InViewportCamera(position))
         {
             if (InViewportCamera(position))
             {
@@ -416,7 +416,10 @@ public class FP_Controller : MonoBehaviour
             {
                 position = new Vector3(-position.x, position.y, position.z);
             }
-            position = new Vector3(position.x-5, position.y, -position.z-5);
+            if (InViewportCamera(position))
+            {
+                position = new Vector3(position.x - 5, position.y, -position.z - 5);
+            }
         }
 
         return position;
