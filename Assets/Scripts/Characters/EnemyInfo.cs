@@ -44,13 +44,17 @@ public class EnemyInfo : CharacterInfo
     /// Высота, на которой ходят живые враги.
     /// </summary>
     public const Single startPositionY = 0.6f;
-    
+    /// <summary>
+    /// Звук удара по игроку.
+    /// </summary>
+    private AudioSource soundPlayerKick = null;
 
     void Start()
     {
         this.playerInfo = player.GetComponent<PlayerInfo>();
         this.camera = GameObject.Find("Main Camera");
         this.gameBox = GameObject.Find("GameBox");
+        this.soundPlayerKick = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -78,7 +82,7 @@ public class EnemyInfo : CharacterInfo
                 this.timerAtack += Time.deltaTime;
                 if (this.timerAtack > 1)
                 {
-                    this.playerInfo.healthPoints -= this.damage;
+                    KickPlayer();
                     this.timerAtack = 0;
                 }
             }
@@ -91,6 +95,14 @@ public class EnemyInfo : CharacterInfo
                 this.camera.transform.position.z 
                 ));
         }
+    }
+    /// <summary>
+    /// Нанести удар по игроку.
+    /// </summary>
+    private void KickPlayer()
+    {
+        this.soundPlayerKick.Play();
+        this.playerInfo.healthPoints -= this.damage;
     }
 
     public void OnTriggerEnter(Collider other)
@@ -120,7 +132,7 @@ public class EnemyInfo : CharacterInfo
         //При столкновении с игроком ему сразу наноситься один удар.
         if (other.gameObject.name == "PlayerFront")
         {
-            this.playerInfo.healthPoints -= this.damage;
+            KickPlayer();
         }
     }
 }
