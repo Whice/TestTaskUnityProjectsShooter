@@ -33,7 +33,7 @@ public class BulletFly : MonoBehaviour
     /// <summary>
     /// Дальность полета. При превышении пуля уничтожается.
     /// </summary>
-    private Single rangeOfFlight = 20f;
+    private Single rangeOfFlight;
     /// <summary>
     /// Материал объекта пули.
     /// </summary>
@@ -55,6 +55,7 @@ public class BulletFly : MonoBehaviour
         if(this.controller.shotSound==null)
             this.controller.shotSound = GetComponent<AudioSource>();
         this.controller.shotSound.Play();
+        this.rangeOfFlight = GameObject.Find("Floor").transform.localScale.x*5+10;
     }
 
     void Update()
@@ -65,7 +66,7 @@ public class BulletFly : MonoBehaviour
         this.timerForSpeed = 0f;
 
         //Уничтожение снаряда, если он улетел далеко.
-        if (//this.transform.position.y<-1||//Снаряд под землей.
+        if (this.transform.position.y<-1||//Снаряд под землей.
             this.transform.position.x > this.rangeOfFlight ||
             this.transform.position.y > this.rangeOfFlight ||
             this.transform.position.z > this.rangeOfFlight

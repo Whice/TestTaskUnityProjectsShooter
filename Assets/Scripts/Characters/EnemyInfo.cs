@@ -51,7 +51,7 @@ public class EnemyInfo : CharacterInfo
 
     void Start()
     {
-        this.playerInfo = player.GetComponent<PlayerInfo>();
+        this.playerInfo = this.player.GetComponent<PlayerInfo>();
         this.camera = GameObject.Find("Main Camera");
         this.gameBox = GameObject.Find("GameBox");
         this.soundPlayerKick = GetComponent<AudioSource>();
