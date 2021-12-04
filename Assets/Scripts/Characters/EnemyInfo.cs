@@ -43,7 +43,15 @@ public class EnemyInfo : CharacterInfo
     /// <summary>
     /// Скорость движения врагов.
     /// </summary>
+    public const Single speedOrigin = 0.016f;
     public Single speed = 0.016f;
+    /// <summary>
+    /// Установить случайную скорость для врага.
+    /// </summary>
+    public void SetRandomSpeed()
+    {
+        this.speed = UnityEngine.Random.Range(speed, speed * 3);
+    }
     /// <summary>
     /// Высота, на которой ходят живые враги.
     /// </summary>
