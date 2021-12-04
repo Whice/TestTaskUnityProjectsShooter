@@ -29,6 +29,10 @@ public class EnemyInfo : CharacterInfo
     /// </summary>
     private PlayerInfo playerInfo = null;
     /// <summary>
+    /// Критический урон.
+    /// </summary>
+    private Int32 criticalDamage = 9;
+    /// <summary>
     /// Ссылка на объект камеры.
     /// </summary>
     private GameObject camera = null;
@@ -102,7 +106,19 @@ public class EnemyInfo : CharacterInfo
     private void KickPlayer()
     {
         this.soundPlayerKick.Play();
-        this.playerInfo.healthPoints -= this.damage;
+
+
+        Int32 randChance = UnityEngine.Random.Range(1, 100);
+
+        //15% критического удара.
+        if (randChance < 15)
+        {
+            this.playerInfo.healthPoints -= this.criticalDamage;
+        }
+        else
+        {
+            this.playerInfo.healthPoints -= this.damage;
+        }
     }
 
     public void OnTriggerEnter(Collider other)
