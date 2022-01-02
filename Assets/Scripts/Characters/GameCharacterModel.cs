@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Класс с общими настройками и полями для игрока и его противников.
+/// Модель персонажа в игре.
 /// </summary>
-public class CharacterInfo : MonoBehaviour
+public class GameCharacterModel : ItemModel
 {
     /// <summary>
     /// Очки жизни.
@@ -21,14 +23,13 @@ public class CharacterInfo : MonoBehaviour
         }
         set
         {
-            if(value<0)
+            Int32 newValue = value;
+            if (value < 0)
             {
-                this.healthPointsPrivate = 0;
+                newValue = 0;
             }
-            else
-            {
-                this.healthPointsPrivate = value;
-            }
+
+            SetValueProperty(nameof(this.healthPoints), ref this.healthPointsPrivate, newValue);
         }
     }
 
@@ -43,11 +44,11 @@ public class CharacterInfo : MonoBehaviour
     {
         get
         {
-            return this.healthPoints == 0;
+            return this.healthPoints < 1;
         }
         set
         {
-            if(value)
+            if (value)
             {
                 this.healthPoints = 0;
             }

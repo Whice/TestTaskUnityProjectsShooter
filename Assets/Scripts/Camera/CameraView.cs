@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrophyItemController : ItemController
+public class CameraView : ItemView
 {
-    void ToArena()
-    {
-
-    }
 }

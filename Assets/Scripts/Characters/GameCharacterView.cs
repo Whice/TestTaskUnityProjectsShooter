@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Контроллер врага в игре.
+/// Представление персонажа в игре.
 /// </summary>
-public class EnemyController : CharacterController
+public class GameCharacterView : ItemView
 {
 
 }

@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,10 +12,12 @@ public class ArenaController : ItemController
         var boxes = model.withoutArenaBoxes;
         for (Int32 number = 0; number < ArenaModel.boxesCountOnStart; number++)
         {
-            //инициализация объект
-            var box = new BoxModel();//На самом деле берется из объекта
-            box.player = view.player;
-            boxes.Add(box);
+            ArenaModel.instance.CreateNewGameBoxWithoutArena();
         }
+        for (Int32 number = 0; number < ArenaModel.countDeadEnemyInStartGame; number++)
+        {
+            ArenaModel.instance.CreateNewDeadEnemy();
+        }
+        ArenaModel.instance.AddNotActiveBullets(200);
     }
 }

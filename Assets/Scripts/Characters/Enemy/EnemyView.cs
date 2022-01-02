@@ -1,8 +1,11 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyView : CharacterView
+/// <summary>
+/// Представление врага в игре.
+/// </summary>
+public class EnemyView : GameCharacterView
 {
 
 }

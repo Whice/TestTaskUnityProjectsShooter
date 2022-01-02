@@ -66,15 +66,11 @@ public class FP_Controller : MonoBehaviour
     private float speed;
     private string surfaceTag;
 
-    private GameObject player = null;
-
     void Awake()
     {
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<FP_Input>();
         footSteps = GetComponent<FP_FootSteps>();
-
-        
     }
 
     void Start()
@@ -87,30 +83,6 @@ public class FP_Controller : MonoBehaviour
         slideLimit = controller.slopeLimit - 0.1F;
         jumpTimer = antiBunnyHopFactor;
         JumpLandSource = gameObject.AddComponent<AudioSource>();
-
-        this.player = GameObject.Find("Player");
-
-        this.timerForSpawnEnemy = Time.deltaTime;
-
-        if (this.enemyPrefab == null)
-        {
-            this.enemyPrefab = GameObject.Find("EnemyAdam");
-        }
-        //Создание первых мертвых врагов
-        for (int i = 0; i < countDeadEnemyInStartGame; i++)
-        {
-            GameObject newEnemy = CreateNewEnemy();
-            if (this.deadEnemy.Count > 0)
-                newEnemy.transform.position = new Vector3(this.deadEnemy[this.deadEnemy.Count - 1].transform.position.x + 10, -99, 0);
-            this.deadEnemy.Add(newEnemy);
-        }
-
-        //Создание ящиков вне арены.
-        this.gameBox = GameObject.Find("GameBox");
-        for (int i = 0; i < countDeadEnemyInStartGame; i++)
-        {
-            CreateNewGameBox();
-        }
     }
 
 	
@@ -182,26 +154,6 @@ public class FP_Controller : MonoBehaviour
 
     void Update()
     {
-        //Уничтожение снарядов.
-        if(this.bulletsForDelete.Count>0)
-        {
-            for(int i=0;i<this.bulletsForDelete.Count;i++)
-            {
-                Destroy(this.bulletsForDelete[i]);
-            }
-            this.bulletsForDelete = new System.Collections.Generic.List<GameObject>(10);
-        }
-
-        
-
-        //Создание нового врага.
-        this.timerForSpawnEnemy += Time.deltaTime;
-        if (this.timerForSpawnEnemy - Time.deltaTime> 3)
-        {
-            this.timerForSpawnEnemy = Time.deltaTime;
-            ReviveOneEnemyInRandomPlace();
-        }
-
         if (!canControl)
             return;
 
@@ -268,214 +220,31 @@ public class FP_Controller : MonoBehaviour
 		if (audio)
 			source.Play ();
 	}
-
 	public bool IsGrounded()
 	{
 		return grounded;
 	}
-
     public bool IsCrouching()
     {
         return crouch;
     }
-
     public bool IsRunning()
     {
         return run;
     }
-
 	private bool CanStand()
 	{
         RaycastHit hitAbove = new RaycastHit();
         return !Physics.SphereCast(controller.bounds.center, controller.radius, Vector3.up, out hitAbove,
                                    controller.height / 2 + 0.5F);
 	}
-
 	private bool CanSlide()
 	{
 		return new Vector3 (controller.velocity.x, 0, controller.velocity.z).magnitude < walkSpeed/2;
 	}
-
     public string SurfaceTag()
     {
         return surfaceTag;
     }
 
-    #region Пули.
-
-    /// <summary>
-    /// Звук выстрела.
-    /// </summary>
-    public AudioSource shotSound = null;
-    /// <summary>
-    /// Список пуль.
-    /// </summary>
-    public System.Collections.Generic.HashSet<GameObject> bullets = new System.Collections.Generic.HashSet<GameObject>();
-    /// <summary>
-    /// Список пуль для удаления.
-    /// </summary>
-    public System.Collections.Generic.List<GameObject> bulletsForDelete = new System.Collections.Generic.List<GameObject>(10);
-
-    #endregion
-
-    #region Враги.
-
-    /// <summary>
-    /// Таймер для отсчета времени перед появления нового врага.
-    /// </summary>
-    private Single timerForSpawnEnemy = 0;
-    /// <summary>
-    /// Поле для заготовки врага.
-    /// </summary>
-    public GameObject enemyPrefab = null;
-    /// <summary>
-    /// Количество мертвых врагов, которое будет создано в началае игры.
-    /// </summary>
-    private const Int32 countDeadEnemyInStartGame = 100;
-    /// <summary>
-    /// Список мертвых врагов.
-    /// В списке мертвых врагов хораняться еще или уже не задействованые враги.
-    /// Таким образом на их создание и уничтожение не тратиться время.
-    /// </summary>
-    public System.Collections.Generic.List<GameObject> deadEnemy = new System.Collections.Generic.List<GameObject>(100);
-    /// <summary>
-    /// Список живых врагов.
-    /// </summary>
-    public System.Collections.Generic.List<GameObject> aliveEnemy = new System.Collections.Generic.List<GameObject>(100);
-
-    /// <summary>
-    /// Создать нового врага.
-    /// </summary>
-    /// <returns></returns>
-    private GameObject CreateNewEnemy()
-    {
-        GameObject enemy = Instantiate(this.enemyPrefab);
-        EnemyInfo info = enemy.GetComponent<EnemyInfo>();
-        info.deadEnemy = this.deadEnemy;
-        info.aliveEnemy = this.aliveEnemy;
-        enemy.transform.position = new Vector3(0, -99, 0);
-        info.player = this.player;
-        info.isDead = true;
-        return enemy;
-    }
-    /// <summary>
-    /// Оживить одного врага и поставить его в случайное место, где его не видно.
-    /// </summary>
-    private void ReviveOneEnemyInRandomPlace()
-    {
-        GameObject newAliveEnemy = null;
-        if (this.deadEnemy.Count > 0)
-        {
-            newAliveEnemy = this.deadEnemy[deadEnemy.Count - 1];
-            this.deadEnemy.RemoveAt(deadEnemy.Count - 1);
-        }
-        else
-        {
-            newAliveEnemy = CreateNewEnemy();
-            //Если врагов стало больше 100, то и количество язщиков надо увеличить.
-            CreateNewGameBox();
-        }
-
-        this.aliveEnemy.Add(newAliveEnemy);
-        EnemyInfo info = newAliveEnemy.GetComponent<EnemyInfo>();
-        info.isDead = false;
-        newAliveEnemy.transform.position = GetRandomPositionWithoutCameraVision();
-    }
-    /// <summary>
-    /// Ссылка на пол.
-    /// </summary>
-    private GameObject floor = null;
-    /// <summary>
-    /// Получить случайное местоположение вне зоны видимости камеры.
-    /// </summary>
-    /// <returns></returns>
-    private Vector3 GetRandomPositionWithoutCameraVision()
-    {
-        if(this.floor==null)
-        {
-            this.floor = GameObject.Find("Floor");
-        }
-        Single floorSize = this.floor.transform.localScale.x * 5;
-        Vector3 position = new Vector3(
-                                        /*X*/ UnityEngine.Random.Range(0, floorSize+10),
-                                        /*Y*/ EnemyInfo.startPositionY,
-                                        /*Z*/ UnityEngine.Random.Range(0, floorSize+10)
-                                        );
-
-        while (InViewportCamera(position))
-        {
-            if (InViewportCamera(position))
-            {
-                position = new Vector3(-position.x, position.y, position.z);
-            }
-            if (InViewportCamera(position))
-            {
-                position = new Vector3(position.x, position.y, -position.z);
-            }
-            if (InViewportCamera(position))
-            {
-                position = new Vector3(-position.x, position.y, position.z);
-            }
-            if (InViewportCamera(position))
-            {
-                position = new Vector3(position.x - 5, position.y, -position.z - 5);
-            }
-        }
-
-        return position;
-    }
-    /// <summary>
-    /// Ссылка на камеру игрока.
-    /// </summary>
-    private Camera mainCamera = null;
-    /// <summary>
-    /// Проверить находится ли точка в зоне видимости камеры камеры.
-    /// </summary>
-    /// <param name="position">Местоположение точки.</param>
-    /// <returns></returns>
-    private Boolean InViewportCamera(Vector3 position)
-    {
-        if(this.mainCamera==null)
-        {
-            this.mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        }
-        Vector3 viewPosition = this.mainCamera.WorldToViewportPoint(position);
-        if (viewPosition.x > -0.1 && viewPosition.x < 1.1 && viewPosition.z > 0)
-        {
-            return true;
-        }
-        return false;
-    }
-
-    #endregion
-
-    #region Ящики
-
-    /// <summary>
-    /// Список ящиков вне арены.
-    /// </summary>
-    public System.Collections.Generic.List<GameObject> withoutArenaBoxes = new System.Collections.Generic.List<GameObject>(100);
-    /// <summary>
-    /// Список ящиков на арене.
-    /// </summary>
-    public System.Collections.Generic.List<GameObject> onArenaBoxes = new System.Collections.Generic.List<GameObject>(100);
-    /// <summary>
-    /// Объект ящика.
-    /// </summary>
-    public GameObject gameBox = null;
-    /// <summary>
-    /// Создать новый ящик вне арены.
-    /// </summary>
-    private void CreateNewGameBox()
-    {
-        GameObject box = Instantiate(this.gameBox);
-        GameBoxInfo boxInfo = box.transform.GetComponent<GameBoxInfo>();
-        boxInfo.withoutArenaBoxes = this.withoutArenaBoxes;
-        boxInfo.onArenaBoxes = this.onArenaBoxes;
-        if (this.withoutArenaBoxes.Count > 0)
-            box.transform.position = new Vector3(this.withoutArenaBoxes[this.withoutArenaBoxes.Count - 1].transform.position.x + 10, -99, 0);
-        this.withoutArenaBoxes.Add(box);
-    }
-
-    #endregion
 }

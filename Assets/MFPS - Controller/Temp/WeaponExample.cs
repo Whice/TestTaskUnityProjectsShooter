@@ -23,9 +23,7 @@ public class WeaponExample : MonoBehaviour
 
 	void Start () 
     {
-        GameObject gameObject = GameObject.Find("Player");
-        this.playerInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
-        this.playerInfo.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
+        PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
         this.controller = gameObject.GetComponent<FP_Controller>();
         ammo = ammoCount;
         this.reloadBulletSound = GetComponent<AudioSource>();
@@ -52,40 +50,25 @@ public class WeaponExample : MonoBehaviour
     /// Объект камеры.
     /// </summary>
     public GameObject camera = null;
-    /// <summary>
-    /// Информация об игроке.
-    /// </summary>
-    public PlayerInfo playerInfo = null;
     void Shoot()
     {
         if (ammoCount > 0)
         {
             //Создание префаба и скрипта пули и заполнение их полей.
             {
-                if(this.playerInfo==null)
-                {
-                    this.playerInfo = GameObject.Find("Player").GetComponent<PlayerInfo>();
-                }
-
-                GameObject bullet = Instantiate(bulletPrefab,
-                    this.camera.transform.position + new Vector3
+                Vector3 cameraPosition = this.camera.transform.position;
+                Vector3 cameraForward = this.camera.transform.forward;
+                BulletModel bulletModel = ArenaModel.instance.GetLastNotActiveBullet();
+                Vector3 bulletPosition = new Vector3
                     (
-                        this.camera.transform.forward.x * 0.9f,
-                        -0.6f,
-                        this.camera.transform.forward.z * 0.9f
-                        ),
-                        this.camera.transform.rotation);
-
-                bullet.transform.forward = this.transform.forward;
-                BulletFly bulletFly = bullet.GetComponent<BulletFly>();
-                bulletFly.controller = this.controller;
-                bulletFly.numberInListController = this.controller.bullets.Count;
-                bulletFly.thisPerfab = bullet;
-                bulletFly.SetColor(this.playerInfo.bulletColor);
-                this.controller.bullets.Add(bullet);
+                    cameraPosition.x + cameraForward.x*3,
+                    cameraPosition.y,
+                    cameraPosition.z + cameraForward.z*3
+                    );
+                bulletModel.Activate(bulletPosition, cameraForward);
 
                 this.ammoCount--;
-                this.playerInfo.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
+                PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
             }
         }
 
@@ -108,7 +91,7 @@ public class WeaponExample : MonoBehaviour
         this.ammoCount = this.ammo;
         Debug.Log("Reloading Complete");
         reloading = false;
-        this.playerInfo.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
+        PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
     }
 
     void OnGUI()

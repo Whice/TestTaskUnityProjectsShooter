@@ -1,8 +1,8 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManagerScript : MonoBehaviour
+public class GameCharacterController : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
