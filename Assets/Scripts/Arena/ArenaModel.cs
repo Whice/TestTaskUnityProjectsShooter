@@ -101,17 +101,20 @@ public class ArenaModel : ItemModel
     /// </summary>
     private void ReviveOneEnemyInRandomPlace()
     {
-        //Если враги кончились, создать нового мертвого врага.
-        if (this.deadEnemies.Count == 0)
+        if (this.aliveEnemies.Count < 1)
         {
-            CreateNewDeadEnemy();
-        }
+            //Если враги кончились, создать нового мертвого врага.
+            if (this.deadEnemies.Count == 0)
+            {
+                CreateNewDeadEnemy();
+            }
 
-        //добавить врага к живым
-        EnemyModel newAliveEnemy = this.deadEnemies[this.deadEnemies.Count - 1];
-        this.deadEnemies.RemoveAt(this.deadEnemies.Count - 1);
-        this.aliveEnemies.Add(newAliveEnemy);
-        newAliveEnemy.Activate();
+            //добавить врага к живым
+            EnemyModel newAliveEnemy = this.deadEnemies[this.deadEnemies.Count - 1];
+            this.deadEnemies.RemoveAt(this.deadEnemies.Count - 1);
+            this.aliveEnemies.Add(newAliveEnemy);
+            newAliveEnemy.Activate();
+        }
     }
     /// <summary>
     /// Создать нового врага на арене("оживить его").

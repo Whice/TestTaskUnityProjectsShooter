@@ -158,6 +158,7 @@ public class EnemyModel : GameCharacterModel
     /// </summary>
     public void Activate()
     {
+        this.healthPoints = 10;
         this.gameObject.SetActive(true);
         this.gameObject.GetComponent<Rigidbody>().useGravity = true;
         //Задать ему начальную позицию.
