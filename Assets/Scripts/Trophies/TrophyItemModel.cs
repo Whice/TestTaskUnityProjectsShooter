@@ -4,5 +4,4 @@ using UnityEngine;
 
 public class TrophyItemModel : ItemModel
 {
-    public GameObject player;
 }

@@ -16,9 +16,9 @@ public class BulletModel : ItemModel
     /// Дальность полета. При превышении пуля уничтожается.
     /// </summary>
     private Single rangeOfFlight;
-    private void Start()
+    private void Awake()
     {
-        this.rangeOfFlight = GameObject.Find("Floor").transform.localScale.x * 5 + 10;
+        this.rangeOfFlight = ArenaModel.instance.arenaFloor.transform.localScale.x * 5 + 10;
     }
     void Update()
     {
@@ -39,23 +39,22 @@ public class BulletModel : ItemModel
     #region Активация и деактивация пули.
 
     /// <summary>
-    /// Положение пули в списке активных или неактивных пуль.
+    /// Звук выстрела.
     /// </summary>
-    private Int32 numberInListPrivate = -1;
+    private AudioSource shotSoundPrivate = null;
     /// <summary>
-    /// Положение пули в списке активных или неактивных пуль.
-    /// Задать можно только один раз.
-    /// Номер должен быть больше 0.
+    /// Звук выстрела.
     /// </summary>
-    public Int32 numberInList
+    private AudioSource shotSound
     {
-        get => this.numberInListPrivate;
-        set
+        get
         {
-            if(this.numberInListPrivate==-1 && value>-1)
+            if(this.shotSoundPrivate == null)
             {
-                this.numberInListPrivate = value;
+
+                this.shotSoundPrivate = GetComponent<AudioSource>();
             }
+            return this.shotSoundPrivate;
         }
     }
     /// <summary>
@@ -64,9 +63,8 @@ public class BulletModel : ItemModel
     /// </summary>
     public void Deactivate()
     {
-        ArenaModel.instance.activeBullets.RemoveAt(numberInListPrivate);
+        ArenaModel.instance.activeBullets.Remove(this);
 
-        this.numberInListPrivate = ArenaModel.instance.notActiveBullets.Count;
         ArenaModel.instance.notActiveBullets.Add(this);
         this.gameObject.SetActive(false);
     }
@@ -77,16 +75,15 @@ public class BulletModel : ItemModel
     /// </summary>
     public void Activate(in Vector3 position, in Vector3 forward)
     {
-        ArenaModel.instance.notActiveBullets.RemoveAt(this.numberInListPrivate);
+        ArenaModel.instance.notActiveBullets.Remove(this);
 
-        this.numberInListPrivate = ArenaModel.instance.activeBullets.Count;
         ArenaModel.instance.activeBullets.Add(this);
         this.gameObject.SetActive(true);
 
         this.transform.position = position;
         this.transform.forward = forward;
 
-        (this.view as BulletView).shotSound.Play();
+        this.shotSound.Play();
     }
 
     #endregion

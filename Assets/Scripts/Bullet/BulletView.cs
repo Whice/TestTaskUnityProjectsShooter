@@ -7,8 +7,4 @@ using UnityEngine;
 /// </summary>
 public class BulletView : ItemView
 {
-    /// <summary>
-    /// Звук выстрела.
-    /// </summary>
-    public AudioSource shotSound = null;
 }

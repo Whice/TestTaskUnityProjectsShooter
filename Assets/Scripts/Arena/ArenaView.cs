@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ArenaView : ItemView
 {
-    public GameObject player = null;
-
     #region Заготовки.
 
     /// <summary>

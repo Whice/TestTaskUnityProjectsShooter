@@ -41,7 +41,7 @@ public class ItemModelViewContoller : MonoBehaviour
     /// <summary>
     /// Объект модели.
     /// </summary>
-    protected ItemModelViewContoller itemModelProtected;
+    protected ItemModelViewContoller itemModelProtected = null;
     /// <summary>
     /// Объект модели.
     /// </summary>
@@ -49,7 +49,7 @@ public class ItemModelViewContoller : MonoBehaviour
     /// <summary>
     /// Объект представления.
     /// </summary>
-    protected ItemModelViewContoller itemViewProtected;
+    protected ItemModelViewContoller itemViewProtected = null;
     /// <summary>
     /// Объект представления.
     /// </summary>
@@ -57,7 +57,7 @@ public class ItemModelViewContoller : MonoBehaviour
     /// <summary>
     /// Объект контроллера.
     /// </summary>
-    protected ItemModelViewContoller itemControllerProtected;
+    protected ItemModelViewContoller itemControllerProtected = null;
     /// <summary>
     /// Объект контроллера.
     /// </summary>

@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Контроллер врага в игре.
 /// </summary>
-public class EnemyController : CharacterController
+public class EnemyController : GameCharacterController
 {
 
 }

@@ -5,18 +5,21 @@ public class MainApplicationClass : MonoBehaviour
 {
     #region Реализация синглтона
 
-    private MainApplicationClass() { }
-
     /// <summary>
     /// Объект главного класса приложения.
     /// </summary>
-    private static MainApplicationClass instancePrivate = null;
-    /// <summary>
-    /// Объект главного класса приложения.
-    /// </summary>
-    public static MainApplicationClass instance
+    public static MainApplicationClass instance = null;
+    private void Awake()
     {
-        get => instancePrivate == null ? new MainApplicationClass() : instancePrivate;
+        if (MainApplicationClass.instance == null)
+        {
+            MainApplicationClass.instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     #endregion

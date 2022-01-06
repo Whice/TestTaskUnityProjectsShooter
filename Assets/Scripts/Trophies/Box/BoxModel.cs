@@ -1,29 +1,18 @@
 ﻿using System;
+using UnityEngine;
 
-public class BoxModel: TrophyItemView
+public class BoxModel: TrophyItemModel
 {
     public BoxView boxView
     {
-        get => this.view as BoxView;
-    }
-    /// <summary>
-    /// Положение в списке активных или неактивных.
-    /// </summary>
-    private Int32 numberInListPrivate = -1;
-    /// <summary>
-    /// Положение в списке активных или неактивных.
-    /// Задать можно только один раз.
-    /// Номер должен быть больше 0.
-    /// </summary>
-    public Int32 numberInList
-    {
-        get => this.numberInListPrivate;
-        set
+        get
         {
-            if (this.numberInListPrivate == -1 && value > -1)
+            if (this.view == null)
             {
-                this.numberInListPrivate = value;
+                this.itemViewProtected = this.gameObject.GetComponent<BoxView>();
             }
+
+            return this.view as BoxView;
         }
     }
     /// <summary>
@@ -34,22 +23,23 @@ public class BoxModel: TrophyItemView
     {
         ArenaModel arenaModel = ArenaModel.instance;
 
-        arenaModel.withoutArenaBoxes.RemoveAt(this.numberInListPrivate);
+        arenaModel.withoutArenaBoxes.Remove(this);
         arenaModel.onArenaBoxes.Add(this);
-        this.numberInListPrivate = arenaModel.onArenaBoxes.Count - 1;
         this.gameObject.SetActive(true);
         this.boxView.SetRandomColor();
+        this.gameObject.GetComponent<Rigidbody>().useGravity = true;
     }
     /// <summary>
     /// Убрать ящик с арены.
     /// </summary>
     public void Deactivate()
     {
+        this.boxView.suckSound.Play();
         ArenaModel arenaModel = ArenaModel.instance;
 
-        arenaModel.onArenaBoxes.RemoveAt(this.numberInListPrivate);
+        arenaModel.onArenaBoxes.Remove(this);
         arenaModel.withoutArenaBoxes.Add(this);
-        this.numberInListPrivate = arenaModel.withoutArenaBoxes.Count - 1;
         this.gameObject.SetActive(false);
+        this.gameObject.GetComponent<Rigidbody>().useGravity = false;
     }
 }

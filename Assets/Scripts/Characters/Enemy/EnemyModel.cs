@@ -25,10 +25,75 @@ public class EnemyModel : GameCharacterModel
                 break;
         }
     }
+
     /// <summary>
-    /// Игровой ящик.
+    /// Изанчальная скорость движения врагов.
     /// </summary>
-    public GameObject gameBox = null;
+    public const Single speedOrigin = 0.016f;
+    /// <summary>
+    /// Скорость движения врагов.
+    /// </summary>
+    public Single speed = 0.16f;
+    /// <summary>
+    /// Высота на которой находится пол.
+    /// Y координата.
+    /// </summary>
+    private Single floorHeight;
+    /// <summary>
+    /// Установить случайную скорость для врага.
+    /// </summary>
+    public void SetRandomSpeed()
+    {
+        this.speed = UnityEngine.Random.Range(speedOrigin, speedOrigin * 3);
+    }
+    /// <summary>
+    /// Звук удара по игроку.
+    /// </summary>
+    private AudioSource soundPlayerKick = null;
+
+    void Start()
+    {
+        this.soundPlayerKick = GetComponent<AudioSource>();
+        this.floorHeight = ArenaModel.instance.arenaFloor.transform.position.y;
+    }
+    void Update()
+    {
+        //Если этот враг жив, то он может стремиться к убийству игрока.
+        Vector3 thisPosition = this.transform.position;
+        
+        Vector3 targetPosition = new Vector3
+            (
+            this.mainCamera.transform.position.x,
+            this.floorHeight,
+            this.mainCamera.transform.position.z
+            );
+
+        //Двигаться к игроку
+        if (Math.Abs(thisPosition.x - targetPosition.x) + Math.Abs(thisPosition.z - targetPosition.z) > 1.5f)
+        {
+            this.transform.position = Vector3.MoveTowards(thisPosition, targetPosition, this.speed * Time.deltaTime);
+        }
+        //Либо атаковать раз в секунду
+        else
+        {
+            this.timerAtack += Time.deltaTime;
+            if (this.timerAtack > 1)
+            {
+                KickPlayer();
+                this.timerAtack = 0;
+            }
+        }
+
+        //Повернуться к игроку
+        this.transform.LookAt(new Vector3
+            (
+            this.mainCamera.transform.position.x,
+            this.floorHeight,
+            this.mainCamera.transform.position.z
+            ));
+    }
+
+
     /// <summary>
     /// Критический урон.
     /// </summary>
@@ -37,72 +102,6 @@ public class EnemyModel : GameCharacterModel
     /// Таймер для сдерживания атаки.
     /// </summary>
     private Single timerAtack = 0;
-    /// <summary>
-    /// Скорость движения врагов.
-    /// </summary>
-    public const Single speedOrigin = 0.016f;
-    public Single speed = 0.016f;
-    /// <summary>
-    /// Установить случайную скорость для врага.
-    /// </summary>
-    public void SetRandomSpeed()
-    {
-        this.speed = UnityEngine.Random.Range(speed, speed * 3);
-    }
-    /// <summary>
-    /// Высота, на которой ходят живые враги.
-    /// </summary>
-    public const Single startPositionY = 0.6f;
-    /// <summary>
-    /// Звук удара по игроку.
-    /// </summary>
-    private AudioSource soundPlayerKick = null;
-
-    void Start()
-    {
-        this.gameBox = GameObject.Find("GameBox");
-        this.soundPlayerKick = GetComponent<AudioSource>();
-    }
-    void Update()
-    {
-        //Если этот враг жив, то он может стремиться к убийству игрока.
-        if (!this.isDead)
-        {
-
-            Vector3 thisPosition = this.transform.position;
-            Vector3 targetPosition = new Vector3
-                (
-                PlayerModel.instance.transform.position.x,
-                startPositionY,
-                PlayerModel.instance.transform.position.z
-                );
-
-            //Двигаться к игроку
-            if (Math.Abs(thisPosition.x - targetPosition.x) + Math.Abs(thisPosition.z - targetPosition.z) > 1.5f)
-            {
-                this.transform.position = Vector3.MoveTowards(thisPosition, targetPosition, this.speed);
-            }
-            //Либо атаковать раз в секунду
-            else
-            {
-                this.timerAtack += Time.deltaTime;
-                if (this.timerAtack > 1)
-                {
-                    KickPlayer();
-                    this.timerAtack = 0;
-                }
-            }
-
-            //Повернуться к игроку
-            this.transform.LookAt(new Vector3
-                (
-                CameraModel.instance.transform.position.x,
-                startPositionY,
-                CameraModel.instance.transform.position.z
-                ));
-        }
-    }
-
     /// <summary>
     /// Нанести удар по игроку.
     /// </summary>
@@ -130,10 +129,7 @@ public class EnemyModel : GameCharacterModel
         //При столкновении с пулей умертвить врага.
         if (other.gameObject.name == "Bullet(Clone)")
         {
-            Destroy(other.gameObject);
             this.healthPoints -= PlayerModel.instance.damage;
-
-            
         }
         
         //При столкновении с игроком ему сразу наноситься один удар.
@@ -143,35 +139,29 @@ public class EnemyModel : GameCharacterModel
         }
     }
 
-    /// <summary>
-    /// Положение в списке активных или неактивных.
-    /// </summary>
-    private Int32 numberInListPrivate = -1;
-    /// <summary>
-    /// Положение в списке активных или неактивных.
-    /// Задать можно только один раз.
-    /// Номер должен быть больше 0.
-    /// </summary>
-    public Int32 numberInList
+    private ArenaModel arenaModel
     {
-        get => this.numberInListPrivate;
-        set
-        {
-            if (this.numberInListPrivate == -1 && value > -1)
-            {
-                this.numberInListPrivate = value;
-            }
-        }
+        get => ArenaModel.instance;
     }
     /// <summary>
     /// Сделать неактивным.
     /// </summary>
     private void Deactivate()
     {
-        ArenaModel.instance.aliveEnemies.RemoveAt(this.numberInListPrivate);
-        ArenaModel.instance.deadEnemies.Add(this);
-        this.numberInListPrivate = ArenaModel.instance.deadEnemies.Count - 1;
+        this.arenaModel.aliveEnemies.Remove(this);
+        this.arenaModel.deadEnemies.Add(this);
         this.gameObject.SetActive(false);
+        this.gameObject.GetComponent<Rigidbody>().useGravity = false;
+    }
+    /// <summary>
+    /// Добавить врага к живым.
+    /// </summary>
+    public void Activate()
+    {
+        this.gameObject.SetActive(true);
+        this.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        //Задать ему начальную позицию.
+        this.SetRandomPositionWithoutCameraVision();
     }
 
     /// <summary>
@@ -180,11 +170,13 @@ public class EnemyModel : GameCharacterModel
     /// <returns></returns>
     public void SetRandomPositionWithoutCameraVision()
     {
+        Single shift = 30;
+        Vector3 playerPosition = PlayerModel.instance.transform.position;
         Single floorSize = ArenaModel.instance.arenaFloor.transform.localScale.x * 5;
         Vector3 position = new Vector3(
-                                        /*X*/ UnityEngine.Random.Range(0, floorSize + 10),
+                                        /*X*/ UnityEngine.Random.Range(playerPosition.x - shift, playerPosition.x + shift),
                                         /*Y*/ ArenaModel.instance.arenaFloor.transform.position.y,
-                                        /*Z*/ UnityEngine.Random.Range(0, floorSize + 10)
+                                        /*Z*/ UnityEngine.Random.Range(playerPosition.z - shift, playerPosition.z + shift)
                                         );
 
         while (InViewportCamera(position))
@@ -193,11 +185,11 @@ public class EnemyModel : GameCharacterModel
             {
                 position = new Vector3(-position.x, position.y, position.z);
             }
-            if (InViewportCamera(position))
+            else if (InViewportCamera(position))
             {
                 position = new Vector3(position.x, position.y, -position.z);
             }
-            if (InViewportCamera(position))
+            else if (InViewportCamera(position))
             {
                 position = new Vector3(-position.x, position.y, position.z);
             }
@@ -212,7 +204,21 @@ public class EnemyModel : GameCharacterModel
     /// <summary>
     /// Ссылка на камеру игрока.
     /// </summary>
-    private Camera mainCamera = null;
+    private Camera mainCameraPrivate = null;
+    /// <summary>
+    /// Ссылка на камеру игрока.
+    /// </summary>
+    private Camera mainCamera
+    {
+        get
+        {
+            if (this.mainCameraPrivate == null)
+            {
+                this.mainCameraPrivate = CameraModel.instance.gameObject.GetComponent<Camera>();
+            }
+            return this.mainCameraPrivate;
+        }
+    }
     /// <summary>
     /// Проверить находится ли точка в зоне видимости камеры камеры.
     /// </summary>
@@ -220,10 +226,6 @@ public class EnemyModel : GameCharacterModel
     /// <returns></returns>
     private Boolean InViewportCamera(Vector3 position)
     {
-        if (this.mainCamera == null)
-        {
-            this.mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        }
         Vector3 viewPosition = this.mainCamera.WorldToViewportPoint(position);
         if (viewPosition.x > -0.1 && viewPosition.x < 1.1 && viewPosition.z > 0)
         {

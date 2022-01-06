@@ -31,18 +31,27 @@ public class ArenaModel : ItemModel
 
     #region Реализация синглтона
 
-    private ArenaModel() { }
-
     /// <summary>
     /// Объект главного класса приложения.
     /// </summary>
-    private static ArenaModel instancePrivate = null;
-    /// <summary>
-    /// Объект главного класса приложения.
-    /// </summary>
-    public static ArenaModel instance
+    public static ArenaModel instance = null;
+    private void Awake()
     {
-        get => instancePrivate == null ? new ArenaModel() : instancePrivate;
+        //организация синглтона
+        if (ArenaModel.instance == null)
+        {
+            ArenaModel.instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+
+        //создание пуль
+        this.notActiveBullets = new List<BulletModel>(BulletController.countOfBulletInStart);
+        this.activeBullets = new List<BulletModel>(BulletController.countOfBulletInStart);
+        this.AddNotActiveBullets(BulletController.countOfBulletInStart);
     }
 
     #endregion
@@ -63,10 +72,12 @@ public class ArenaModel : ItemModel
     /// В списке мертвых врагов хораняться еще или уже не задействованые враги.
     /// Таким образом на их создание и уничтожение не тратиться время.
     /// </summary>
+    [HideInInspector]
     public List<EnemyModel> deadEnemies = new List<EnemyModel>(countDeadEnemyInStartGame);
     /// <summary>
     /// Список живых врагов.
     /// </summary>
+    [HideInInspector]
     public List<EnemyModel> aliveEnemies = new List<EnemyModel>(countDeadEnemyInStartGame);
     /// <summary>
     /// Создать нового мертвого врага.
@@ -97,13 +108,10 @@ public class ArenaModel : ItemModel
         }
 
         //добавить врага к живым
-        EnemyModel newAliveEnemy = this.deadEnemies[deadEnemies.Count - 1];
-        this.deadEnemies.RemoveAt(deadEnemies.Count - 1);
+        EnemyModel newAliveEnemy = this.deadEnemies[this.deadEnemies.Count - 1];
+        this.deadEnemies.RemoveAt(this.deadEnemies.Count - 1);
         this.aliveEnemies.Add(newAliveEnemy);
-        newAliveEnemy.gameObject.SetActive(true);
-
-        //Задать ему начальную позицию.
-        newAliveEnemy.SetRandomPositionWithoutCameraVision();
+        newAliveEnemy.Activate();
     }
     /// <summary>
     /// Создать нового врага на арене("оживить его").
@@ -126,14 +134,16 @@ public class ArenaModel : ItemModel
     /// <summary>
     /// Количество неактивных ящиков в начале игры.
     /// </summary>
-    public const Int32 boxesCountOnStart = 100;
+    public const Int32 boxesCountOnStart = 50;
     /// <summary>
     /// Список ящиков вне арены.
     /// </summary>
+    [HideInInspector]
     public List<BoxModel> withoutArenaBoxes = new List<BoxModel>(boxesCountOnStart);
     /// <summary>
     /// Список ящиков на арене.
     /// </summary>
+    [HideInInspector]
     public List<BoxModel> onArenaBoxes = new List<BoxModel>(boxesCountOnStart);
     /// <summary>
     /// Создать новый ящик вне арены.
@@ -151,6 +161,14 @@ public class ArenaModel : ItemModel
     /// <returns></returns>
     public BoxModel GetLastNotActiveBoxModel()
     {
+        Int32 lastNumber = this.withoutArenaBoxes.Count - 1;
+        if (lastNumber<0)
+        {
+            for(Int32 i=0;i<boxesCountOnStart;i++)
+            {
+                CreateNewGameBoxWithoutArena();
+            }
+        }
         return this.withoutArenaBoxes[this.withoutArenaBoxes.Count - 1];
     }
 
@@ -159,28 +177,35 @@ public class ArenaModel : ItemModel
     #region Пули
 
     /// <summary>
+    /// Создать Одну новую неактивную пулю.
+    /// </summary>
+    private void CreateNewNotActiveBullet()
+    {
+        GameObject newBullet = Instantiate(this.arenaView.bulletPrefab);
+        newBullet.SetActive(false);
+        BulletModel newBulletModel = newBullet.GetComponent<BulletModel>();
+        this.notActiveBullets.Add(newBulletModel);
+    }
+    /// <summary>
     /// Добавить несколько пуль в список неактивных.
     /// </summary>
     /// <param name="count">Количество пуль.</param>
     public void AddNotActiveBullets(Int32 count)
     {
-        GameObject newBullet = null;
-        for (Int32 i=0;i<count;i++)
+        for (Int32 i = 0; i < count; i++)
         {
-            newBullet = Instantiate(this.arenaView.bulletPrefab);
-            newBullet.SetActive(false);
-            BulletModel newBulletModel = newBullet.GetComponent<BulletModel>();
-            newBulletModel.numberInList = this.notActiveBullets.Count;
-            this.notActiveBullets.Add(newBulletModel);
+            CreateNewNotActiveBullet();
         }
     }
     /// <summary>
     /// Список неактивных пуль.
     /// </summary>
+    [HideInInspector]
     public List<BulletModel> notActiveBullets = new List<BulletModel>();
     /// <summary>
     /// Список активных пуль.
     /// </summary>
+    [HideInInspector]
     public List<BulletModel> activeBullets = new List<BulletModel>();
     /// <summary>
     /// Получить последнюю из списка неактивных пуль.
@@ -189,7 +214,7 @@ public class ArenaModel : ItemModel
     public BulletModel GetLastNotActiveBullet()
     {
         Int32 lastNumber = this.notActiveBullets.Count - 1;
-        if (lastNumber<0)
+        if (lastNumber < 0)
         {
             AddNotActiveBullets(50);
         }

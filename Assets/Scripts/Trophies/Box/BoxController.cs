@@ -16,7 +16,7 @@ public class BoxController : TrophyItemController
     {
         if (other.gameObject.name == "Player")
         {
-            this.boxView.suckThisBox.Play();
+            this.boxView.suckSound.Play();
             PlayerModel.instance.AddColoredCube(this.boxView.color);
             this.boxModel.Deactivate();
         }

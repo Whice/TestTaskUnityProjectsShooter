@@ -1,15 +1,36 @@
 ﻿using UnityEngine;
 
-public class BoxView : TrophyItemModel
+public class BoxView : TrophyItemView
 {
+    #region Звук.
+
     /// <summary>
-    /// Звук высасывания.
+    /// Звук всасывания.
     /// </summary>
-    public AudioSource suckThisBox;
+    private AudioSource suckSoundPrivate = null;
+    /// <summary>
+    /// Звук всасывания.
+    /// </summary>
+    public AudioSource suckSound
+    {
+        get
+        {
+            if(this.suckSoundPrivate==null)
+            {
+                this.suckSoundPrivate = GetComponent<AudioSource>();
+            }
+            return this.suckSoundPrivate;
+        }
+    }
+
+    #endregion
+
+    #region  Цвет.
+
     /// <summary>
     /// Материал ящика.
     /// </summary>
-    public Material materialPrivate;
+    private Material materialPrivate;
     /// <summary>
     /// Материал ящика.
     /// </summary>
@@ -19,7 +40,7 @@ public class BoxView : TrophyItemModel
         {
             if(this.materialPrivate==null)
             {
-                this.materialPrivate = this.GetComponent<Renderer>().material;
+                this.materialPrivate = this.transform.GetChild(0).GetComponent<Renderer>().material;
             }
             return this.materialPrivate;
         }
@@ -68,4 +89,6 @@ public class BoxView : TrophyItemModel
         }
         this.material.color = this.colorPrivate;
     }
+
+    #endregion
 }

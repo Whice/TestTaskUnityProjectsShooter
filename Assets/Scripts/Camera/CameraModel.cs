@@ -8,21 +8,24 @@ public class CameraModel : ItemModel
 
     #region Реализация синглтона
 
-    private CameraModel() { }
-
     /// <summary>
     /// Объект главного класса приложения.
     /// </summary>
-    private static CameraModel instancePrivate = null;
-    /// <summary>
-    /// Объект главного класса приложения.
-    /// </summary>
-    public static CameraModel instance
+    public static CameraModel instance = null;
+    private void Awake()
     {
-        get => instancePrivate == null ? new CameraModel() : instancePrivate;
+        if (CameraModel.instance == null)
+        {
+            CameraModel.instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     #endregion
 
-    
+
 }

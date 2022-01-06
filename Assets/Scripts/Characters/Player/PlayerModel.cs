@@ -6,25 +6,40 @@ using UnityEngine.UI;
 
 public class PlayerModel : GameCharacterModel
 {
+	/// <summary>
+	/// Запас пуль.
+	/// </summary>
+	private Int32 ammoCountPrivate = 37;
+	/// <summary>
+	/// Запас пуль.
+	/// </summary>
+	public Int32 ammoCount
+    {
+		get => this.ammoCountPrivate;
+		set => SetValueProperty(nameof(ammoCount), ref this.ammoCountPrivate, value);
+    }
 	public PlayerView playerView
     {
 		get => this.view as PlayerView;
     }
 	#region Реализация синглтона
 
-	private PlayerModel() { }
-
 	/// <summary>
 	/// Объект главного класса приложения.
 	/// </summary>
-	private static PlayerModel instancePrivate = null;
-	/// <summary>
-	/// Объект главного класса приложения.
-	/// </summary>
-	public static PlayerModel instance
-	{
-		get => instancePrivate == null ? new PlayerModel() : instancePrivate;
-	}
+	public static PlayerModel instance = null;
+	private void Awake()
+    {
+        if(PlayerModel.instance==null)
+        {
+			PlayerModel.instance = this;
+			DontDestroyOnLoad(this);
+		}
+        else
+        {
+			Destroy(this.gameObject);
+        }
+    }
 
 	#endregion
 
@@ -122,22 +137,34 @@ public class PlayerModel : GameCharacterModel
 	void Start()
 	{
 		this.healthPoints = 100;
+		this.ammoCountPrivate = 47;
+		//Обновить текст в интерфейсе
+		this.playerView.UpdateText();
 	}
 
     protected override void OnChanged(string propertyName, object oldValue, object newValue)
     {
         base.OnChanged(propertyName, oldValue, newValue);
 
-		switch(propertyName)
-        {
+		switch (propertyName)
+		{
 			case (nameof(this.healthPoints)):
-                {
+				{
 					if (isDead)
 					{
 						SceneManager.LoadSceneAsync(0);
 					}
+
+					//Обновить текст в интерфейсе
+					this.playerView.UpdateText();
 				}
 				break;
-        }
+			case (nameof(this.ammoCount)):
+				{
+					//Обновить текст в интерфейсе
+					this.playerView.UpdateText();
+				}
+				break;
+		}
     }
 }

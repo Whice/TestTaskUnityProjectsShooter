@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 /// <summary>
 /// This is not a functional weapon script. It just shows how to implement shooting and reloading with buttons system.
@@ -10,8 +11,20 @@ public class WeaponExample : MonoBehaviour
 
     public float shootRate = 0.15F;
     public float reloadTime = 1.0F;
-    public int ammoCount = 37;
-
+    /// <summary>
+    /// Запас пуль.
+    /// </summary>
+    public Int32 ammoCount
+    {
+        get
+        {
+            return PlayerModel.instance.ammoCount;
+        }
+        set
+        {
+            PlayerModel.instance.ammoCount = value;
+        }
+    }
     /// <summary>
     /// Ссылка для доступа к общему контроллеру.
     /// </summary>
@@ -23,6 +36,9 @@ public class WeaponExample : MonoBehaviour
 
 	void Start () 
     {
+        PlayerModel playerModel = PlayerModel.instance;
+        PlayerView playerView = playerModel.playerView;
+        playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
         PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
         this.controller = gameObject.GetComponent<FP_Controller>();
         ammo = ammoCount;
@@ -45,11 +61,40 @@ public class WeaponExample : MonoBehaviour
     /// <summary>
     /// Объект пули.
     /// </summary>
-    public GameObject bulletPrefab = null;
+    public GameObject bulletPrefabPrivate = null;
+    /// <summary>
+    /// Объект пули.
+    /// </summary>
+    public GameObject bulletPrefab
+    {
+        get
+        {
+            if (this.bulletPrefabPrivate == null)
+            {
+                this.bulletPrefabPrivate= ArenaModel.instance.arenaView.bulletPrefab;
+            }
+            return this.bulletPrefabPrivate;
+        }
+        
+    }
     /// <summary>
     /// Объект камеры.
     /// </summary>
-    public GameObject camera = null;
+    public GameObject cameraPrivate = null;
+    /// <summary>
+    /// Объект камеры.
+    /// </summary>
+    public GameObject camera
+    {
+        get
+        {
+            if(this.cameraPrivate==null)
+            {
+                this.cameraPrivate = CameraModel.instance.gameObject;
+            }
+            return this.cameraPrivate;
+        }
+    }
     void Shoot()
     {
         if (ammoCount > 0)
