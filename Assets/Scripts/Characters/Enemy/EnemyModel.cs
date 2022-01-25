@@ -35,6 +35,25 @@ public class EnemyModel : GameCharacterModel
     /// </summary>
     public Single speed = 0.16f;
     /// <summary>
+    /// Цель, к которой стремится снеговик.
+    /// </summary>
+    private Vector3 targetPosition
+    {
+        get => new Vector3
+            (
+            this.mainCamera.transform.position.x,
+            this.transform.position.y,
+            this.mainCamera.transform.position.z
+            );
+    }
+    /// <summary>
+    /// Враг находится около игрока?
+    /// </summary>
+    public Boolean IsNearWithPlayer
+    {
+        get => Math.Abs(this.transform.position.x - targetPosition.x) + Math.Abs(this.transform.position.z - targetPosition.z) < 2.5f;
+    }
+    /// <summary>
     /// Высота на которой находится пол.
     /// Y координата.
     /// </summary>
@@ -90,27 +109,17 @@ public class EnemyModel : GameCharacterModel
     }
     void Update()
     {
-        //Если этот враг жив, то он может стремиться к убийству игрока.
-        Vector3 thisPosition = this.transform.position;
-        this.yHeight = thisPosition.y;
-        
         //Убить снеговика, который 
-        if(thisPosition.y<5)
+        if(this.transform.position.y<-5)
         {
             this.Deactivate();
         }
-        
-        Vector3 targetPosition = new Vector3
-            (
-            this.mainCamera.transform.position.x,
-            this.yHeight,
-            this.mainCamera.transform.position.z
-            );
 
+        //Если этот враг жив, то он может стремиться к убийству игрока.
         //Двигаться к игроку
-        if (Math.Abs(thisPosition.x - targetPosition.x) + Math.Abs(thisPosition.z - targetPosition.z) > 1.5f)
+        if (!IsNearWithPlayer)
         {
-            this.transform.position = Vector3.MoveTowards(thisPosition, targetPosition, this.speed * Time.deltaTime);
+            this.transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, this.speed * Time.deltaTime);
         }
         //Либо атаковать раз в секунду
         else
@@ -124,12 +133,7 @@ public class EnemyModel : GameCharacterModel
         }
 
         //Повернуться к игроку
-        this.transform.LookAt(new Vector3
-            (
-            this.mainCamera.transform.position.x,
-            this.yHeight,
-            this.mainCamera.transform.position.z
-            ));
+        this.transform.LookAt(this.targetPosition);
     }
 
 
@@ -214,13 +218,20 @@ public class EnemyModel : GameCharacterModel
     {
         Single shift = 10;
         Vector3 playerPosition = PlayerModel.instance.transform.position;
-        Single floorSize = ArenaModel.instance.arenaFloor.transform.localScale.x * 5;
         Vector3 position = new Vector3(
                                         /*X*/ UnityEngine.Random.Range(playerPosition.x - shift, playerPosition.x + shift),
                                         /*Y*/ this.floorHeight,
                                         /*Z*/ UnityEngine.Random.Range(playerPosition.z - shift, playerPosition.z + shift)
                                         );
+        //Если враг слишком близко к игроку, подвинуть врага подальше.
+        const Single distance = 5;
+        if (position.x * position.x + position.y * position.y < distance * distance)
+        {
+            position = new Vector3(-position.x + distance, position.y + distance, position.z);
+        }
 
+        //Перемещать врага на 90 градусов вокруг игрока,
+        //пока он не окажется за спиной игрока.
         while (InViewportCamera(position))
         {
             if (InViewportCamera(position))
@@ -239,6 +250,12 @@ public class EnemyModel : GameCharacterModel
             {
                 position = new Vector3(position.x - 5, position.y, -position.z - 5);
             }
+        }
+
+        //Если игрок встал в угол, то поставить врага сразу за спиной игрока.
+        if(PlayerModel.instance.GetDistanceToWall()<2)
+        {
+            position = playerPosition - CameraModel.instance.transform.forward;
         }
 
         this.transform.position = position;
