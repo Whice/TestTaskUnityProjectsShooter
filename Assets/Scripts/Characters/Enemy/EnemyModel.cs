@@ -40,6 +40,38 @@ public class EnemyModel : GameCharacterModel
     /// </summary>
     private Single floorHeight;
     /// <summary>
+    /// Значение высоты врага.
+    /// </summary>
+    private Single yHeightField = 0;
+    /// <summary>
+    /// Значение высоты врага.
+    /// </summary>
+    private Single yHeight
+    {
+        get
+        {
+            return this.transform.position.y;
+        }
+        set
+        {
+            this.yHeightField = value;
+            /*
+             * Если враг над полом, то пусть падает.
+             * Если нет, то убрать физику
+             */
+            if(this.yHeightField>0)
+            {
+                this.gameObject.GetComponent<Rigidbody>().useGravity = true;
+            }
+            else
+            {
+                this.yHeightField = 0;
+
+                this.gameObject.GetComponent<Rigidbody>().useGravity = false;
+            }
+        }
+    }
+    /// <summary>
     /// Установить случайную скорость для врага.
     /// </summary>
     public void SetRandomSpeed()
@@ -60,11 +92,18 @@ public class EnemyModel : GameCharacterModel
     {
         //Если этот враг жив, то он может стремиться к убийству игрока.
         Vector3 thisPosition = this.transform.position;
+        this.yHeight = thisPosition.y;
+        
+        //Убить снеговика, который 
+        if(thisPosition.y<5)
+        {
+            this.Deactivate();
+        }
         
         Vector3 targetPosition = new Vector3
             (
             this.mainCamera.transform.position.x,
-            this.floorHeight,
+            this.yHeight,
             this.mainCamera.transform.position.z
             );
 
@@ -88,7 +127,7 @@ public class EnemyModel : GameCharacterModel
         this.transform.LookAt(new Vector3
             (
             this.mainCamera.transform.position.x,
-            this.floorHeight,
+            this.yHeight,
             this.mainCamera.transform.position.z
             ));
     }
@@ -163,6 +202,8 @@ public class EnemyModel : GameCharacterModel
         this.gameObject.GetComponent<Rigidbody>().useGravity = true;
         //Задать ему начальную позицию.
         this.SetRandomPositionWithoutCameraVision();
+
+        this.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, 0));
     }
 
     /// <summary>
@@ -171,12 +212,12 @@ public class EnemyModel : GameCharacterModel
     /// <returns></returns>
     public void SetRandomPositionWithoutCameraVision()
     {
-        Single shift = 30;
+        Single shift = 10;
         Vector3 playerPosition = PlayerModel.instance.transform.position;
         Single floorSize = ArenaModel.instance.arenaFloor.transform.localScale.x * 5;
         Vector3 position = new Vector3(
                                         /*X*/ UnityEngine.Random.Range(playerPosition.x - shift, playerPosition.x + shift),
-                                        /*Y*/ ArenaModel.instance.arenaFloor.transform.position.y,
+                                        /*Y*/ this.floorHeight,
                                         /*Z*/ UnityEngine.Random.Range(playerPosition.z - shift, playerPosition.z + shift)
                                         );
 

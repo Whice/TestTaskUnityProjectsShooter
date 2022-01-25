@@ -28,6 +28,8 @@ public class BoxModel: TrophyItemModel
         this.gameObject.SetActive(true);
         this.boxView.SetRandomColor();
         this.gameObject.GetComponent<Rigidbody>().useGravity = true;
+
+        this.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, 0));
     }
     /// <summary>
     /// Убрать ящик с арены.
