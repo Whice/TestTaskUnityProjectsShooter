@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Представление врага в игре.
@@ -11,7 +9,13 @@ public class EnemyView : GameCharacterView
     {
         get => this.model as EnemyModel;
     }
+    /// <summary>
+    /// Анимация поворота колеса.
+    /// </summary>
     private Animation rotateAnimationField = null;
+    /// <summary>
+    /// Анимация поворота колеса.
+    /// </summary>
     private Animation rotateAnimation
     {
         get
@@ -24,11 +28,18 @@ public class EnemyView : GameCharacterView
             return this.rotateAnimationField;
         }
     }
+
     private void Update()
     {
-        if (!this.rotateAnimation.isPlaying && !this.enemyModel.IsNearWithPlayer)
+        //Если враг далеко от игрока.
+        if (!this.enemyModel.IsNearWithPlayer)
         {
-            this.rotateAnimation.Play();
+            //Если проигрывание анимации уже кончилось.
+            if (!this.rotateAnimation.isPlaying)
+            {
+                //Запустить колесо вращаться снова.
+                this.rotateAnimation.Play();
+            }
         }
     }
 }

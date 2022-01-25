@@ -26,82 +26,6 @@ public class EnemyModel : GameCharacterModel
         }
     }
 
-    /// <summary>
-    /// Изанчальная скорость движения врагов.
-    /// </summary>
-    public const Single speedOrigin = 0.016f;
-    /// <summary>
-    /// Скорость движения врагов.
-    /// </summary>
-    public Single speed = 0.16f;
-    /// <summary>
-    /// Цель, к которой стремится снеговик.
-    /// </summary>
-    private Vector3 targetPosition
-    {
-        get => new Vector3
-            (
-            this.mainCamera.transform.position.x,
-            this.transform.position.y,
-            this.mainCamera.transform.position.z
-            );
-    }
-    /// <summary>
-    /// Враг находится около игрока?
-    /// </summary>
-    public Boolean IsNearWithPlayer
-    {
-        get => Math.Abs(this.transform.position.x - targetPosition.x) + Math.Abs(this.transform.position.z - targetPosition.z) < 2.5f;
-    }
-    /// <summary>
-    /// Высота на которой находится пол.
-    /// Y координата.
-    /// </summary>
-    private Single floorHeight;
-    /// <summary>
-    /// Значение высоты врага.
-    /// </summary>
-    private Single yHeightField = 0;
-    /// <summary>
-    /// Значение высоты врага.
-    /// </summary>
-    private Single yHeight
-    {
-        get
-        {
-            return this.transform.position.y;
-        }
-        set
-        {
-            this.yHeightField = value;
-            /*
-             * Если враг над полом, то пусть падает.
-             * Если нет, то убрать физику
-             */
-            if(this.yHeightField>0)
-            {
-                this.gameObject.GetComponent<Rigidbody>().useGravity = true;
-            }
-            else
-            {
-                this.yHeightField = 0;
-
-                this.gameObject.GetComponent<Rigidbody>().useGravity = false;
-            }
-        }
-    }
-    /// <summary>
-    /// Установить случайную скорость для врага.
-    /// </summary>
-    public void SetRandomSpeed()
-    {
-        this.speed = UnityEngine.Random.Range(speedOrigin, speedOrigin * 3);
-    }
-    /// <summary>
-    /// Звук удара по игроку.
-    /// </summary>
-    private AudioSource soundPlayerKick = null;
-
     void Start()
     {
         this.soundPlayerKick = GetComponent<AudioSource>();
@@ -136,52 +60,6 @@ public class EnemyModel : GameCharacterModel
         this.transform.LookAt(this.targetPosition);
     }
 
-
-    /// <summary>
-    /// Критический урон.
-    /// </summary>
-    private Int32 criticalDamage = 9;
-    /// <summary>
-    /// Таймер для сдерживания атаки.
-    /// </summary>
-    private Single timerAtack = 0;
-    /// <summary>
-    /// Нанести удар по игроку.
-    /// </summary>
-    private void KickPlayer()
-    {
-        this.soundPlayerKick.Play();
-
-
-        Int32 randChance = UnityEngine.Random.Range(1, 100);
-
-        //15% критического удара.
-        if (randChance < 15)
-        {
-            PlayerModel.instance.healthPoints -= this.criticalDamage;
-        }
-        else
-        {
-            PlayerModel.instance.healthPoints -= this.damage;
-        }
-    }
-
-    public void OnTriggerEnter(Collider other)
-    {
-
-        //При столкновении с пулей умертвить врага.
-        if (other.gameObject.name == "Bullet(Clone)")
-        {
-            this.healthPoints -= PlayerModel.instance.damage;
-        }
-        
-        //При столкновении с игроком ему сразу наноситься один удар.
-        if (other.gameObject.name == "PlayerFront")
-        {
-            KickPlayer();
-        }
-    }
-
     private ArenaModel arenaModel
     {
         get => ArenaModel.instance;
@@ -206,12 +84,36 @@ public class EnemyModel : GameCharacterModel
         this.gameObject.GetComponent<Rigidbody>().useGravity = true;
         //Задать ему начальную позицию.
         this.SetRandomPositionWithoutCameraVision();
+        this.SetRandomSpeed();
 
         this.gameObject.GetComponent<Rigidbody>().AddForce(new Vector3(0, 1, 0));
     }
 
+
+    #region Скорость.
+
     /// <summary>
-    /// Получить случайное местоположение вне зоны видимости камеры.
+    /// Изанчальная скорость движения врагов.
+    /// </summary>
+    public const Single speedOrigin = 0.016f;
+    /// <summary>
+    /// Скорость движения врагов.
+    /// </summary>
+    public Single speed = 0;
+    /// <summary>
+    /// Установить случайную скорость для врага.
+    /// </summary>
+    public void SetRandomSpeed()
+    {
+        this.speed = UnityEngine.Random.Range(speedOrigin, speedOrigin * 3);
+    }
+
+    #endregion
+
+    #region Установка случайного местоположения.
+
+    /// <summary>
+    /// Установить случайное местоположение вне зоны видимости камеры.
     /// </summary>
     /// <returns></returns>
     public void SetRandomPositionWithoutCameraVision()
@@ -292,4 +194,104 @@ public class EnemyModel : GameCharacterModel
         }
         return false;
     }
+
+    #endregion
+
+    #region Урон.
+
+    /// <summary>
+    /// Звук удара по игроку.
+    /// </summary>
+    private AudioSource soundPlayerKick = null;
+    /// <summary>
+    /// Критический урон.
+    /// </summary>
+    private Int32 criticalDamage = 9;
+    /// <summary>
+    /// Таймер для сдерживания атаки.
+    /// </summary>
+    private Single timerAtack = 0;
+    /// <summary>
+    /// Нанести удар по игроку.
+    /// </summary>
+    public void KickPlayer()
+    {
+        this.soundPlayerKick.Play();
+
+
+        Int32 randChance = UnityEngine.Random.Range(1, 100);
+
+        //15% критического удара.
+        if (randChance < 15)
+        {
+            PlayerModel.instance.healthPoints -= this.criticalDamage;
+        }
+        else
+        {
+            PlayerModel.instance.healthPoints -= this.damage;
+        }
+    }
+
+    #endregion
+
+    #region Данные о местоположении врага или игрока.
+
+    /// <summary>
+    /// Значение высоты врага.
+    /// </summary>
+    private Single yHeightField = 0;
+    /// <summary>
+    /// Значение высоты врага.
+    /// </summary>
+    private Single yHeight
+    {
+        get
+        {
+            return this.transform.position.y;
+        }
+        set
+        {
+            this.yHeightField = value;
+            /*
+             * Если враг над полом, то пусть падает.
+             * Если нет, то убрать физику
+             */
+            if (this.yHeightField > 0)
+            {
+                this.gameObject.GetComponent<Rigidbody>().useGravity = true;
+            }
+            else
+            {
+                this.yHeightField = 0;
+
+                this.gameObject.GetComponent<Rigidbody>().useGravity = false;
+            }
+        }
+    }
+    /// <summary>
+    /// Цель, к которой стремится снеговик.
+    /// </summary>
+    private Vector3 targetPosition
+    {
+        get => new Vector3
+            (
+            this.mainCamera.transform.position.x,
+            this.yHeight,
+            this.mainCamera.transform.position.z
+            );
+    }
+    /// <summary>
+    /// Враг находится около игрока?
+    /// </summary>
+    public Boolean IsNearWithPlayer
+    {
+        get => Math.Abs(this.transform.position.x - targetPosition.x) + Math.Abs(this.transform.position.z - targetPosition.z) < 2.5f;
+    }
+    /// <summary>
+    /// Высота на которой находится пол.
+    /// Y координата.
+    /// </summary>
+    private Single floorHeight;
+
+    #endregion
 }
