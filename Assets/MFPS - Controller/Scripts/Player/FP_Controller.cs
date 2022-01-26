@@ -12,8 +12,20 @@ public class FP_Controller : MonoBehaviour
 {
     public bool canControl = true;
     public float gravity = 20.0f;
-	public float walkSpeed = 6.0f;
-    public float runSpeed = 11.0f;
+    /// <summary>
+    /// Скорость ходьбы.
+    /// </summary>
+    public float walkSpeed
+    {
+        get => PlayerModel.instance.walkSpeed;
+    }
+    /// <summary>
+    /// Скрорсть бега.
+    /// </summary>
+    public float runSpeed
+    {
+        get => PlayerModel.instance.runSpeed;
+    }
     public float jumpForce = 8.0f;
     public float crouchSpeed = 2.0F;
     public float crouchHeight = 1.0F;

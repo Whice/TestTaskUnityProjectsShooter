@@ -79,6 +79,7 @@ public class EnemyModel : GameCharacterModel
     /// </summary>
     public void Activate()
     {
+        this.yHeight = 5f;
         this.healthPoints = 10;
         this.gameObject.SetActive(true);
         this.gameObject.GetComponent<Rigidbody>().useGravity = true;
@@ -95,73 +96,31 @@ public class EnemyModel : GameCharacterModel
     /// <summary>
     /// Изанчальная скорость движения врагов.
     /// </summary>
-    public const Single speedOrigin = 0.016f;
+    public const Single ORIGIN_SPEED = 0.6f;
     /// <summary>
     /// Скорость движения врагов.
     /// </summary>
-    public Single speed = 0;
+    [HideInInspector]
+    public Single speed = 0f;
     /// <summary>
     /// Установить случайную скорость для врага.
     /// </summary>
     public void SetRandomSpeed()
     {
-        this.speed = UnityEngine.Random.Range(speedOrigin, speedOrigin * 3);
+        this.speed = UnityEngine.Random.Range(ORIGIN_SPEED, ORIGIN_SPEED * 3);
+
+        //Скорость врага не может быть больше скорости игрока.
+        //Она обязательно должна быть чуть меньше.
+       /* if (!(this.speed < PlayerModel.instance.runSpeed))
+        {
+            this.speed = PlayerModel.instance.runSpeed - ;
+        }*/
     }
 
     #endregion
 
     #region Установка случайного местоположения.
 
-    /// <summary>
-    /// Установить случайное местоположение вне зоны видимости камеры.
-    /// </summary>
-    /// <returns></returns>
-    public void SetRandomPositionWithoutCameraVision()
-    {
-        Single shift = 10;
-        Vector3 playerPosition = PlayerModel.instance.transform.position;
-        Vector3 position = new Vector3(
-                                        /*X*/ UnityEngine.Random.Range(playerPosition.x - shift, playerPosition.x + shift),
-                                        /*Y*/ this.floorHeight,
-                                        /*Z*/ UnityEngine.Random.Range(playerPosition.z - shift, playerPosition.z + shift)
-                                        );
-        //Если враг слишком близко к игроку, подвинуть врага подальше.
-        const Single distance = 5;
-        if (position.x * position.x + position.y * position.y < distance * distance)
-        {
-            position = new Vector3(-position.x + distance, position.y + distance, position.z);
-        }
-
-        //Перемещать врага на 90 градусов вокруг игрока,
-        //пока он не окажется за спиной игрока.
-        while (InViewportCamera(position))
-        {
-            if (InViewportCamera(position))
-            {
-                position = new Vector3(-position.x, position.y, position.z);
-            }
-            else if (InViewportCamera(position))
-            {
-                position = new Vector3(position.x, position.y, -position.z);
-            }
-            else if (InViewportCamera(position))
-            {
-                position = new Vector3(-position.x, position.y, position.z);
-            }
-            if (InViewportCamera(position))
-            {
-                position = new Vector3(position.x - 5, position.y, -position.z - 5);
-            }
-        }
-
-        //Если игрок встал в угол, то поставить врага сразу за спиной игрока.
-        if(PlayerModel.instance.GetDistanceToWall()<2)
-        {
-            position = playerPosition - CameraModel.instance.transform.forward;
-        }
-
-        this.transform.position = position;
-    }
     /// <summary>
     /// Ссылка на камеру игрока.
     /// </summary>
@@ -194,6 +153,71 @@ public class EnemyModel : GameCharacterModel
         }
         return false;
     }
+    /// <summary>
+    /// Установить случайное местоположение вне зоны видимости камеры.
+    /// </summary>
+    /// <returns></returns>
+    public void SetRandomPositionWithoutCameraVision()
+    {
+        //Если игрок не упирается в стену.
+        if (PlayerModel.instance.GetDistanceToWall() > 0.7)
+        {
+            Single shift = 30;
+            Vector3 playerPosition = PlayerModel.instance.transform.position;
+            Vector3 position = new Vector3(
+                                            /*X*/ UnityEngine.Random.Range(playerPosition.x - shift, playerPosition.x + shift),
+                                            /*Y*/ this.floorHeight,
+                                            /*Z*/ UnityEngine.Random.Range(playerPosition.z - shift, playerPosition.z + shift)
+                                            );
+            //Если враг слишком близко к игроку, подвинуть врага подальше.
+            const Single distance = 15F;
+            if (position.x * position.x + position.z * position.z < distance * distance)
+            {
+                position = new Vector3(-position.x + distance, position.y , position.z + distance);
+            }
+
+            //Перемещать врага на 90 градусов вокруг игрока,
+            //пока он не окажется за спиной игрока.
+            while (InViewportCamera(position))
+            {
+                if (InViewportCamera(position))
+                {
+                    position = new Vector3(-position.x, position.y, position.z);
+                }
+                else if (InViewportCamera(position))
+                {
+                    position = new Vector3(position.x, position.y, -position.z);
+                }
+                else if (InViewportCamera(position))
+                {
+                    position = new Vector3(-position.x, position.y, position.z);
+                }
+                if (InViewportCamera(position))
+                {
+                    position = new Vector3(position.x - 5, position.y, -position.z - 5);
+                }
+            }
+
+            //Если игрок встал в угол, то поставить врага сразу за спиной игрока.
+            if (PlayerModel.instance.GetDistanceToWall() < 2)
+            {
+                position = playerPosition - CameraModel.instance.transform.forward;
+            }
+
+            this.transform.position = position;
+        }
+        //Если игрок упирается в стену.
+        else
+        {
+            //Поставить сразу за спиной игрока.
+            this.transform.position = new Vector3
+                (
+                -1 * this.mainCamera.transform.forward.x,
+                this.yHeight,
+                -1 * this.mainCamera.transform.forward.z
+                );
+        }
+    }
 
     #endregion
 
@@ -211,6 +235,44 @@ public class EnemyModel : GameCharacterModel
     /// Таймер для сдерживания атаки.
     /// </summary>
     private Single timerAtack = 0;
+    /// <summary>
+    /// Физика этого врага.
+    /// </summary>
+    private Rigidbody rigidbodyField = null;
+    /// <summary>
+    /// Физика этого врага.
+    /// </summary>
+    private Rigidbody rigidbody
+    {
+        get
+        {
+            if(this.rigidbodyField==null)
+            {
+                this.rigidbodyField = GetComponent<Rigidbody>();
+            }
+            return this.rigidbodyField;
+        }
+    }
+    /// <summary>
+    /// Сила отталкивания врага после нанесения удара игроку.
+    /// </summary>
+    const Single IMPULSE_FORCE = 10f;
+    /// <summary>
+    /// Отойти назад.
+    /// </summary>
+    private void StepBack()
+    {
+        this.rigidbody.AddForce
+            (
+            new Vector3
+                (
+                -this.transform.forward.x * IMPULSE_FORCE,
+                this.transform.position.y,
+                -this.transform.forward.z * IMPULSE_FORCE
+                ),
+            ForceMode.Impulse
+            );
+    }
     /// <summary>
     /// Нанести удар по игроку.
     /// </summary>
@@ -230,6 +292,8 @@ public class EnemyModel : GameCharacterModel
         {
             PlayerModel.instance.healthPoints -= this.damage;
         }
+
+        StepBack();
     }
 
     #endregion

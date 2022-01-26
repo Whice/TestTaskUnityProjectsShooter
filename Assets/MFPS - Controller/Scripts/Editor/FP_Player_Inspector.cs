@@ -22,7 +22,6 @@ public class FP_Player_Inspector : Editor {
 
         cntrlr = (MonoScript)EditorGUILayout.ObjectField("Script", cntrlr, typeof(FP_Controller), false);
         fP_Controller.canControl = EditorGUILayout.Toggle("Can Control", fP_Controller.canControl);
-        fP_Controller.walkSpeed = EditorGUILayout.FloatField("Walk Speed", fP_Controller.walkSpeed);
         fP_Controller.gravity = EditorGUILayout.FloatField("Gravity", fP_Controller.gravity);
         fP_Controller.airControl = EditorGUILayout.Toggle("Air Control", fP_Controller.airControl);
 
@@ -32,7 +31,6 @@ public class FP_Player_Inspector : Editor {
         if(fP_Controller.canRun)
         {
             GUILayout.Label("Speed", GUILayout.Width(42.5F));
-            fP_Controller.runSpeed = EditorGUILayout.FloatField("", fP_Controller.runSpeed, GUILayout.Width(50));
             EditorGUILayout.PropertyField(this.serializedObject.FindProperty("runKey"), GUIContent.none);
         }
 

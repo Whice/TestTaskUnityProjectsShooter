@@ -10,6 +10,38 @@ public class ArenaModel : ItemModel
         get => this.view as ArenaView;
     }
 
+    #region Стены и пол арены.
+
+    /// <summary>
+    /// Ссылка на пол арены.
+    /// </summary>
+    private GameObject[] wallPrivate = new GameObject[0];
+    /// <summary>
+    /// Ссылка на пол арены.
+    /// </summary>
+    public GameObject[] walls
+    {
+        get
+        {
+            //Если список стен не заполнен, то заполнить.
+            if(this.wallPrivate.Length==0)
+            {
+                List<GameObject> children = new List<GameObject>(this.transform.childCount);
+                GameObject child = null;
+                for(Int32 i=0;i<this.transform.childCount;i++)
+                {
+                    child = this.transform.GetChild(i).gameObject;
+                    if (child.name.IndexOf("Wall")>-1)
+                    {
+                        children.Add(child);
+                    }
+                }
+                this.wallPrivate = children.ToArray();
+            }
+
+            return this.wallPrivate;
+        }
+    }
     /// <summary>
     /// Ссылка на пол арены.
     /// </summary>
@@ -28,6 +60,9 @@ public class ArenaModel : ItemModel
             return this.arenaFloorPrivate;
         }
     }
+
+
+    #endregion
 
     #region Реализация синглтона
 

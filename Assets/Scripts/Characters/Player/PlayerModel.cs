@@ -1,11 +1,17 @@
 ﻿using System;
-using System.Text;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class PlayerModel : GameCharacterModel
 {
+	/// <summary>
+	/// Скорость ходьбы.
+	/// </summary>
+	public Single walkSpeed = 6.0f;
+	/// <summary>
+	/// Скрорсть бега.
+	/// </summary>
+	public Single runSpeed = 11.0f;
 	/// <summary>
 	/// Запас пуль.
 	/// </summary>
@@ -14,14 +20,15 @@ public class PlayerModel : GameCharacterModel
 	/// Запас пуль.
 	/// </summary>
 	public Int32 ammoCount
-    {
+	{
 		get => this.ammoCountPrivate;
 		set => SetValueProperty(nameof(ammoCount), ref this.ammoCountPrivate, value);
-    }
+	}
 	public PlayerView playerView
-    {
+	{
 		get => this.view as PlayerView;
-    }
+	}
+
 	#region Реализация синглтона
 
 	/// <summary>
@@ -29,17 +36,17 @@ public class PlayerModel : GameCharacterModel
 	/// </summary>
 	public static PlayerModel instance = null;
 	private void Awake()
-    {
-        if(PlayerModel.instance==null)
-        {
+	{
+		if (PlayerModel.instance == null)
+		{
 			PlayerModel.instance = this;
 			DontDestroyOnLoad(this);
 		}
-        else
-        {
+		else
+		{
 			Destroy(this.gameObject);
-        }
-    }
+		}
+	}
 
 	#endregion
 
@@ -53,9 +60,9 @@ public class PlayerModel : GameCharacterModel
 	/// Количество красных кубов.
 	/// </summary>
 	public Int32 redCubesCount
-    {
+	{
 		get => this.redCubesCountPrivate;
-    }
+	}
 	/// <summary>
 	/// Количество зеленых кубов.
 	/// </summary>
@@ -64,9 +71,9 @@ public class PlayerModel : GameCharacterModel
 	/// Количество зеленых кубов.
 	/// </summary>
 	public Int32 greenCubesCount
-    {
+	{
 		get => this.greenCubesCountPrivate;
-    }
+	}
 	/// <summary>
 	/// Количество желтых кубов.
 	/// </summary>
@@ -75,9 +82,9 @@ public class PlayerModel : GameCharacterModel
 	/// Количество желтых кубов.
 	/// </summary>
 	public Int32 yellowCubesCount
-    {
+	{
 		get => this.yellowCubesCountPrivate;
-    }
+	}
 	/// <summary>
 	/// Цвет пуль игрока.
 	/// </summary>
@@ -86,9 +93,9 @@ public class PlayerModel : GameCharacterModel
 	/// Цвет пуль игрока.
 	/// </summary>
 	public Color bulletColor
-    {
+	{
 		get => this.bulletColorPrivate;
-    }
+	}
 
 	/// <summary>
 	/// Добавить куб определенного цвета к статистике игрока.
@@ -141,10 +148,9 @@ public class PlayerModel : GameCharacterModel
 		//Обновить текст в интерфейсе
 		this.playerView.UpdateText();
 	}
-
     protected override void OnChanged(string propertyName, object oldValue, object newValue)
-    {
-        base.OnChanged(propertyName, oldValue, newValue);
+	{
+		base.OnChanged(propertyName, oldValue, newValue);
 
 		switch (propertyName)
 		{
@@ -157,14 +163,60 @@ public class PlayerModel : GameCharacterModel
 
 					//Обновить текст в интерфейсе
 					this.playerView.UpdateText();
+					break;
 				}
-				break;
 			case (nameof(this.ammoCount)):
 				{
 					//Обновить текст в интерфейсе
 					this.playerView.UpdateText();
+					break;
 				}
-				break;
 		}
-    }
+	}
+
+	#region Расстояние до стен.
+
+	/// <summary>
+	/// Стены.
+	/// </summary>
+	public GameObject[] walls
+	{
+		get => ArenaModel.instance.walls;
+	}
+	/// <summary>
+	/// Получить расстояние от игрока до ближайшей стены.
+	/// <br/>Расстояние до стены не может стать меньше, чем 0.55.
+	/// </summary>
+	/// <returns></returns>
+	public Single GetDistanceToWall()
+	{
+		/*
+		 * Т.к. стены расположены перпендикулярно на арене, 
+		 * то расчет можно выполнять по минимальному x или y
+		 * к ближайшей из стен.
+		 * Минимальное значение - 0.5, когда игрок стоит вплотную.
+		 */
+
+		Single nearestDistance = Single.MaxValue;
+		Single distanceX;
+		Single distanceZ;
+		foreach (GameObject wall in this.walls)
+		{
+			distanceX = Math.Abs(wall.transform.position.x - this.transform.position.x);
+			if (distanceX < nearestDistance)
+			{
+				nearestDistance = distanceX;
+
+			}
+			distanceZ = Math.Abs(wall.transform.position.z - this.transform.position.z);
+			if (distanceZ< nearestDistance)
+			{
+				nearestDistance = distanceZ;
+			}
+		}
+
+		return nearestDistance;
+	}
+
+	#endregion
 }
