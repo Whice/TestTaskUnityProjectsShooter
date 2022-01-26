@@ -12,7 +12,12 @@ public class BoxController : TrophyItemController
     }
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.name == "Player")
+        Debug.Log(other.gameObject.name);
+        if (other.gameObject.name == "PlayerFront" ||
+            other.gameObject.name == "MFPController" ||
+            other.gameObject.name == "Canvas" ||
+            other.gameObject.name == "Player"
+            )
         {
             this.boxView.suckSound.Play();
             PlayerModel.instance.AddColoredCube(this.boxView.color);
