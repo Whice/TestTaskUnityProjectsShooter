@@ -283,8 +283,8 @@ public class EnemyModel : GameCharacterModel
 
         Int32 randChance = UnityEngine.Random.Range(1, 100);
 
-        //15% критического удара.
-        if (randChance < 15)
+        //5% критического удара.
+        if (randChance < 5)
         {
             PlayerModel.instance.healthPoints -= this.criticalDamage;
         }
