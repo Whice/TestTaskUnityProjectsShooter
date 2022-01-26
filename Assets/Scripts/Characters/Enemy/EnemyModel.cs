@@ -192,9 +192,36 @@ public class EnemyModel : GameCharacterModel
                 {
                     position = new Vector3(-position.x, position.y, position.z);
                 }
+                else if (InViewportCamera(position))
+                {
+                    position = new Vector3(position.x, position.y, -position.z);
+                }
+
+                //Если ни одно положение вокруг центра не подошло, то сдивнуть подальше от него.
                 if (InViewportCamera(position))
                 {
-                    position = new Vector3(position.x - 5, position.y, -position.z - 5);
+                    shift = 5;
+                    Single X;
+                    if(position.x<0)
+                    {
+                        X = position.x - shift;
+                    }
+                    else
+                    {
+                        X = position.x + shift;
+                    }
+                    Single Y;
+                    if(position.y<0)
+                    {
+                        Y = position.y - shift;
+                    }
+                    else
+                    {
+                        Y = position.y + shift;
+                    }
+
+
+                    position = new Vector3(X, position.y, Y);
                 }
             }
 
@@ -258,6 +285,10 @@ public class EnemyModel : GameCharacterModel
     /// </summary>
     const Single IMPULSE_FORCE = 10f;
     /// <summary>
+    /// Шанс критического удара.
+    /// </summary>
+    const Int32 CRITICAL_CHANCE = 15;
+    /// <summary>
     /// Отойти назад.
     /// </summary>
     private void StepBack()
@@ -283,8 +314,8 @@ public class EnemyModel : GameCharacterModel
 
         Int32 randChance = UnityEngine.Random.Range(1, 100);
 
-        //5% критического удара.
-        if (randChance < 5)
+        //Возможен критический удар.
+        if (randChance < CRITICAL_CHANCE)
         {
             PlayerModel.instance.healthPoints -= this.criticalDamage;
         }

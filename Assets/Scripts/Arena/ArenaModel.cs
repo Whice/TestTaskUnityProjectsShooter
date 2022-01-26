@@ -1,8 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Арена.
+/// </summary>
 public class ArenaModel : ItemModel
 {
     public ArenaView arenaView
@@ -212,7 +214,7 @@ public class ArenaModel : ItemModel
     #region Пули
 
     /// <summary>
-    /// Создать Одну новую неактивную пулю.
+    /// Создать одну новую неактивную пулю.
     /// </summary>
     private void CreateNewNotActiveBullet()
     {
@@ -253,6 +255,7 @@ public class ArenaModel : ItemModel
         {
             AddNotActiveBullets(50);
         }
+
         return this.notActiveBullets[this.notActiveBullets.Count - 1];
     }
 
