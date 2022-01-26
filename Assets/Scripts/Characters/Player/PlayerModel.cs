@@ -198,20 +198,28 @@ public class PlayerModel : GameCharacterModel
 		 */
 
 		Single nearestDistance = Single.MaxValue;
-		Single distanceX;
-		Single distanceZ;
+		Single distanceToWall;
+		Vector3 wallPosition;
 		foreach (GameObject wall in this.walls)
 		{
-			distanceX = Math.Abs(wall.transform.position.x - this.transform.position.x);
-			if (distanceX < nearestDistance)
+			wallPosition = wall.transform.position;
+			if (wallPosition.x != 0)
 			{
-				nearestDistance = distanceX;
+				distanceToWall = Math.Abs(wall.transform.position.x - this.transform.position.x);
+				if (distanceToWall < nearestDistance)
+				{
+					nearestDistance = distanceToWall;
 
+				}
 			}
-			distanceZ = Math.Abs(wall.transform.position.z - this.transform.position.z);
-			if (distanceZ< nearestDistance)
+
+			if (wallPosition.z != 0)
 			{
-				nearestDistance = distanceZ;
+				distanceToWall = Math.Abs(wall.transform.position.z - this.transform.position.z);
+				if (distanceToWall < nearestDistance)
+				{
+					nearestDistance = distanceToWall;
+				}
 			}
 		}
 
