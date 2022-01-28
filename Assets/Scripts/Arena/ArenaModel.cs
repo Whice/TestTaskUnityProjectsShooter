@@ -103,19 +103,19 @@ public class ArenaModel : ItemModel
     /// <summary>
     /// Количество мертвых врагов, которое будет создано в началае игры.
     /// </summary>
-    public const Int32 countDeadEnemyInStartGame = 100;
+    public const Int32 COUNT_DEAD_ENEMY_ON_START = 100;
     /// <summary>
     /// Список мертвых врагов.
     /// В списке мертвых врагов хораняться еще или уже не задействованые враги.
     /// Таким образом на их создание и уничтожение не тратиться время.
     /// </summary>
     [HideInInspector]
-    public List<EnemyModel> deadEnemies = new List<EnemyModel>(countDeadEnemyInStartGame);
+    public List<EnemyModel> deadEnemies = new List<EnemyModel>(COUNT_DEAD_ENEMY_ON_START);
     /// <summary>
     /// Список живых врагов.
     /// </summary>
     [HideInInspector]
-    public List<EnemyModel> aliveEnemies = new List<EnemyModel>(countDeadEnemyInStartGame);
+    public List<EnemyModel> aliveEnemies = new List<EnemyModel>(COUNT_DEAD_ENEMY_ON_START);
     /// <summary>
     /// Создать нового мертвого врага.
     /// </summary>
@@ -171,17 +171,17 @@ public class ArenaModel : ItemModel
     /// <summary>
     /// Количество неактивных ящиков в начале игры.
     /// </summary>
-    public const Int32 boxesCountOnStart = 50;
+    public const Int32 BOXES_COUNT_ON_START = 50;
     /// <summary>
     /// Список ящиков вне арены.
     /// </summary>
     [HideInInspector]
-    public List<BoxModel> withoutArenaBoxes = new List<BoxModel>(boxesCountOnStart);
+    public List<BoxModel> withoutArenaBoxes = new List<BoxModel>(BOXES_COUNT_ON_START);
     /// <summary>
     /// Список ящиков на арене.
     /// </summary>
     [HideInInspector]
-    public List<BoxModel> onArenaBoxes = new List<BoxModel>(boxesCountOnStart);
+    public List<BoxModel> onArenaBoxes = new List<BoxModel>(BOXES_COUNT_ON_START);
     /// <summary>
     /// Создать новый ящик вне арены.
     /// </summary>
@@ -201,7 +201,7 @@ public class ArenaModel : ItemModel
         Int32 lastNumber = this.withoutArenaBoxes.Count - 1;
         if (lastNumber<0)
         {
-            for(Int32 i=0;i<boxesCountOnStart;i++)
+            for(Int32 i=0;i<BOXES_COUNT_ON_START;i++)
             {
                 CreateNewGameBoxWithoutArena();
             }
@@ -213,6 +213,10 @@ public class ArenaModel : ItemModel
 
     #region Пули
 
+    /// <summary>
+    /// Количество неактивных пуль в начале игры.
+    /// </summary>
+    public const Int32 BULLET_COUNT_ON_START = 200;
     /// <summary>
     /// Создать одну новую неактивную пулю.
     /// </summary>

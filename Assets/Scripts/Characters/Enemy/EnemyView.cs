@@ -85,7 +85,7 @@ public class EnemyView : GameCharacterView
         {
             Int32 percent = UnityEngine.Random.Range(0, 101);
             //Вращать головой.
-            if (percent < 25)
+            if (percent < 250)
             {
                 this.headAnimator.Play("HeadRotate");
             }
@@ -96,5 +96,11 @@ public class EnemyView : GameCharacterView
             }
             this.timeElapsedBetweenAnimaton = 0;
         }
+    }
+
+    public void StopAnimationInAnimator()
+    {
+        var number = this.headAnimator.GetCurrentAnimatorStateInfo(0);
+        var nameAnim = number.IsName("HeadRotate");
     }
 }
