@@ -112,6 +112,10 @@ public class WeaponExample : MonoBehaviour
                     );
                 bulletModel.Activate(bulletPosition, cameraForward);
 
+                //Установить цвет пули
+                BulletView bulletView = bulletModel.view as BulletView;
+                bulletView.SetColor(PlayerModel.instance.bulletColor);
+
                 this.ammoCount--;
                 PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
             }
