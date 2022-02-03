@@ -59,25 +59,6 @@ public class WeaponExample : MonoBehaviour
     #region Стрельба
 
     /// <summary>
-    /// Объект пули.
-    /// </summary>
-    public GameObject bulletPrefabPrivate = null;
-    /// <summary>
-    /// Объект пули.
-    /// </summary>
-    public GameObject bulletPrefab
-    {
-        get
-        {
-            if (this.bulletPrefabPrivate == null)
-            {
-                this.bulletPrefabPrivate= ArenaModel.instance.arenaView.bulletPrefab;
-            }
-            return this.bulletPrefabPrivate;
-        }
-        
-    }
-    /// <summary>
     /// Объект камеры.
     /// </summary>
     public GameObject cameraPrivate = null;
