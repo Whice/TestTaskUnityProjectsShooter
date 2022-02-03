@@ -82,7 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 7223687217333419669, guid: 9d3d063b44ed5174683d5974d0f40d86,
     type: 3}
-  enemyPrefab: {fileID: 8518625336721538653, guid: 3031e00722f29da42a142ebb5c81dc92,
+  enemyPrefab: {fileID: 7758724683995552829, guid: 7e4f0eb8fc28b904c836a59f29136d65,
     type: 3}
   gameBoxPrefab: {fileID: 6623746695824381820, guid: 601cb1141f4d2904a8aa67b6b774456c,
     type: 3}

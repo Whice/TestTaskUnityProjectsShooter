@@ -11,19 +11,12 @@ public class EnemyController : GameCharacterController
     {
         get => this.model as EnemyModel;
     }
-    public void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
-
         //При столкновении с пулей нанести урон врагу.
         if (other.gameObject.name == "Bullet(Clone)")
         {
-            this.enemyModel.healthPoints -= PlayerModel.instance.damage;
-        }
-
-        //При столкновении с игроком ему сразу наноситься один удар.
-        if (other.gameObject.name == "PlayerFront")
-        {
-            this.enemyModel.KickPlayer();
+            this.enemyModel.ApplyDamage(PlayerModel.instance.damage);
         }
     }
 }
