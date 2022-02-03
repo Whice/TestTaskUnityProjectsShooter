@@ -209,7 +209,7 @@ public class SimpleEnemyModel : EnemyModel
     /// <summary>
     /// Сила отталкивания врага после нанесения удара игроку.
     /// </summary>
-    const Single IMPULSE_FORCE = 10f;
+    const Single IMPULSE_FORCE = 20f;
     /// <summary>
     /// Шанс критического удара.
     /// </summary>
@@ -223,9 +223,9 @@ public class SimpleEnemyModel : EnemyModel
             (
             new Vector3
                 (
-                -this.transform.forward.x * IMPULSE_FORCE,
+                -this.transform.forward.x * IMPULSE_FORCE * this.rigidbody.mass,
                 this.transform.position.y,
-                -this.transform.forward.z * IMPULSE_FORCE
+                -this.transform.forward.z * IMPULSE_FORCE * this.rigidbody.mass
                 ),
             ForceMode.Impulse
             );

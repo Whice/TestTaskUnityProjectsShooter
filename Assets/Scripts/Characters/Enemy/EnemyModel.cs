@@ -29,7 +29,7 @@ public class EnemyModel : GameCharacterModel
     protected virtual void Update()
     {
         //Убить снеговика, который упал слишком низко.
-        if(this.transform.position.y<-5)
+        if (this.transform.position.y < this.floorHeight - 5)
         {
             this.Deactivate();
         }
@@ -122,9 +122,9 @@ public class EnemyModel : GameCharacterModel
         }
     }
     /// <summary>
-    /// Значение высоты врага.
+    /// Дополнительное значение высоты врага, чтобы он не тонул под землей.
     /// </summary>
-    protected Single yHeightField = 0;
+    protected const Single ADDITIONAL_HEIGHT = -1f;
     /// <summary>
     /// Значение высоты врага.
     /// </summary>
@@ -132,25 +132,26 @@ public class EnemyModel : GameCharacterModel
     {
         get
         {
+            if (this.transform.position.y < this.floorHeight + ADDITIONAL_HEIGHT)
+            {
+                this.transform.position = new Vector3
+                   (
+                   this.transform.transform.position.x,
+                   this.floorHeight + ADDITIONAL_HEIGHT,
+                   this.transform.transform.position.z
+                   );
+            }
+
             return this.transform.position.y;
         }
         set
         {
-            this.yHeightField = value;
-            /*
-             * Если враг над полом, то пусть падает.
-             * Если нет, то убрать физику
-             */
-            if (this.yHeightField > 0)
-            {
-                this.gameObject.GetComponent<Rigidbody>().useGravity = true;
-            }
-            else
-            {
-                this.yHeightField = 0;
-
-                this.gameObject.GetComponent<Rigidbody>().useGravity = false;
-            }
+            this.transform.position = new Vector3
+                (
+                this.transform.transform.position.x,
+                value,
+                this.transform.transform.position.z
+                );
         }
     }
     /// <summary>
