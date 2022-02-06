@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!95 &4596183827150914406
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7758724683995552829}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dbcbe4296f5e29c4c95d27cc558b9ba0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &-2768418580995818939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,6 +34,7 @@ MonoBehaviour:
   damage: 5
   rigidbody: {fileID: 2623729394077759561}
   speed: 0
+  soundPlayerKick: {fileID: 5439736150952884437}
 --- !u!114 &1935108086311710461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateWhillsAnimation: {fileID: 6011605996145141385}
-  headAnimator: {fileID: 1907378305097277204}
+  headAnimator: {fileID: 4596183827150914406}
 --- !u!114 &4196528955299559847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,11 +207,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3540068599324487163, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178744079513852457, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7803092950604151525, guid: 3031e00722f29da42a142ebb5c81dc92,
         type: 3}
       propertyPath: headAnimator
       value: 
-      objectReference: {fileID: 1907378305097277204}
+      objectReference: {fileID: 0}
     - target: {fileID: 7803092950604151525, guid: 3031e00722f29da42a142ebb5c81dc92,
         type: 3}
       propertyPath: rotateWhillsAnimation
@@ -216,9 +246,9 @@ Rigidbody:
     type: 3}
   m_PrefabInstance: {fileID: 2131533454434755168}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &1907378305097277204 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 571082028895567220, guid: 3031e00722f29da42a142ebb5c81dc92,
+--- !u!82 &5439736150952884437 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: -2960719455504278859, guid: 3031e00722f29da42a142ebb5c81dc92,
     type: 3}
   m_PrefabInstance: {fileID: 2131533454434755168}
   m_PrefabAsset: {fileID: 0}

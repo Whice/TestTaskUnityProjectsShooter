@@ -12,6 +12,35 @@ public class ArenaModel : ItemModel
         get => this.view as ArenaView;
     }
 
+    #region Босс.
+
+    /// <summary>
+    /// Объект босса.
+    /// </summary>
+    public GameObject boss = null;
+    /// <summary>
+    /// Модель босса.
+    /// </summary>
+    private BossModel bossModel = null;
+    /// <summary>
+    /// Создать на арене нового босса.
+    /// </summary>
+    /// <returns></returns>
+    public BossModel CreateNewBoss()
+    {
+        if(this.bossModel==null)
+        {
+            this.bossModel = Instantiate(this.boss).GetComponent<BossModel>();
+        }
+        if(!this.bossModel.isActive)
+        {
+            this.bossModel.Activate();
+        }
+        return this.bossModel;
+    }
+
+    #endregion
+
     #region Стены и пол арены.
 
     /// <summary>

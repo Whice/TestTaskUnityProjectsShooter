@@ -13,7 +13,8 @@ public class EnemyModel : GameCharacterModel
         {
             case nameof(this.healthPoints):
                 {
-                    if(this.healthPoints<1)
+                    Debug.Log(this.healthPoints);
+                    if (this.healthPoints<1)
                     {
                         this.Deactivate();
                     }
@@ -22,21 +23,78 @@ public class EnemyModel : GameCharacterModel
         }
     }
 
-    protected virtual void Start()
+    #region Действия при создании объекта.
+
+    /// <summary>
+    /// Установить урон для этого врага.
+    /// </summary>
+    protected virtual void SetDamage()
+    {
+        this.damage = 5;
+    }
+    /// <summary>
+    /// Установить ХП для этого врага.
+    /// </summary>
+    protected virtual void SetHealth()
+    {
+        this.healthPoints = 10;
+    }
+
+    /// <summary>
+    /// Задание значений полям при создании объекта. 
+    /// </summary>
+    protected virtual void InitializeEnemy()
     {
         this.floorHeight = ArenaModel.instance.arenaFloor.transform.position.y;
+        SetDamage();
     }
-    protected virtual void Update()
+
+    private void Start()
     {
-        //Убить снеговика, который упал слишком низко.
+        InitializeEnemy();
+    }
+
+    #endregion
+
+    #region Действия при каждом кадре.
+
+    /// <summary>
+    /// Убить снеговика, который упал слишком низко.
+    /// </summary>
+    protected void KillEnemyWithoutArena()
+    {
         if (this.transform.position.y < this.floorHeight - 5)
         {
             this.Deactivate();
         }
+    }
+    /// <summary>
+    /// Поворот к игроку включен.
+    /// </summary>
+    protected Boolean isEnableTurnToPlayer = true;
+    /// <summary>
+    /// Повернуться к игроку.
+    /// </summary>
+    protected void TurnToPlayer()
+    {
+        if(this.isEnableTurnToPlayer)
+        {
+            this.transform.LookAt(this.targetPosition);
+        }
+    }
+
+    private void Update()
+    {
+        //Убить снеговика, который упал слишком низко.
+        KillEnemyWithoutArena();
 
         //Повернуться к игроку
-        this.transform.LookAt(this.targetPosition);
+        TurnToPlayer();
     }
+
+    #endregion
+
+    #region Активация/деактивация
 
     /// <summary>
     /// Физика этого врага.
@@ -47,12 +105,23 @@ public class EnemyModel : GameCharacterModel
         get => ArenaModel.instance;
     }
     /// <summary>
+    /// Получить трофей за этого врага.
+    /// </summary>
+    protected virtual void GetTrophy() { }
+    /// <summary>
     /// Сделать неактивным.
     /// </summary>
     public virtual void Deactivate()
     {
         this.rigidbody.useGravity = false;
         this.gameObject.SetActive(false);
+        GetTrophy();
+    }
+    /// <summary>
+    /// Задать начальную позицию.
+    /// </summary>
+    protected virtual void SetBeginPosition()
+    {
     }
     /// <summary>
     /// Добавить врага к живым.
@@ -61,13 +130,14 @@ public class EnemyModel : GameCharacterModel
     {
         this.gameObject.SetActive(true);
 
-        //Задать ему начальную позицию.
-        this.SetRandomPositionWithoutCameraVision();
+        //Задать начальную позицию.
+        SetBeginPosition();
 
         this.rigidbody.useGravity = true;
         this.rigidbody.AddForce(new Vector3(0, 10, 0));
     }
 
+    #endregion
 
     #region Установка случайного местоположения.
 
@@ -88,15 +158,6 @@ public class EnemyModel : GameCharacterModel
     /// Таймер для сдерживания атаки.
     /// </summary>
     protected Single timerAtack = 0;
-
-    /// <summary>
-    /// Нанести урон этому врагу.
-    /// </summary>
-    /// <param name="damage"></param>
-    public virtual void ApplyDamage(Int32 damage)
-    {
-        this.healthPoints -= damage;
-    }
 
     #endregion
 

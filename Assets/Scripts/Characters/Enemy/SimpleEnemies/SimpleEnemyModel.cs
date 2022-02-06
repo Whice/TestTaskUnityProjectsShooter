@@ -8,31 +8,28 @@ public class SimpleEnemyModel : EnemyModel
 {
     protected override void OnChanged(string propertyName, object oldValue, object newValue)
     {
+        base.OnChanged(propertyName, oldValue, newValue);
         switch (propertyName)
         {
-            case nameof(this.healthPoints):
+            case nameof(countOfKilledSimpleEnemy):
                 {
-                    if (this.healthPoints < 1)
+
+                    if (this.countOfKilledSimpleEnemy % DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS == 0)
                     {
-                        BoxModel boxModel = ArenaModel.instance.GetLastNotActiveBoxModel();
-                        boxModel.Activate();
-                        boxModel.transform.position = this.transform.position;
+                        ArenaModel.instance.CreateNewBoss();
                     }
                 }
                 break;
-        }
-        base.OnChanged(propertyName, oldValue, newValue);
-        
+        }        
     }
 
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
-        this.soundPlayerKick = GetComponent<AudioSource>();
+        InitializeEnemy();
     }
-    protected override void Update()
+
+    private void Update()
     {
-        base.Update();
         //Если этот враг жив, то он может стремиться к убийству игрока.
         //Двигаться к игроку
         if (!IsNearWithPlayer)
@@ -49,24 +46,73 @@ public class SimpleEnemyModel : EnemyModel
                 this.timerAtack = 0;
             }
         }
+
+        //Убить снеговика, который упал слишком низко.
+        KillEnemyWithoutArena();
+
+        //Повернуться к игроку
+        TurnToPlayer();
     }
 
+    #region Активация/деактивация
+
+    protected override void GetTrophy()
+    {
+        BoxModel boxModel = ArenaModel.instance.GetLastNotActiveBoxModel();
+        boxModel.Activate();
+        boxModel.transform.position = this.transform.position;
+    }
+
+    /// <summary>
+    /// Уровень врага. Увеличиватся при смерти босса.
+    /// </summary>
+    public static UInt16 level = 1;
+    protected override void SetHealth()
+    {
+        this.healthPoints = 10 * level;
+    }
+
+    private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 1;
+    /// <summary>
+    /// Колчиество простых убитых врагов.
+    /// </summary>
+    private static UInt64 countOfKilledSimpleEnemyPrivate = 0;
+    /// <summary>
+    /// Колчиество простых убитых врагов.
+    /// </summary>
+    protected UInt64 countOfKilledSimpleEnemy
+    {
+        get
+        {
+            return SimpleEnemyModel.countOfKilledSimpleEnemyPrivate;
+        }
+        set
+        {
+            SetValueProperty(nameof(countOfKilledSimpleEnemy), ref SimpleEnemyModel.countOfKilledSimpleEnemyPrivate, value);
+        }
+    }
     public override void Deactivate()
     {
         this.arenaModel.aliveEnemies.Remove(this);
         this.arenaModel.deadEnemies.Add(this);
+        this.countOfKilledSimpleEnemy++;
         base.Deactivate();
+    }
+
+    protected override void SetBeginPosition()
+    {
+        base.SetBeginPosition();
+        this.SetRandomPositionWithoutCameraVision();
+        this.yHeight = 5f;
     }
     public override void Activate()
     {
-        this.yHeight = 5f;
-        this.healthPoints = 10;
-
         base.Activate();
-
-        this.SetRandomSpeed();
+        SetHealth();
+        SetRandomSpeed();
     }
 
+    #endregion
 
     #region Скорость.
 
@@ -201,7 +247,7 @@ public class SimpleEnemyModel : EnemyModel
     /// <summary>
     /// Звук удара по игроку.
     /// </summary>
-    private AudioSource soundPlayerKick = null;
+    public AudioSource soundPlayerKick = null;
     /// <summary>
     /// Критический урон.
     /// </summary>
@@ -243,11 +289,11 @@ public class SimpleEnemyModel : EnemyModel
         //Возможен критический удар.
         if (randChance < CRITICAL_CHANCE)
         {
-            PlayerModel.instance.healthPoints -= this.criticalDamage;
+            PlayerModel.instance.ApplyDamage(this.criticalDamage);
         }
         else
         {
-            PlayerModel.instance.healthPoints -= this.damage;
+            PlayerModel.instance.ApplyDamage(this.damage);
         }
 
         StepBack();

@@ -62,6 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45fd8a36d92209843aa3fe91e428d4ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boss: {fileID: 3230485025825708712, guid: 18019794343f32242a7b59807ba4f10a, type: 3}
   deadEnemies: []
   aliveEnemies: []
   withoutArenaBoxes: []

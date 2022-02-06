@@ -58,4 +58,19 @@ public class GameCharacterModel : ItemModel
             }
         }
     }
+
+    /// <summary>
+    /// Нанести урон этому персонажу.
+    /// </summary>
+    /// <param name="damage"></param>
+    public virtual void ApplyDamage(Int32 damage)
+    {
+        this.healthPoints -= damage;
+    }
+
+    private void Update()
+    {
+        Update(true);
+    }
+    protected virtual void Update(Boolean execute) { }
 }
