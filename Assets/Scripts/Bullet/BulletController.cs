@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -16,9 +14,8 @@ public class BulletController : ItemController
     {
         String nameCollision = collision.transform.gameObject.name;
         if (
-            name.Contains("Enemy") ||
-            name.Contains("Floor") ||
-            name.Contains("Wall")
+            nameCollision.Contains("Enemy") ||
+            nameCollision.Contains("BulletBorders")
             )
         {
             BulletModel model = this.model as BulletModel;

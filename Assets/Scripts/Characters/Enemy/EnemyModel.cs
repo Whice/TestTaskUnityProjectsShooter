@@ -13,7 +13,7 @@ public class EnemyModel : GameCharacterModel
         {
             case nameof(this.healthPoints):
                 {
-                    Debug.Log(this.healthPoints);
+                    Debug.Log(gameObject.name + " health: " + this.healthPoints);
                     if (this.healthPoints<1)
                     {
                         this.Deactivate();

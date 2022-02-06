@@ -116,10 +116,8 @@ public class WeaponExample : MonoBehaviour
     {
         this.reloadBulletSound.Play();
         this.reloading = true;
-        Debug.Log("Reloading");
         yield return new WaitForSeconds(reloadTime);
         this.ammoCount = this.ammo;
-        Debug.Log("Reloading Complete");
         reloading = false;
         PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
     }

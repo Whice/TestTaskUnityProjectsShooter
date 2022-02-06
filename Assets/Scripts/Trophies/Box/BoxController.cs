@@ -12,7 +12,6 @@ public class BoxController : TrophyItemController
     }
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
         if (other.gameObject.name == "PlayerFront" ||
             other.gameObject.name == "MFPController" ||
             other.gameObject.name == "Canvas" ||

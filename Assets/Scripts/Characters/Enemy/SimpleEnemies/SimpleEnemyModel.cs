@@ -72,7 +72,10 @@ public class SimpleEnemyModel : EnemyModel
         this.healthPoints = 10 * level;
     }
 
-    private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 1;
+    /// <summary>
+    /// Количество простых врагов нужное, чтобы появился босс.
+    /// </summary>
+    private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 50;
     /// <summary>
     /// Колчиество простых убитых врагов.
     /// </summary>

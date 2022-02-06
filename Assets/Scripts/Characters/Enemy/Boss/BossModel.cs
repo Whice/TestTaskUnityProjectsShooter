@@ -136,6 +136,7 @@ public class BossModel : EnemyModel
     {
         this.level++;
         SetDamage();
+        SetHealth();
         SimpleEnemyModel.level++;
         
     }
