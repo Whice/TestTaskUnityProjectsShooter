@@ -10,6 +10,7 @@ MonoImporter:
       type: 3}
   - gameBoxPrefab: {fileID: 6623746695824381820, guid: 601cb1141f4d2904a8aa67b6b774456c,
       type: 3}
+  - suckAudioClip: {fileID: 8300000, guid: 6fc10a6bc2019e9418980adaecbf5c2e, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

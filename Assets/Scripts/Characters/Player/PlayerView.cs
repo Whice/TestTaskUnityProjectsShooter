@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerView : GameCharacterView
@@ -51,8 +52,6 @@ public class PlayerView : GameCharacterView
 	/// </summary>
 	public Text textYellowCubesCount = null;
 
-	#endregion
-
 	/// <summary>
 	/// Создать строку текста на экране.
 	/// </summary>
@@ -86,4 +85,15 @@ public class PlayerView : GameCharacterView
 			CreateTextLine(this.textYellowCubesCount, titleTextYellowCubesCount, playerModel.yellowCubesCount);
 		}
 	}
+
+	#endregion
+
+	#region Звук.
+
+	/// <summary>
+	/// Звук всасывания трофея.
+	/// </summary>
+	public AudioSource suckTrophySound = null;
+
+	#endregion
 }

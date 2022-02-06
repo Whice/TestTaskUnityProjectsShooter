@@ -2,29 +2,6 @@
 
 public class BoxView : TrophyItemView
 {
-    #region Звук.
-
-    /// <summary>
-    /// Звук всасывания.
-    /// </summary>
-    private AudioSource suckSoundPrivate = null;
-    /// <summary>
-    /// Звук всасывания.
-    /// </summary>
-    public AudioSource suckSound
-    {
-        get
-        {
-            if(this.suckSoundPrivate==null)
-            {
-                this.suckSoundPrivate = GetComponent<AudioSource>();
-            }
-            return this.suckSoundPrivate;
-        }
-    }
-
-    #endregion
-
     #region  Цвет.
 
     /// <summary>

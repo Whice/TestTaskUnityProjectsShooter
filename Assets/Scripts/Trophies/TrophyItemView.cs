@@ -4,27 +4,15 @@ using UnityEngine;
 
 public class TrophyItemView : ItemView
 {
+    #region Звук.
+
     /// <summary>
     /// Звук высасывания.
     /// </summary>
-    private AudioSource suckThisBoxPrivate;
-    /// <summary>
-    /// Звук высасывания.
-    /// </summary>
-    public AudioSource suckThisBox
+    public AudioSource suckSound
     {
-        get
-        {
-            if(this.suckThisBoxPrivate==null)
-            {
-                this.suckThisBoxPrivate = GetComponent<AudioSource>();
-            }
-            return this.suckThisBoxPrivate;
-        }
+        get => PlayerModel.instance.playerView.suckTrophySound;
     }
 
-    void OnTrigger()
-    {
-
-    }
+    #endregion
 }

@@ -1,4 +1,6 @@
-﻿
+﻿/// <summary>
+/// Варианты атаки босса.
+/// </summary>
 enum BossAttacks
 {
     leftLaserShoot = 1,

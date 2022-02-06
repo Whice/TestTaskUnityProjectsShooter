@@ -271,6 +271,9 @@ GameObject:
   - component: {fileID: 11441682}
   - component: {fileID: 11471926}
   - component: {fileID: 8298512}
+  - component: {fileID: 3363552458949386276}
+  - component: {fileID: 8599109910801620797}
+  - component: {fileID: 7295888496101239914}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -520,6 +523,51 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &3363552458949386276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03cf7fea18ba0fe49b77b15255aa1747, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
+  walkSpeed: 6
+  runSpeed: 11
+--- !u!114 &8599109910801620797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7867651ee406584ba3049f19167bcb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7295888496101239914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 106006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ec9ed9d3e38e944f8d08c79c48dc2b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textAmmoCount: {fileID: 0}
+  textHealth: {fileID: 0}
+  textRedCubesCount: {fileID: 0}
+  textGreenCubesCount: {fileID: 0}
+  textYellowCubesCount: {fileID: 0}
+  suckTrophySound: {fileID: 0}
 --- !u!1 &107306
 GameObject:
   m_ObjectHideFlags: 0

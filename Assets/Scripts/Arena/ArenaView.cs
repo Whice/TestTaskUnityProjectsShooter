@@ -20,4 +20,5 @@ public class ArenaView : ItemView
     public GameObject gameBoxPrefab = null;
 
     #endregion
+
 }
