@@ -42,4 +42,25 @@ public class MainApplicationClass : MonoBehaviour
             this.views.Add(view);
         }
     }
+
+    public GameObject AddiitionalCamera = null;
+    public void DeactivateAllSingletons()
+    {
+
+        if(this.AddiitionalCamera!=null)
+        {
+            this.AddiitionalCamera.SetActive(true);
+            this.AddiitionalCamera.transform.position = CameraModel.instance.transform.position;
+            this.AddiitionalCamera.transform.forward = CameraModel.instance.transform.forward;
+        }
+        PlayerModel.instance.gameObject.SetActive(false);
+        ArenaModel.instance.gameObject.SetActive(false);
+        CameraModel.instance.gameObject.SetActive(false);
+    }
+    public void ActivateAllSingletons()
+    {
+        CameraModel.instance.gameObject.SetActive(true);
+        ArenaModel.instance.gameObject.SetActive(true);
+        PlayerModel.instance.gameObject.SetActive(true);
+    }
 }

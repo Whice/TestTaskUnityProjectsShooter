@@ -5,6 +5,6 @@ public class MainMenuScript : MonoBehaviour
 {
     public void LoadGameScene()
     {
-        SceneManager.LoadSceneAsync(0);
+        SceneManager.LoadSceneAsync("Arena");
     }
 }

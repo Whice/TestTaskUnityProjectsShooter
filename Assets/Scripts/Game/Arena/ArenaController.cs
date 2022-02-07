@@ -53,5 +53,6 @@ public class ArenaController : ItemController
         CreateBulletLists();
         UpdateEnemyLists();
         UpdateBoxesLists();
+        MainApplicationClass.instance.ActivateAllSingletons();
     }    
 }
