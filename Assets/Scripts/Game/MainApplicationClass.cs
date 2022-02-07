@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MainApplicationClass : MonoBehaviour
@@ -43,24 +44,47 @@ public class MainApplicationClass : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Запасная камера. Нужна, когда отключается основная. 
+    /// </summary>
     public GameObject AddiitionalCamera = null;
+    /// <summary>
+    /// Занавес, чтобы загородить взор камеры.
+    /// </summary>
+    public GameObject blackBox = null;
+    /// <summary>
+    /// Деактивация всех одиночек для перехода между сценами.
+    /// </summary>
     public void DeactivateAllSingletons()
     {
-
-        if(this.AddiitionalCamera!=null)
-        {
-            this.AddiitionalCamera.SetActive(true);
-            this.AddiitionalCamera.transform.position = CameraModel.instance.transform.position;
-            this.AddiitionalCamera.transform.forward = CameraModel.instance.transform.forward;
-        }
-        PlayerModel.instance.gameObject.SetActive(false);
-        ArenaModel.instance.gameObject.SetActive(false);
-        CameraModel.instance.gameObject.SetActive(false);
+        SetActiveAllSingletons(false);
     }
+    /// <summary>
+    /// Активация всех одиночек для перехода между сценами.
+    /// </summary>м
     public void ActivateAllSingletons()
     {
-        CameraModel.instance.gameObject.SetActive(true);
-        ArenaModel.instance.gameObject.SetActive(true);
-        PlayerModel.instance.gameObject.SetActive(true);
+        SetActiveAllSingletons(true);
     }
+    /// <summary>
+    /// Установка активированности для одиночек.
+    /// </summary>
+    /// <param name="isActive">Включить?</param>
+    private void SetActiveAllSingletons(Boolean isActive)
+    {
+        if (this.AddiitionalCamera != null && this.blackBox!=null)
+        {
+            this.AddiitionalCamera.SetActive(!isActive);
+            if (!isActive)
+            {
+                this.AddiitionalCamera.transform.position = CameraModel.instance.transform.position;
+                this.AddiitionalCamera.transform.forward = CameraModel.instance.transform.forward;
+                this.AddiitionalCamera.GetComponent<AudioSource>().Play();
+            }
+        }
+        CameraModel.instance.gameObject.SetActive(isActive);
+        ArenaModel.instance.gameObject.SetActive(isActive);
+        PlayerModel.instance.gameObject.SetActive(isActive);
+    }
+    
 }

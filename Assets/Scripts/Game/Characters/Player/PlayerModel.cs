@@ -158,7 +158,7 @@ public class PlayerModel : GameCharacterModel
 				{
 					if (isDead)
 					{
-						SceneManager.LoadScene("MainMenu");
+						SceneManager.LoadSceneAsync("MainMenu");
 						MainApplicationClass.instance.DeactivateAllSingletons();
 					}
 
