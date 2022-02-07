@@ -108,6 +108,11 @@ PrefabInstance:
       propertyPath: suckTrophySound
       value: 
       objectReference: {fileID: 861387426124700874}
+    - target: {fileID: 843005765818878018, guid: f95457cbbdfc62b42a4f485767059012,
+        type: 3}
+      propertyPath: suckTrophyPrivate
+      value: 
+      objectReference: {fileID: 861387426124700874}
     - target: {fileID: 843005766404406104, guid: f95457cbbdfc62b42a4f485767059012,
         type: 3}
       propertyPath: Priority

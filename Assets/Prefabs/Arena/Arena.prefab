@@ -88,6 +88,12 @@ MonoBehaviour:
     type: 3}
   gameBoxPrefab: {fileID: 6623746695824381820, guid: 601cb1141f4d2904a8aa67b6b774456c,
     type: 3}
+  audioClips:
+  - {fileID: 8300000, guid: bb809aad706786d4bb170937dee9af75, type: 3}
+  - {fileID: 8300000, guid: b0c797fe02e4fd14aa2bd5a561578cc8, type: 3}
+  - {fileID: 8300000, guid: 6b40b730618ebbf40888b05fa095dd63, type: 3}
+  - {fileID: 8300000, guid: 2889a6549d7e1e34da61ce9bc51a3729, type: 3}
+  - {fileID: 8300000, guid: 6fc10a6bc2019e9418980adaecbf5c2e, type: 3}
 --- !u!54 &6780317421030853083
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ public class TrophyItemView : ItemView
     /// </summary>
     public AudioSource suckSound
     {
-        get => PlayerModel.instance.playerView.suckTrophySound;
+        get => PlayerModel.instance.playerView.suckTrophy;
     }
 
     #endregion

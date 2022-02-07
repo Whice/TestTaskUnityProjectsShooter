@@ -93,7 +93,23 @@ public class PlayerView : GameCharacterView
 	/// <summary>
 	/// Звук всасывания трофея.
 	/// </summary>
-	public AudioSource suckTrophySound = null;
+	[SerializeField]
+	private AudioSource suckTrophyPrivate = null;
+	/// <summary>
+	/// Звук всасывания трофея.
+	/// </summary>
+	public AudioSource suckTrophy
+    {
+        get
+        {
+			String name = "SuckTrophy";
+			if (this.suckTrophyPrivate.clip.name!=name)
+            {
+				this.suckTrophyPrivate.clip = ArenaModel.instance.arenaView.GetAudioClip(name);
+			}
+			return this.suckTrophyPrivate;
+        }
+    }
 
 	#endregion
 }
