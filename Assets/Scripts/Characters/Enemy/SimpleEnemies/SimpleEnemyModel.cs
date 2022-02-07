@@ -163,7 +163,7 @@ public class SimpleEnemyModel : EnemyModel
             Vector3 playerPosition = PlayerModel.instance.transform.position;
             Vector3 position = new Vector3(
                                             /*X*/ UnityEngine.Random.Range(playerPosition.x - shift, playerPosition.x + shift),
-                                            /*Y*/ this.floorHeight,
+                                            /*Y*/ this.yHeight,
                                             /*Z*/ UnityEngine.Random.Range(playerPosition.z - shift, playerPosition.z + shift)
                                             );
             //Если враг слишком близко к игроку, подвинуть врага подальше.
@@ -222,24 +222,15 @@ public class SimpleEnemyModel : EnemyModel
                 }
             }
 
-            //Если игрок встал в угол, то поставить врага сразу за спиной игрока.
-            if (PlayerModel.instance.GetDistanceToWall() < 2)
-            {
-                position = playerPosition - CameraModel.instance.transform.forward;
-            }
-
             this.transform.position = position;
         }
         //Если игрок упирается в стену.
         else
         {
+            Vector3 playerPosition = PlayerModel.instance.transform.position;
+            var yzPosition = playerPosition - CameraModel.instance.transform.forward * 0.5f;
             //Поставить сразу за спиной игрока.
-            this.transform.position = new Vector3
-                (
-                -1 * this.mainCamera.transform.forward.x,
-                this.yHeight,
-                -1 * this.mainCamera.transform.forward.z
-                );
+            this.transform.position = new Vector3(yzPosition.x, this.yHeight, yzPosition.z);
         }
     }
 

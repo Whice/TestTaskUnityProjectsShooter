@@ -183,24 +183,42 @@ public class EnemyModel : GameCharacterModel
         }
     }
     /// <summary>
-    /// Дополнительное значение высоты врага, чтобы он не тонул под землей.
-    /// </summary>
-    protected const Single ADDITIONAL_HEIGHT = -1f;
-    /// <summary>
     /// Значение высоты врага.
     /// </summary>
     protected Single yHeight
     {
         get
         {
-            if (this.transform.position.y < this.floorHeight + ADDITIONAL_HEIGHT)
+            if (this.transform.position.y > 0.2f)
             {
-                this.transform.position = new Vector3
-                   (
-                   this.transform.transform.position.x,
-                   this.floorHeight + ADDITIONAL_HEIGHT,
-                   this.transform.transform.position.z
-                   );
+                if(!this.rigidbody.useGravity)
+                    this.rigidbody.useGravity = true;
+            }
+            else
+            {
+                if (this.rigidbody.useGravity)
+                    this.rigidbody.useGravity = false;
+
+
+                if (this.transform.position.y < this.floorHeight)
+                {
+                    this.transform.position = new Vector3
+                       (
+                       this.transform.transform.position.x,
+                       this.floorHeight + this.floorHeight/10,
+                       this.transform.transform.position.z
+                       );
+                }
+                else if (this.transform.position.y > this.floorHeight)
+                {
+                    this.transform.position = new Vector3
+                       (
+                       this.transform.transform.position.x,
+                       this.floorHeight - this.floorHeight/10,
+                       this.transform.transform.position.z
+                       );
+                }
+
             }
 
             return this.transform.position.y;

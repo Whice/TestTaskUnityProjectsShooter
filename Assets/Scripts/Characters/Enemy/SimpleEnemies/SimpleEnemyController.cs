@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Контроллер врага в игре.
@@ -20,5 +18,11 @@ public class SimpleEnemyController : EnemyController
         {
             this.enemyModel.KickPlayer();
         }
+        //При столкновении с игроком ему сразу наноситься один удар.
+        else if (other.gameObject.name.Contains("Wall"))
+        {
+            this.transform.position = this.transform.position + this.transform.forward;
+        }
+
     }
 }

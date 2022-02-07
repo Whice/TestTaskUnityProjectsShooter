@@ -214,6 +214,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4178744079513852457, guid: 3031e00722f29da42a142ebb5c81dc92,
         type: 3}
+      propertyPath: m_Drag
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4178744079513852457, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
       propertyPath: m_IsKinematic
       value: 0
       objectReference: {fileID: 0}
