@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class ArenaController : ItemController
 {
+    public ArenaView arenaView
+    {
+        get => this.view as ArenaView;
+    }
     public ArenaModel arenaModel
     {
         get => ArenaModel.instance;

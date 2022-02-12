@@ -88,6 +88,14 @@ MonoBehaviour:
     type: 3}
   gameBoxPrefab: {fileID: 6623746695824381820, guid: 601cb1141f4d2904a8aa67b6b774456c,
     type: 3}
+  fogOnFloor: {fileID: 1356344468175332898, guid: 65b35f57d4f265a4eae934cf3c5e430e,
+    type: 3}
+  arenaFloor: {fileID: 7734029313641653962}
+  walls:
+  - {fileID: 8967830545050186559}
+  - {fileID: 7378602369258596066}
+  - {fileID: 5899571846742412206}
+  - {fileID: 7520974032808343798}
   audioClips:
   - {fileID: 8300000, guid: bb809aad706786d4bb170937dee9af75, type: 3}
   - {fileID: 8300000, guid: b0c797fe02e4fd14aa2bd5a561578cc8, type: 3}

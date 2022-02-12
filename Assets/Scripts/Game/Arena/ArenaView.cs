@@ -18,6 +18,18 @@ public class ArenaView : ItemView
     /// Заготовка ящика.
     /// </summary>
     public GameObject gameBoxPrefab = null;
+    /// <summary>
+    /// Заготовка тумана.
+    /// </summary>
+    public GameObject fogOnFloor = null;
+    /// <summary>
+    /// Ссылка на пол арены.
+    /// </summary>
+    public GameObject arenaFloor = null;
+    /// <summary>
+    /// Ссылка на пол арены.
+    /// </summary>
+    public GameObject[] walls = new GameObject[0];
 
     #endregion
 
