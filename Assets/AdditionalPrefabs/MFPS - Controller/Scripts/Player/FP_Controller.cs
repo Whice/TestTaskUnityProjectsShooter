@@ -60,6 +60,33 @@ public class FP_Controller : MonoBehaviour
     private bool jump = false;
     private bool run = false;
 
+    /// <summary>
+    /// Бег включен.
+    /// </summary>
+    private bool enableRunField = false;
+    /// <summary>
+    /// Бег включен.
+    /// Включение/отключение изменяет скорость передвижения.
+    /// <br/>true - скорость бега.
+    /// <br/>false - скорость ходьбы.
+    /// </summary>
+    private bool enableRun
+    {
+        get => this.enableRunField;
+        set
+        {
+            this.enableRunField = value;
+            if(value)
+            {
+                this.speed = this.runSpeed;
+            }
+            else
+            {
+                this.speed = this.walkSpeed;
+            }
+        }
+    }
+
     private int antiBunnyHopFactor = 1;
 	private int jumpTimer;
     private int landTimer;
@@ -103,7 +130,8 @@ public class FP_Controller : MonoBehaviour
 		// If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
 		inputModifyFactor = (inputX != 0.0F && inputZ != 0.0F)? 0.7071F : 1.0F;
 		
-		if (grounded) {
+		if (grounded)
+        {
 			sliding = false;
 			// See if surface immediately below should be slid down. We use this normally rather than a ControllerColliderHit point,
 			// because that interferes with step climbing amongst other annoyances
@@ -118,8 +146,6 @@ public class FP_Controller : MonoBehaviour
 				if (Vector3.Angle(hit.normal, Vector3.up) > slideLimit && CanSlide())
 					sliding = true;
 			}
-
-            speed = isCrouching || !CanStand() ? crouchSpeed : run ? canRun ? runSpeed : walkSpeed : walkSpeed;
 			
 			// If sliding (and it's allowed), or if we're on an object tagged "Slide", get a vector pointing down the slope we're on
 			if (sliding) 
@@ -172,9 +198,9 @@ public class FP_Controller : MonoBehaviour
         switch (playerInput.UseMobileInput)
         {
             case true:
-                runState = playerInput.Run() && canRun && !isCrouching ? 1 : 0;
+                runState = 1;
                 inputX = playerInput.MoveInput().x;
-                inputZ = playerInput.MoveInput().z + runState;
+                inputZ = playerInput.MoveInput().z;
                 crouch = playerInput.Crouch();
                 run = playerInput.Run();
                 jump = playerInput.Jump();
@@ -186,6 +212,10 @@ public class FP_Controller : MonoBehaviour
                 run = Input.GetKey(runKey);
                 jump = Input.GetKey(jumpKey);
             break;
+        }
+        if (this.run)
+        {
+            this.enableRun = !enableRun;
         }
 
         if (jumpState == 0 && CanStand() && jump && jumpTimer >= antiBunnyHopFactor)

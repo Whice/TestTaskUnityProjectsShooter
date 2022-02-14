@@ -206,9 +206,4 @@ public class FP_CameraLook : MonoBehaviour
         else
             prevGrounded = false;
     }
-
-    //public Vector2 LookInput()
-    //{
-    //    return new Vector2(InputX, InputY);
-    //}
 }

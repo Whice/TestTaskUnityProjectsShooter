@@ -188,6 +188,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MFPController Modify
       objectReference: {fileID: 0}
+    - target: {fileID: 843005766417983084, guid: f95457cbbdfc62b42a4f485767059012,
+        type: 3}
+      propertyPath: canJump
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f95457cbbdfc62b42a4f485767059012, type: 3}
 --- !u!1 &5712864936762157036 stripped
