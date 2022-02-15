@@ -5,6 +5,19 @@ using UnityEngine.UI;
 
 public class PlayerView : GameCharacterView
 {
+	#region кнопка бега.
+
+	/// <summary>
+	/// Окружность-картинка кнопки бега.
+	/// </summary>
+	public Image runButtonCircle = null;
+	/// <summary>
+	/// Текст кнопки бега.
+	/// </summary>
+	public Text runButtonText = null;
+
+	#endregion кнопка бега.
+
 	#region Поля для вывода текста.
 
 	/// <summary>

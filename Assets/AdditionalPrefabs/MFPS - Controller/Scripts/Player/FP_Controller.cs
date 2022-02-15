@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
@@ -60,6 +58,30 @@ public class FP_Controller : MonoBehaviour
     private bool jump = false;
     private bool run = false;
 
+    #region Бег.
+
+    /// <summary>
+    /// Окружность-картинка кнопки бега.
+    /// </summary>
+    public Image runButtonCircle
+    {
+        get => PlayerModel.instance.playerView.runButtonCircle;
+    }
+    /// <summary>
+    /// Текст кнопки бега.
+    /// </summary>
+    public Text runButtonText
+    {
+        get => PlayerModel.instance.playerView.runButtonText;
+    }
+    /// <summary>
+    /// Цвет кнопки и текста пи включенном беге.
+    /// </summary>
+    private static readonly Color enableRunColor = Color.yellow;
+    /// <summary>
+    /// Цвет кнопки и текста пи отключенном беге.
+    /// </summary>
+    private static readonly Color disableRunColor = Color.white;
     /// <summary>
     /// Бег включен.
     /// </summary>
@@ -79,13 +101,19 @@ public class FP_Controller : MonoBehaviour
             if(value)
             {
                 this.speed = this.runSpeed;
+                this.runButtonCircle.color = FP_Controller.enableRunColor;
+                this.runButtonText.color = FP_Controller.enableRunColor;
             }
             else
             {
                 this.speed = this.walkSpeed;
+                this.runButtonCircle.color = FP_Controller.disableRunColor;
+                this.runButtonText.color = FP_Controller.disableRunColor;
             }
         }
     }
+
+    #endregion Бег.
 
     private int antiBunnyHopFactor = 1;
 	private int jumpTimer;

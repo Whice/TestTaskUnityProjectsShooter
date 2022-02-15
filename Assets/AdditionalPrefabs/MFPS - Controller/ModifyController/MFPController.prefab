@@ -732,11 +732,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ec9ed9d3e38e944f8d08c79c48dc2b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  runButtonCircle: {fileID: 0}
+  runButtonText: {fileID: 0}
   textAmmoCount: {fileID: 843005765705280880}
   textHealth: {fileID: 843005765633517084}
   textRedCubesCount: {fileID: 843005767663774105}
   textGreenCubesCount: {fileID: 843005766567497942}
   textYellowCubesCount: {fileID: 843005767136643091}
+  suckTrophyPrivate: {fileID: 0}
 --- !u!1 &843005766408129268
 GameObject:
   m_ObjectHideFlags: 0
@@ -1754,7 +1757,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: RUN
+  m_Text: 'ENABLE
+
+    RUN'
 --- !u!1 &843005766408285986
 GameObject:
   m_ObjectHideFlags: 0

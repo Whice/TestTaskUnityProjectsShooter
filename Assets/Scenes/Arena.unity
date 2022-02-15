@@ -869,6 +869,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5712864936739912166, guid: ac37d1f8ef9e93c4391db80ea1d8e673,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -2.15
+      objectReference: {fileID: 0}
     - target: {fileID: 5712864936761885990, guid: ac37d1f8ef9e93c4391db80ea1d8e673,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -933,6 +938,38 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MFPController Modify
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712864936767661180, guid: ac37d1f8ef9e93c4391db80ea1d8e673,
+        type: 3}
+      propertyPath: m_Text
+      value: 'ENABLE
+
+        RUN'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712864936767676466, guid: ac37d1f8ef9e93c4391db80ea1d8e673,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712864936767676466, guid: ac37d1f8ef9e93c4391db80ea1d8e673,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712864936767676466, guid: ac37d1f8ef9e93c4391db80ea1d8e673,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712864937074501429, guid: ac37d1f8ef9e93c4391db80ea1d8e673,
+        type: 3}
+      propertyPath: runSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5712864937074501429, guid: ac37d1f8ef9e93c4391db80ea1d8e673,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ac37d1f8ef9e93c4391db80ea1d8e673, type: 3}
