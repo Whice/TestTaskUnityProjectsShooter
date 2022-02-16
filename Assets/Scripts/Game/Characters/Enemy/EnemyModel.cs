@@ -163,24 +163,12 @@ public class EnemyModel : GameCharacterModel
 
     #region Данные о местоположении врага или игрока.
 
-
-    /// <summary>
-    /// Ссылка на камеру игрока.
-    /// </summary>
-    private Camera mainCameraPrivate = null;
     /// <summary>
     /// Ссылка на камеру игрока.
     /// </summary>
     protected Camera mainCamera
     {
-        get
-        {
-            if (this.mainCameraPrivate == null)
-            {
-                this.mainCameraPrivate = CameraModel.instance.gameObject.GetComponent<Camera>();
-            }
-            return this.mainCameraPrivate;
-        }
+        get=> CameraModel.instance.cameraView.mainCamera;
     }
     /// <summary>
     /// Значение высоты врага.

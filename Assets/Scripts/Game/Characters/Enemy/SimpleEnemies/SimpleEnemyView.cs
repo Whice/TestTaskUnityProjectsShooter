@@ -11,6 +11,16 @@ public class SimpleEnemyView : EnemyView
         get => this.model as SimpleEnemyModel;
     }
 
+    #region Звуки, которые издают враги.
+
+    public AudioClip EnemyKick = null;
+    public AudioClip SnowmanDodgeSound = null;
+    public AudioClip SnowmanGiggleSound = null;
+    public AudioClip SnowmanHeadJumpSound = null;
+    public AudioClip SnowmanHeadRotateSound = null;
+
+    #endregion Звуки, которые издают враги.
+
     #region Анимация вращения колес.
 
     /// <summary>

@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class CameraModel : ItemModel
 {
+    public CameraView cameraView
+    {
+        get => this.view as CameraView;
+    }
 
     #region Реализация синглтона
 
