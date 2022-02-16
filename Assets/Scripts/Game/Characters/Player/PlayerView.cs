@@ -124,5 +124,45 @@ public class PlayerView : GameCharacterView
         }
     }
 
+	/// <summary>
+	/// Страшная музыка.
+	/// </summary>
+	[SerializeField]
+	private AudioSource horrorBackground = null;
+
 	#endregion
+
+	#region Изменение страшной музыки при движении игрока.
+
+	/// <summary>
+	/// Последнее местонахождение.
+	/// </summary>
+	private Vector3 lastPosition;
+	/// <summary>
+	/// Скорость изменения страшной музыки.
+	/// </summary>
+	private const Single horrorBackgroundChangeVolumeSpeed = 0.004f;
+
+    #endregion
+
+    private void Start()
+    {
+		this.lastPosition = this.transform.position;
+    }
+
+	private void Update()
+	{
+		//Если гг не пеердвигается, то страшная музыка становиться громче, и наоборот.
+		//Предполагается, что это сподвигнет гг чаще бегать и меньше стоять.
+		if (this.horrorBackground.volume < 1 && this.lastPosition == this.transform.position)
+		{
+			this.horrorBackground.volume += horrorBackgroundChangeVolumeSpeed;
+		}
+		else 
+		{
+			if (this.horrorBackground.volume > 0.1f)
+				this.horrorBackground.volume -= horrorBackgroundChangeVolumeSpeed;
+		}
+		this.lastPosition = this.transform.position;
+	}
 }

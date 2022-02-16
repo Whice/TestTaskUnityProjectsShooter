@@ -570,6 +570,7 @@ MonoBehaviour:
   textGreenCubesCount: {fileID: 2516498064358509775}
   textYellowCubesCount: {fileID: 7093617179849532520}
   suckTrophyPrivate: {fileID: 8298512}
+  horrorBackground: {fileID: 663875885691822499}
 --- !u!1 &107306
 GameObject:
   m_ObjectHideFlags: 0
