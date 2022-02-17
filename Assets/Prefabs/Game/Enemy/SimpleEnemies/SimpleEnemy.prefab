@@ -34,7 +34,6 @@ MonoBehaviour:
   damage: 5
   rigidbody: {fileID: 2623729394077759561}
   speed: 0
-  soundPlayerKick: {fileID: 5439736150952884437}
 --- !u!114 &1935108086311710461
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,13 +46,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a28c248d403cfc74b9ffdd927f137df7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SnowmanDodgeSound: {fileID: 8300000, guid: fe088e0ee5179564baf690e7d0be4bc1, type: 3}
-  SnowmanGiggleSound: {fileID: 8300000, guid: e1a69014e1ad6ed4fa220cb66acfefe2, type: 3}
-  SnowmanHeadJumpSound: {fileID: 8300000, guid: bb58a1f820aa3e04b81eeed0f2be0058,
-    type: 3}
-  SnowmanHeadRotateSound: {fileID: 8300000, guid: 0545b7dcbb724ab48a6d50682dff7fa7,
-    type: 3}
+  enemiesAudioSourcePrivate: {fileID: 5439736150952884437}
   EnemyKick: {fileID: 8300000, guid: b0c797fe02e4fd14aa2bd5a561578cc8, type: 3}
+  EnemyDodgeSound: {fileID: 8300000, guid: fe088e0ee5179564baf690e7d0be4bc1, type: 3}
+  EnemyGiggleSound: {fileID: 8300000, guid: e1a69014e1ad6ed4fa220cb66acfefe2, type: 3}
+  EnemyHeadJumpSound: {fileID: 8300000, guid: bb58a1f820aa3e04b81eeed0f2be0058, type: 3}
+  EnemyHeadRotateSound: {fileID: 8300000, guid: 0545b7dcbb724ab48a6d50682dff7fa7,
+    type: 3}
   rotateWhillsAnimation: {fileID: 6011605996145141385}
   headAnimator: {fileID: 4596183827150914406}
 --- !u!114 &4196528955299559847
@@ -159,6 +158,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2960719455504278859, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1523209110083446527, guid: 3031e00722f29da42a142ebb5c81dc92,
         type: 3}
       propertyPath: m_RootOrder
@@ -228,6 +232,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsKinematic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456631026476205092, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456631026476205092, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.006081644
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456631026476205092, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456631026476205092, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456631026476205092, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456631026476205092, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456631026476205092, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 7803092950604151525, guid: 3031e00722f29da42a142ebb5c81dc92,
         type: 3}

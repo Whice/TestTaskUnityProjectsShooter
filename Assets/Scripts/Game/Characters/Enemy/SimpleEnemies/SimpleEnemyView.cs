@@ -13,11 +13,55 @@ public class SimpleEnemyView : EnemyView
 
     #region Звуки, которые издают враги.
 
+    /// <summary>
+    /// Источник звуков у врага.
+    /// </summary>
+    [SerializeField]
+    private AudioSource enemiesAudioSourcePrivate = null;
+    /// <summary>
+    /// Источник звуков у врага.
+    /// </summary>
+    public AudioSource enemiesAudioSource
+    {
+        get
+        {
+            if(this.enemiesAudioSourcePrivate.clip==null)
+            {
+                this.enemiesAudioSourcePrivate.clip = this.EnemyKick;
+            }
+            return this.enemiesAudioSourcePrivate;
+        }
+    }
+    /// <summary>
+    /// Звук, с которым враг бьет игрока.
+    /// </summary>
     public AudioClip EnemyKick = null;
-    public AudioClip SnowmanDodgeSound = null;
-    public AudioClip SnowmanGiggleSound = null;
-    public AudioClip SnowmanHeadJumpSound = null;
-    public AudioClip SnowmanHeadRotateSound = null;
+    public AudioClip EnemyDodgeSound = null;
+    public AudioClip EnemyGiggleSound = null;
+    /// <summary>
+    /// Звук, с которым прыгает голова.
+    /// </summary>
+    public AudioClip EnemyHeadJumpSound = null;
+    /// <summary>
+    /// Проиграть звук, с которым прыгает голова.
+    /// </summary>
+    private void PlayEnemyHeadJumpSound()
+    {
+        this.enemiesAudioSource.clip = this.EnemyHeadJumpSound;
+        this.enemiesAudioSource.Play();
+    }
+    /// <summary>
+    /// Звук, с которым вращается голова.
+    /// </summary>
+    public AudioClip EnemyHeadRotateSound = null;
+    /// <summary>
+    /// Проиграть звук, с которым вращается голова.
+    /// </summary>
+    private void PlayEnemyHeadRotateSound()
+    {
+        this.enemiesAudioSource.clip = this.EnemyHeadRotateSound;
+        this.enemiesAudioSource.Play();
+    }
 
     #endregion Звуки, которые издают враги.
 
@@ -44,6 +88,23 @@ public class SimpleEnemyView : EnemyView
     /// Сколько прошло времени после выполнения последней анимации.
     /// </summary>
     private Single timeElapsedBetweenAnimaton = 0;
+    /// <summary>
+    /// Проиграть выбранную анимацию.
+    /// </summary>
+    /// <param name="name">Имя анимации.</param>
+    private void PlayAnimation(String name)
+    {
+        this.headAnimator.enabled = true;
+
+        this.headAnimator.Play(name);
+    }
+    /// <summary>
+    /// Остановить проигрывание анимации.
+    /// </summary>
+    private void StopAnimation()
+    {
+        this.headAnimator.enabled = false;
+    }
 
     #endregion
 
@@ -66,22 +127,17 @@ public class SimpleEnemyView : EnemyView
         {
             Int32 percent = UnityEngine.Random.Range(0, 101);
             //Вращать головой.
-            if (percent < 250)
+            if (percent < 25)
             {
-                this.headAnimator.Play("HeadRotate");
+                PlayAnimation("HeadRotate");
             }
             //Подкидывать голову.
             else if (percent > 24 && percent < 40)
             {
-                this.headAnimator.Play("HeadFlight");
+                PlayAnimation("HeadFlight");
             }
             this.timeElapsedBetweenAnimaton = 0;
         }
     }
-
-    public void StopAnimationInAnimator()
-    {
-        var number = this.headAnimator.GetCurrentAnimatorStateInfo(0);
-        var nameAnim = number.IsName("HeadRotate");
-    }
 }
+    

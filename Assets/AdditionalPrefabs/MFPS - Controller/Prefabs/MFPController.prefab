@@ -405,7 +405,7 @@ MonoBehaviour:
   UseMobileInput: 1
   mobileInputs:
     moveJoystick: {fileID: 11418502}
-    lookPad: {fileID: 11406520}
+    lookPad: {fileID: 0}
     runButton: {fileID: 11486566}
     jumpButton: {fileID: 11401506}
     crouchButton: {fileID: 11480190}
@@ -538,6 +538,7 @@ MonoBehaviour:
   damage: 5
   walkSpeed: 6
   runSpeed: 11
+  maxAmmoCount: 47
 --- !u!114 &8599109910801620797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1861,7 +1862,7 @@ MonoBehaviour:
   playerInput: {fileID: 11441682}
   shootRate: 0.15
   reloadTime: 1
-  cameraPrivate: {fileID: 0}
+  reloadBulletSoundField: {fileID: 0}
 --- !u!1 &160666
 GameObject:
   m_ObjectHideFlags: 0
@@ -2998,7 +2999,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 50
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2847524735186266125
 Rigidbody:
@@ -3454,7 +3455,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 50
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &8269075358991608945
 Rigidbody:

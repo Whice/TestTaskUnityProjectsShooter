@@ -6,6 +6,10 @@ using UnityEngine;
 /// </summary>
 public class SimpleEnemyModel : EnemyModel
 {
+    public SimpleEnemyView simpleEnemyView
+    {
+        get => this.view as SimpleEnemyView;
+    }
     protected override void OnChanged(string propertyName, object oldValue, object newValue)
     {
         base.OnChanged(propertyName, oldValue, newValue);
@@ -20,7 +24,7 @@ public class SimpleEnemyModel : EnemyModel
                     }
                 }
                 break;
-        }        
+        }
     }
 
     private void Start()
@@ -170,7 +174,7 @@ public class SimpleEnemyModel : EnemyModel
             const Single distance = 15F;
             if (position.x * position.x + position.z * position.z < distance * distance)
             {
-                position = new Vector3(-position.x + distance, position.y , position.z + distance);
+                position = new Vector3(-position.x + distance, position.y, position.z + distance);
             }
 
             //Перемещать врага на 90 градусов вокруг игрока,
@@ -199,7 +203,7 @@ public class SimpleEnemyModel : EnemyModel
                 {
                     shift = 5;
                     Single X;
-                    if(position.x<0)
+                    if (position.x < 0)
                     {
                         X = position.x - shift;
                     }
@@ -208,7 +212,7 @@ public class SimpleEnemyModel : EnemyModel
                         X = position.x + shift;
                     }
                     Single Y;
-                    if(position.y<0)
+                    if (position.y < 0)
                     {
                         Y = position.y - shift;
                     }
@@ -241,7 +245,28 @@ public class SimpleEnemyModel : EnemyModel
     /// <summary>
     /// Звук удара по игроку.
     /// </summary>
-    public AudioSource soundPlayerKick = null;
+    private AudioSource soundPlayerKickPrivate = null;
+    /// <summary>
+    /// Звук удара по игроку.
+    /// </summary>
+    public AudioSource soundPlayerKick
+    {
+        get
+        {
+            if (this.soundPlayerKickPrivate == null)
+            {
+                this.soundPlayerKickPrivate = this.simpleEnemyView.enemiesAudioSource;
+            }
+
+            AudioClip kickClip = this.simpleEnemyView.EnemyKick;
+            if (this.soundPlayerKickPrivate.clip.name != kickClip.name)
+            {
+                this.soundPlayerKickPrivate.clip = kickClip;
+            }
+
+            return this.soundPlayerKickPrivate;
+        }
+    }
     /// <summary>
     /// Критический урон.
     /// </summary>
@@ -302,7 +327,7 @@ public class SimpleEnemyModel : EnemyModel
     /// </summary>
     public Boolean IsNearWithPlayer
     {
-        get => Math.Abs(this.transform.position.x - targetPosition.x) + Math.Abs(this.transform.position.z - targetPosition.z) < 2.5f;
+        get => Math.Abs(this.transform.position.x - targetPosition.x) + Math.Abs(this.transform.position.z - targetPosition.z) < 1.5f;
     }
 
     #endregion

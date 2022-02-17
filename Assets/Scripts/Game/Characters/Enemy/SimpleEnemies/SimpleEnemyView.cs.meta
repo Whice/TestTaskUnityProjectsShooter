@@ -3,7 +3,17 @@ guid: a28c248d403cfc74b9ffdd927f137df7
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - enemiesAudioSourcePrivate: {instanceID: 0}
+  - EnemyKick: {fileID: 8300000, guid: b0c797fe02e4fd14aa2bd5a561578cc8, type: 3}
+  - EnemyDodgeSound: {fileID: 8300000, guid: fe088e0ee5179564baf690e7d0be4bc1, type: 3}
+  - EnemyGiggleSound: {fileID: 8300000, guid: e1a69014e1ad6ed4fa220cb66acfefe2, type: 3}
+  - EnemyHeadJumpSound: {fileID: 8300000, guid: bb58a1f820aa3e04b81eeed0f2be0058,
+      type: 3}
+  - EnemyHeadRotateSound: {fileID: 8300000, guid: 0545b7dcbb724ab48a6d50682dff7fa7,
+      type: 3}
+  - rotateWhillsAnimation: {instanceID: 0}
+  - headAnimator: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
