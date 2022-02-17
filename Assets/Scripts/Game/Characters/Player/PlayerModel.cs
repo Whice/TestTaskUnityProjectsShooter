@@ -13,6 +13,10 @@ public class PlayerModel : GameCharacterModel
 	/// </summary>
 	public Single runSpeed = 11.0f;
 	/// <summary>
+	/// Максимальный запас пуль.
+	/// </summary>
+	public Int32 maxAmmoCount = 47;
+	/// <summary>
 	/// Запас пуль.
 	/// </summary>
 	private Int32 ammoCountPrivate = 37;
