@@ -67,6 +67,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 189629c7137ef144dbfc257cfd638b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7664959698248117348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348609328094488423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3d6cc05b6f4084085aa46c1385a8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleEnemyModel: {fileID: -2768418580995818939}
 --- !u!1001 &1781551296758502088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -163,6 +176,16 @@ PrefabInstance:
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 456643897285281951, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 456643897285281951, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1523209110083446527, guid: 3031e00722f29da42a142ebb5c81dc92,
         type: 3}
       propertyPath: m_RootOrder
@@ -217,6 +240,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540068599324487163, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_Height
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3540068599324487163, guid: 3031e00722f29da42a142ebb5c81dc92,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3540068599324487163, guid: 3031e00722f29da42a142ebb5c81dc92,
         type: 3}
@@ -300,6 +333,12 @@ Rigidbody:
 --- !u!82 &5439736150952884437 stripped
 AudioSource:
   m_CorrespondingSourceObject: {fileID: -2960719455504278859, guid: 3031e00722f29da42a142ebb5c81dc92,
+    type: 3}
+  m_PrefabInstance: {fileID: 2131533454434755168}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7348609328094488423 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8678220281749193991, guid: 3031e00722f29da42a142ebb5c81dc92,
     type: 3}
   m_PrefabInstance: {fileID: 2131533454434755168}
   m_PrefabAsset: {fileID: 0}

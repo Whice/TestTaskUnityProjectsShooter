@@ -60,6 +60,13 @@ public class SimpleEnemyModel : EnemyModel
 
     #region Активация/деактивация
 
+    /// <summary>
+    /// Убить этого врага.
+    /// </summary>
+    public virtual void KillEnemy()
+    {
+        ApplyDamage(this.healthPoints);
+    }
     protected override void GetTrophy()
     {
         BoxModel boxModel = ArenaModel.instance.GetLastNotActiveBoxModel();
