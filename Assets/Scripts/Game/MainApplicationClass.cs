@@ -44,6 +44,9 @@ public class MainApplicationClass : MonoBehaviour
         }
     }
 
+
+    #region Включение/отключение нужных объектов при смене сцен.
+
     /// <summary>
     /// Запасная камера. Нужна, когда отключается основная. 
     /// </summary>
@@ -72,7 +75,18 @@ public class MainApplicationClass : MonoBehaviour
     /// <param name="isActive">Включить?</param>
     private void SetActiveAllSingletons(Boolean isActive)
     {
-        if (this.AddiitionalCamera != null && this.blackBox!=null)
+        SetActiveForAddiitionalCamera(isActive);
+        CameraModel.instance.gameObject.SetActive(isActive);
+        ArenaModel.instance.gameObject.SetActive(isActive);
+        PlayerModel.instance.gameObject.SetActive(isActive);
+    }
+    /// <summary>
+    /// Включить/отключить дополнительную камеру.
+    /// </summary>
+    /// <param name="isActive">Камера должна быть включена.</param>
+    private void SetActiveForAddiitionalCamera(Boolean isActive)
+    {
+        if (this.AddiitionalCamera != null && this.blackBox != null)
         {
             this.AddiitionalCamera.SetActive(!isActive);
             if (!isActive)
@@ -82,9 +96,13 @@ public class MainApplicationClass : MonoBehaviour
                 this.AddiitionalCamera.GetComponent<AudioSource>().Play();
             }
         }
-        CameraModel.instance.gameObject.SetActive(isActive);
-        ArenaModel.instance.gameObject.SetActive(isActive);
-        PlayerModel.instance.gameObject.SetActive(isActive);
     }
-    
+
+    private void OnLevelWasLoaded()
+    {
+        //При входе на сцену отключить дополнительную камеру.
+        SetActiveForAddiitionalCamera(false);
+    }
+
+    #endregion Включение/отключение нужных объектов при смене сцен.
 }
