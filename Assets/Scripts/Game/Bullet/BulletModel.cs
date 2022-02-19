@@ -65,6 +65,8 @@ public class BulletModel : ItemModel
     {
         ArenaModel.instance.activeBullets.Remove(this);
 
+        ArenaModel.instance.OnChangeEnableObject -= this.gameObject.SetActive;
+
         ArenaModel.instance.notActiveBullets.Add(this);
         this.gameObject.SetActive(false);
     }
@@ -79,6 +81,8 @@ public class BulletModel : ItemModel
 
         ArenaModel.instance.activeBullets.Add(this);
         this.gameObject.SetActive(true);
+
+        ArenaModel.instance.OnChangeEnableObject += this.gameObject.SetActive;
 
         this.transform.position = position;
         this.transform.forward = forward;

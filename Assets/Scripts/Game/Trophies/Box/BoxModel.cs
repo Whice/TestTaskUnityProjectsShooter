@@ -23,6 +23,8 @@ public class BoxModel: TrophyItemModel
     {
         ArenaModel arenaModel = ArenaModel.instance;
 
+        ArenaModel.instance.OnChangeEnableObject += this.gameObject.SetActive;
+
         arenaModel.withoutArenaBoxes.Remove(this);
         arenaModel.onArenaBoxes.Add(this);
         this.gameObject.SetActive(true);
@@ -37,6 +39,8 @@ public class BoxModel: TrophyItemModel
     /// </summary>
     public void Deactivate()
     {
+        ArenaModel.instance.OnChangeEnableObject -= this.gameObject.SetActive;
+
         this.boxView.suckSound.Play();
         PlayerModel.instance.AddColoredCube(this.boxView.color);
 

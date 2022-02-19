@@ -113,6 +113,9 @@ public class EnemyModel : GameCharacterModel
     public virtual void Deactivate()
     {
         this.rigidbody.useGravity = false;
+
+        ArenaModel.instance.OnChangeEnableObject -= this.gameObject.SetActive;
+
         this.gameObject.SetActive(false);
         GetTrophy();
     }
@@ -128,6 +131,8 @@ public class EnemyModel : GameCharacterModel
     public virtual void Activate()
     {
         this.gameObject.SetActive(true);
+
+        ArenaModel.instance.OnChangeEnableObject += this.gameObject.SetActive;
 
         //Задать начальную позицию.
         SetBeginPosition();

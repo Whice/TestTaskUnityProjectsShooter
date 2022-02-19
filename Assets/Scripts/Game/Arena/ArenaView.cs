@@ -30,6 +30,7 @@ public class ArenaView : ItemView
     /// Ссылка на пол арены.
     /// </summary>
     public GameObject[] walls = new GameObject[0];
+    public GameObject textPause = null;
 
     #endregion
 

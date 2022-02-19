@@ -75,7 +75,7 @@ public class MainApplicationClass : MonoBehaviour
     /// <param name="isActive">Включить?</param>
     private void SetActiveAllSingletons(Boolean isActive)
     {
-        SetActiveForAddiitionalCamera(isActive);
+        SetActiveForAddiitionalCamera(!isActive);
         CameraModel.instance.gameObject.SetActive(isActive);
         ArenaModel.instance.gameObject.SetActive(isActive);
         PlayerModel.instance.gameObject.SetActive(isActive);
@@ -88,8 +88,8 @@ public class MainApplicationClass : MonoBehaviour
     {
         if (this.AddiitionalCamera != null && this.blackBox != null)
         {
-            this.AddiitionalCamera.SetActive(!isActive);
-            if (!isActive)
+            this.AddiitionalCamera.SetActive(isActive);
+            if (isActive)
             {
                 this.AddiitionalCamera.transform.position = CameraModel.instance.transform.position;
                 this.AddiitionalCamera.transform.forward = CameraModel.instance.transform.forward;

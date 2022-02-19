@@ -261,15 +261,17 @@ public class FP_Controller : MonoBehaviour
         {
             if (isCrouching)
             {
-                controller.center = Vector3.Lerp(controller.center, new Vector3(controller.center.x, -(defaultHeight - minCrouchHeight) / 2, controller.center.z), 15 * Time.deltaTime);
-                controller.height = Mathf.Lerp(controller.height, minCrouchHeight, 15 * Time.deltaTime);
+                ArenaModel.instance.ActivateAllDinamicObjectsOnArena(false);
+               //controller.center = Vector3.Lerp(controller.center, new Vector3(controller.center.x, -(defaultHeight - minCrouchHeight) / 2, controller.center.z), 15 * Time.deltaTime);
+                //controller.height = Mathf.Lerp(controller.height, minCrouchHeight, 15 * Time.deltaTime);
             }
             else
             {
+                ArenaModel.instance.ActivateAllDinamicObjectsOnArena(true);
                 if (CanStand())
                 {
-                    controller.center = Vector3.Lerp(controller.center, Vector3.zero, 15 * Time.deltaTime);
-                    controller.height = Mathf.Lerp(controller.height, defaultHeight, 15 * Time.deltaTime);
+                    //controller.center = Vector3.Lerp(controller.center, Vector3.zero, 15 * Time.deltaTime);
+                    //controller.height = Mathf.Lerp(controller.height, defaultHeight, 15 * Time.deltaTime);
                 }
             }
         }

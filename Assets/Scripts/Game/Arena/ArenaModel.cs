@@ -12,6 +12,20 @@ public class ArenaModel : ItemModel
         get => this.view as ArenaView;
     }
 
+    private Boolean pauseField = false;
+    private Boolean pause
+    {
+        get => this.pauseField;
+        set => SetValueProperty(nameof(this.pause), ref this.pauseField, value);
+    }
+    public delegate void ChangeEnableObjectHandler(Boolean isActive);
+    public event ChangeEnableObjectHandler OnChangeEnableObject;
+    public void ActivateAllDinamicObjectsOnArena(Boolean isActive)
+    {
+        this.pause = !isActive;
+        this.OnChangeEnableObject?.Invoke(isActive);
+    }
+
     #region Босс.
 
     /// <summary>
@@ -99,7 +113,10 @@ public class ArenaModel : ItemModel
 
     private void Update()
     {
-        CreateNewEnemy();
+        if (!pause)
+        {
+            CreateNewEnemy();
+        }
     }
 
     #region Враги
@@ -268,4 +285,18 @@ public class ArenaModel : ItemModel
     }
 
     #endregion
+
+    protected override void OnChanged(string propertyName, object oldValue, object newValue)
+    {
+        base.OnChanged(propertyName, oldValue, newValue);
+
+        switch (propertyName)
+        {
+            case nameof(this.pause):
+                {
+                    this.arenaView.textPause.SetActive(this.pause);
+                    break;
+                }
+        }
+    }
 }
