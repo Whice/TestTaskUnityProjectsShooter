@@ -123,20 +123,17 @@ public class PlayerModel : GameCharacterModel
 		}
 
 		//Пополнение очков жизни при накоплении ящиков.
-		if (this.healthPoints < 100)
+		if (cubeColor == Color.green && this.greenCubesCount % 10 == 0)
 		{
-			if (cubeColor == Color.green && this.greenCubesCount % 10 == 0)
-			{
-				this.healthPoints += 10;
-			}
-			else if (cubeColor == Color.red && this.redCubesCount % 10 == 0)
-			{
-				this.healthPoints += 10;
-			}
-			else if (cubeColor == Color.yellow && this.yellowCubesCount % 10 == 0)
-			{
-				this.healthPoints += 10;
-			}
+			this.healthPoints += 10;
+		}
+		else if (cubeColor == Color.red && this.redCubesCount % 10 == 0)
+		{
+			this.healthPoints += 10;
+		}
+		else if (cubeColor == Color.yellow && this.yellowCubesCount % 10 == 0)
+		{
+			this.healthPoints += 10;
 		}
 
 		//Обновить текст в интерфейсе
@@ -147,7 +144,7 @@ public class PlayerModel : GameCharacterModel
 
 	void Start()
 	{
-		this.healthPoints = 100;
+		this.healthPoints = this.maxHealthPoint;
 		this.ammoCountPrivate = 47;
 		//Обновить текст в интерфейсе
 		this.playerView.UpdateText();

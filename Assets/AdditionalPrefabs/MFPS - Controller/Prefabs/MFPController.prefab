@@ -405,7 +405,7 @@ MonoBehaviour:
   UseMobileInput: 1
   mobileInputs:
     moveJoystick: {fileID: 11418502}
-    lookPad: {fileID: 0}
+    lookPad: {fileID: 11406520}
     runButton: {fileID: 11486566}
     jumpButton: {fileID: 11401506}
     crouchButton: {fileID: 11480190}

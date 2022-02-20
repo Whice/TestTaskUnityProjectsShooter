@@ -4,8 +4,4 @@ using UnityEngine;
 
 public class TrophyItemController : ItemController
 {
-    void ToArena()
-    {
-
-    }
 }

@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class BossModel : EnemyModel
 {
+    public BossView bossView
+    {
+        get => this.view as BossView;
+    }
+
     #region Нанести урон
 
     public void KickPlayer()
@@ -66,11 +71,11 @@ public class BossModel : EnemyModel
 
     protected override void SetDamage()
     {
-        this.damage = 10 * level;
+        this.damage = 11 * level;
     }
     protected override void SetHealth()
     {
-        this.healthPoints = 100 * level;
+        this.healthPoints = 111 * (level + 1);
     }
     private void Start()
     {
@@ -113,6 +118,9 @@ public class BossModel : EnemyModel
                     );
             }
         }
+
+        //Активировать сердечко, чтобы игрок мог увеличить здоровье.
+        this.bossView.heartForHealth.SetActive(true);
     }
     /// <summary>
     /// Есть ли босс на арене.

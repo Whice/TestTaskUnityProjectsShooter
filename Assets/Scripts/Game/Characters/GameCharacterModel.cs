@@ -9,6 +9,10 @@ using UnityEngine;
 public class GameCharacterModel : ItemModel
 {
     /// <summary>
+    /// Максимальное количество очков здоровья.
+    /// </summary>
+    public Int32 maxHealthPoint = 100;
+    /// <summary>
     /// Очки жизни.
     /// </summary>
     private Int32 healthPointsPrivate = 10;
@@ -27,6 +31,10 @@ public class GameCharacterModel : ItemModel
             if (value < 0)
             {
                 newValue = 0;
+            }
+            else if (value > this.maxHealthPoint)
+            {
+                newValue = this.maxHealthPoint;
             }
 
             SetValueProperty(nameof(this.healthPoints), ref this.healthPointsPrivate, newValue);
