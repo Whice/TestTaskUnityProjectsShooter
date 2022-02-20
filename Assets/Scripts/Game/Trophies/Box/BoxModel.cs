@@ -41,7 +41,7 @@ public class BoxModel: TrophyItemModel
     {
         ArenaModel.instance.OnChangeEnableObject -= this.gameObject.SetActive;
 
-        this.boxView.suckSound.Play();
+        PlayerModel.instance.playerView.suckTrophy.Play();
         PlayerModel.instance.AddColoredCube(this.boxView.color);
 
         ArenaModel arenaModel = ArenaModel.instance;
