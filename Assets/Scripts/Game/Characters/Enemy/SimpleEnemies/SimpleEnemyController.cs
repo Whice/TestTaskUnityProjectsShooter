@@ -13,13 +13,8 @@ public class SimpleEnemyController : EnemyController
     {
         base.OnTriggerEnter(other);
 
-        //При столкновении с игроком ему сразу наноситься один удар.
-        if (other.gameObject.name == "PlayerFront")
-        {
-            this.enemyModel.KickPlayer();
-        }
-        //При столкновении с игроком ему сразу наноситься один удар.
-        else if (other.gameObject.name.Contains("Wall"))
+        //Если враг в стене, то сдвинть его немного вперед.
+        if (other.gameObject.name.Contains("Wall"))
         {
             this.transform.position = this.transform.position + this.transform.forward;
         }

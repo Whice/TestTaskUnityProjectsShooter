@@ -1,5 +1,18 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &7664959698248117348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7348609328094488423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f3d6cc05b6f4084085aa46c1385a8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  simpleEnemyModel: {fileID: -2768418580995818939}
 --- !u!95 &4596183827150914406
 Animator:
   serializedVersion: 3
@@ -8,7 +21,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7758724683995552829}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: dbcbe4296f5e29c4c95d27cc558b9ba0, type: 2}
   m_CullingMode: 0
@@ -67,19 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 189629c7137ef144dbfc257cfd638b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7664959698248117348
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7348609328094488423}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f3d6cc05b6f4084085aa46c1385a8c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  simpleEnemyModel: {fileID: -2768418580995818939}
 --- !u!1001 &1781551296758502088
 PrefabInstance:
   m_ObjectHideFlags: 0

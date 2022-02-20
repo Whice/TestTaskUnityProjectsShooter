@@ -127,7 +127,7 @@ public class SimpleEnemyView : EnemyView
         {
             Int32 percent = UnityEngine.Random.Range(0, 101);
             //Вращать головой.
-            if (percent < 25)
+            if (percent < 15)
             {
                 PlayAnimation("HeadRotate");
             }

@@ -43,13 +43,13 @@ public class SimpleEnemyModel : EnemyModel
         //Либо атаковать раз в секунду
         else
         {
-            this.timerAtack += Time.deltaTime;
             if (this.timerAtack > 1)
             {
                 KickPlayer();
                 this.timerAtack = 0;
             }
         }
+        this.timerAtack += Time.deltaTime;
 
         //Убить снеговика, который упал слишком низко.
         KillEnemyWithoutArena();
@@ -334,7 +334,7 @@ public class SimpleEnemyModel : EnemyModel
     /// </summary>
     public Boolean IsNearWithPlayer
     {
-        get => Math.Abs(this.transform.position.x - targetPosition.x) + Math.Abs(this.transform.position.z - targetPosition.z) < 1.5f;
+        get => Math.Abs(this.transform.position.x - targetPosition.x) + Math.Abs(this.transform.position.z - targetPosition.z) < 2.5f;
     }
 
     #endregion
