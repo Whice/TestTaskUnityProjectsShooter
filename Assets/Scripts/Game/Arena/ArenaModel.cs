@@ -96,7 +96,7 @@ public class ArenaModel : ItemModel
         if (ArenaModel.instance == null)
         {
             ArenaModel.instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {

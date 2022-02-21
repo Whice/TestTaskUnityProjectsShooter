@@ -21,7 +21,7 @@ public class CameraModel : ItemModel
         if (CameraModel.instance == null)
         {
             CameraModel.instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {

@@ -15,7 +15,7 @@ public class MainApplicationClass : MonoBehaviour
         if (MainApplicationClass.instance == null)
         {
             MainApplicationClass.instance = this;
-            DontDestroyOnLoad(this);
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
