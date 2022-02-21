@@ -143,6 +143,13 @@ public class ArenaModel : ItemModel
             SetValueProperty(nameof(countOfKilledSimpleEnemy), ref ArenaModel.countOfKilledSimpleEnemyPrivate, value);
         }
     }
+    /// <summary>
+    /// Сбросить количество убитых врагов на 0 в обход всех условий.
+    /// </summary>
+    public void ResetCountOfKilledSimpleEnemy()
+    {
+        ArenaModel.countOfKilledSimpleEnemyPrivate = 0;
+    }
 
     /// <summary>
     /// Количество мертвых врагов, которое будет создано в началае игры.
