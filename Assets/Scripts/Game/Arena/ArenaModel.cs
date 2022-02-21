@@ -122,6 +122,29 @@ public class ArenaModel : ItemModel
     #region Враги
 
     /// <summary>
+    /// Количество простых врагов нужное, чтобы появился босс.
+    /// </summary>
+    private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 50;
+    /// <summary>
+    /// Колчиество простых убитых врагов.
+    /// </summary>
+    private static UInt64 countOfKilledSimpleEnemyPrivate = 0;
+    /// <summary>
+    /// Количество простых убитых врагов.
+    /// </summary>
+    public UInt64 countOfKilledSimpleEnemy
+    {
+        get
+        {
+            return ArenaModel.countOfKilledSimpleEnemyPrivate;
+        }
+        set
+        {
+            SetValueProperty(nameof(countOfKilledSimpleEnemy), ref ArenaModel.countOfKilledSimpleEnemyPrivate, value);
+        }
+    }
+
+    /// <summary>
     /// Количество мертвых врагов, которое будет создано в началае игры.
     /// </summary>
     public const Int32 COUNT_DEAD_ENEMY_ON_START = 100;
@@ -296,6 +319,16 @@ public class ArenaModel : ItemModel
                 {
                     this.arenaView.textPause.SetActive(this.pause);
                     break;
+                }
+            case nameof(countOfKilledSimpleEnemy):
+                {
+
+                    if (this.countOfKilledSimpleEnemy % DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS == 0)
+                    {
+                        ArenaModel.instance.CreateNewBoss();
+                        PlayerModel.instance.playerView.endBossText.SetActive(true);
+                    }
+                break;
                 }
         }
     }

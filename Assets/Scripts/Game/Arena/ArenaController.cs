@@ -57,6 +57,9 @@ public class ArenaController : ItemController
         CreateBulletLists();
         UpdateEnemyLists();
         UpdateBoxesLists();
+
+        ArenaModel.instance.countOfKilledSimpleEnemy = 0;
+
         MainApplicationClass.instance.ActivateAllSingletons();
     }    
 }

@@ -10,22 +10,6 @@ public class SimpleEnemyModel : EnemyModel
     {
         get => this.view as SimpleEnemyView;
     }
-    protected override void OnChanged(string propertyName, object oldValue, object newValue)
-    {
-        base.OnChanged(propertyName, oldValue, newValue);
-        switch (propertyName)
-        {
-            case nameof(countOfKilledSimpleEnemy):
-                {
-
-                    if (this.countOfKilledSimpleEnemy % DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS == 0)
-                    {
-                        ArenaModel.instance.CreateNewBoss();
-                    }
-                }
-                break;
-        }
-    }
 
     private void Start()
     {
@@ -83,33 +67,11 @@ public class SimpleEnemyModel : EnemyModel
         this.healthPoints = 10 * level;
     }
 
-    /// <summary>
-    /// Количество простых врагов нужное, чтобы появился босс.
-    /// </summary>
-    private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 50;
-    /// <summary>
-    /// Колчиество простых убитых врагов.
-    /// </summary>
-    private static UInt64 countOfKilledSimpleEnemyPrivate = 0;
-    /// <summary>
-    /// Колчиество простых убитых врагов.
-    /// </summary>
-    protected UInt64 countOfKilledSimpleEnemy
-    {
-        get
-        {
-            return SimpleEnemyModel.countOfKilledSimpleEnemyPrivate;
-        }
-        set
-        {
-            SetValueProperty(nameof(countOfKilledSimpleEnemy), ref SimpleEnemyModel.countOfKilledSimpleEnemyPrivate, value);
-        }
-    }
     public override void Deactivate()
     {
         this.arenaModel.aliveEnemies.Remove(this);
         this.arenaModel.deadEnemies.Add(this);
-        this.countOfKilledSimpleEnemy++;
+        ArenaModel.instance.countOfKilledSimpleEnemy++;
         base.Deactivate();
     }
 

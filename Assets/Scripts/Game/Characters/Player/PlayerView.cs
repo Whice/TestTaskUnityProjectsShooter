@@ -21,6 +21,10 @@ public class PlayerView : GameCharacterView
 	#region Поля для вывода текста.
 
 	/// <summary>
+	/// Текст, который сообщает о том, что появился босс.
+	/// </summary>
+	public GameObject endBossText = null;
+	/// <summary>
 	/// Буффер для более быстрой склейки строк.
 	/// </summary>
 	private StringBuilder stringBuilderForText = new StringBuilder(30);
@@ -143,7 +147,7 @@ public class PlayerView : GameCharacterView
 	/// </summary>
 	private const Single horrorBackgroundChangeVolumeSpeed = 0.004f;
 
-    #endregion
+	#endregion
 
     private void Start()
     {

@@ -1,0 +1,1 @@
+﻿using UnityEngine;  namespace UI {     public class EndBossTextAnimation : MonoBehaviour     {         public void DisableBossText()         {             this.gameObject.SetActive(false);         }     } } 
