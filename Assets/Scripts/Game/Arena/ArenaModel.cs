@@ -126,7 +126,7 @@ public class ArenaModel : ItemModel
     /// </summary>
     private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 50;
     /// <summary>
-    /// Колчиество простых убитых врагов.
+    /// Количество простых убитых врагов.
     /// </summary>
     private static UInt64 countOfKilledSimpleEnemyPrivate = 0;
     /// <summary>
