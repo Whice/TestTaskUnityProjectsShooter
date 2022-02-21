@@ -124,7 +124,7 @@ public class ArenaModel : ItemModel
     /// <summary>
     /// Количество простых врагов нужное, чтобы появился босс.
     /// </summary>
-    private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 50;
+    private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 1;
     /// <summary>
     /// Количество простых убитых врагов.
     /// </summary>

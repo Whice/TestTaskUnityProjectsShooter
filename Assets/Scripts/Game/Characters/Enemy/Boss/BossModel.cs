@@ -3,6 +3,18 @@ using UnityEngine;
 
 public class BossModel : EnemyModel
 {
+    protected override void OnChanged(string propertyName, object oldValue, object newValue)
+    {
+        base.OnChanged(propertyName, oldValue, newValue);
+        switch(propertyName)
+        {
+            case nameof(this.healthPoints):
+                {
+                    this.bossView.dynamicFrontHP.fillAmount = (Single)this.healthPoints / this.maxHealthPoint;
+                    break;
+                }
+        }
+    }
     public BossView bossView
     {
         get => this.view as BossView;
@@ -75,7 +87,8 @@ public class BossModel : EnemyModel
     }
     protected override void SetHealth()
     {
-        this.healthPoints = 111 * (level + 1);
+        this.maxHealthPoint = 111 * (level + 1);
+        this.healthPoints = this.maxHealthPoint;
     }
     private void Start()
     {

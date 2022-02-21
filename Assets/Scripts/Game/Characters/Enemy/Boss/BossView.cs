@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BossView : EnemyView
 {
@@ -9,4 +10,5 @@ public class BossView : EnemyView
     {
         get => ArenaModel.instance.arenaView.heartForHealthTrophy;
     }
+    public Image dynamicFrontHP = null;
 }
