@@ -429,7 +429,8 @@ Transform:
   m_LocalRotation: {x: 0.30070576, y: 0, z: 0, w: 0.953717}
   m_LocalPosition: {x: 0, y: 2.716, z: -9.516}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1150949548}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 35, y: 0, z: 0}
@@ -555,10 +556,13 @@ PlayableDirector:
   m_WrapMode: 1
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 1248950700007966639, guid: 0caf65721abb2e14db56b73de87bc452, type: 2}
+    value: {fileID: 1150949549}
   m_ExposedReferences:
     m_References:
     - e2021887687e7204485c16cf7a2d3b70: {fileID: 1150949545}
+    - d8454b0858f39384996cce1d3c80dd1c: {fileID: 1150949545}
 --- !u!95 &1053285686
 Animator:
   serializedVersion: 3
@@ -810,6 +814,7 @@ GameObject:
   - component: {fileID: 1150949548}
   - component: {fileID: 1150949547}
   - component: {fileID: 1150949546}
+  - component: {fileID: 1150949549}
   m_Layer: 0
   m_Name: SnowFall
   m_TagString: Untagged
@@ -892,7 +897,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150949545}
   serializedVersion: 8
-  lengthInSec: 9999
+  lengthInSec: 1
   simulationSpeed: 1
   stopAction: 1
   cullingMode: 0
@@ -5608,13 +5613,32 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150949545}
-  m_LocalRotation: {x: 0, y: 0.70710677, z: -0.70710677, w: 0}
-  m_LocalPosition: {x: 0.38, y: 5.74, z: -5.41}
+  m_LocalRotation: {x: -0, y: 0.4617487, z: -0.8870108, w: 0}
+  m_LocalPosition: {x: 0.38, y: 4.83222, z: 1.6289437}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_Father: {fileID: 1053285682}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: 90, z: -90}
+--- !u!95 &1150949549
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1150949545}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1180062782
 GameObject:
   m_ObjectHideFlags: 0
