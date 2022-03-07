@@ -40,18 +40,6 @@ MonoBehaviour:
     type: 3}
   rotateWhillsAnimation: {fileID: 6011605996145141385}
   headAnimator: {fileID: 4596183827150914406}
---- !u!114 &4196528955299559847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7758724683995552829}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 189629c7137ef144dbfc257cfd638b04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3841311544225306275
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,10 +53,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealthPoint: 100
-  damage: 5
+  damage: 4
   rigidbody: {fileID: 2623729394077759561}
   speed: 0
   intervalBetweenDodge: 6
+--- !u!114 &4196528955299559847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7758724683995552829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 189629c7137ef144dbfc257cfd638b04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7664959698248117348
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,19 +82,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simpleEnemyModel: {fileID: 3841311544225306275}
---- !u!114 &1034680922379604590
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4600430740650631933}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74544106be72f88468d055401a8d5028, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyModel: {fileID: 3841311544225306275}
 --- !u!54 &3575371497239450428
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -111,6 +98,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &1034680922379604590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4600430740650631933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74544106be72f88468d055401a8d5028, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyModel: {fileID: 3841311544225306275}
 --- !u!1001 &1781551296758502088
 PrefabInstance:
   m_ObjectHideFlags: 0

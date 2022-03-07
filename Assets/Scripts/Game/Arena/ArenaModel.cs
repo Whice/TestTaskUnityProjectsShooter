@@ -20,6 +20,11 @@ public class ArenaModel : ItemModel
     }
     public delegate void ChangeEnableObjectHandler(Boolean isActive);
     public event ChangeEnableObjectHandler OnChangeEnableObject;
+    public void ResetOnChangeEnableObjectEvent()
+    {
+        if (this.OnChangeEnableObject != null)
+            this.OnChangeEnableObject = null;
+    }
     public void ActivateAllDinamicObjectsOnArena(Boolean isActive)
     {
         this.pause = !isActive;
@@ -176,15 +181,15 @@ public class ArenaModel : ItemModel
         Int32 choice = UnityEngine.Random.Range(1, 101);
 
         GameObject enemy = null;
-        if (choice>85)
+        if (choice>90)
         {
             enemy = Instantiate(this.arenaView.enemiesPrefabs[1]);//Ускоряется раз в какое-то время
         }
-        else if(choice > 75)
+        else if(choice > 83)
         {
             enemy = Instantiate(this.arenaView.enemiesPrefabs[2]);//Ускоряется за спиной игрока
         }
-        else if(choice > 60)
+        else if(choice > 70)
         {
             enemy = Instantiate(this.arenaView.enemiesPrefabs[3]);//Уклоняется раз в какое-то время
         }

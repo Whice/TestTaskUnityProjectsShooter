@@ -61,5 +61,7 @@ public class ArenaController : ItemController
         ArenaModel.instance.ResetCountOfKilledSimpleEnemy();
 
         MainApplicationClass.instance.ActivateAllSingletons();
+
+        ArenaModel.instance.ResetOnChangeEnableObjectEvent();
     }    
 }

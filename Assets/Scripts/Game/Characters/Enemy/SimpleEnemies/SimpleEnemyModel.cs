@@ -233,7 +233,10 @@ public class SimpleEnemyModel : EnemyModel
     /// <summary>
     /// Критический урон.
     /// </summary>
-    private Int32 criticalDamage = 9;
+    protected Int32 criticalDamage
+    {
+        get => (Int32)(this.damage * 1.8);
+    }
     /// <summary>
     /// Сила отталкивания врага после нанесения удара игроку.
     /// </summary>

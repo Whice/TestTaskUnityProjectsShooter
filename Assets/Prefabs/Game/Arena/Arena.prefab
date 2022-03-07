@@ -397,7 +397,7 @@ PrefabInstance:
     - target: {fileID: 5983924091253009002, guid: 8fb8dee9e31ba3b47a220cb2d1a6279b,
         type: 3}
       propertyPath: CollisionModule.enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5983924091253009002, guid: 8fb8dee9e31ba3b47a220cb2d1a6279b,
         type: 3}
@@ -452,7 +452,7 @@ PrefabInstance:
     - target: {fileID: 5983924091253009002, guid: 8fb8dee9e31ba3b47a220cb2d1a6279b,
         type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 0.001
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5983924091253009002, guid: 8fb8dee9e31ba3b47a220cb2d1a6279b,
         type: 3}

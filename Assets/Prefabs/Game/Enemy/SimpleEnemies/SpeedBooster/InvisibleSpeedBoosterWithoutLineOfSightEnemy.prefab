@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealthPoint: 100
-  damage: 3
+  damage: 1
   rigidbody: {fileID: 2694859945697751832}
   speed: 0
 --- !u!1001 &76362371819326289
