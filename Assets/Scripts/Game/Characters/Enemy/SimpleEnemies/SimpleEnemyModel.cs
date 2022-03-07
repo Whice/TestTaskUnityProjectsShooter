@@ -112,7 +112,7 @@ public class SimpleEnemyModel : EnemyModel
     /// </summary>
     /// <param name="position">Местоположение точки.</param>
     /// <returns></returns>
-    private Boolean InViewportCamera(Vector3 position)
+    protected Boolean InViewportCamera(Vector3 position)
     {
         Vector3 viewPosition = this.mainCamera.WorldToViewportPoint(position);
         if (viewPosition.x > -0.1 && viewPosition.x < 1.1 && viewPosition.z > 0)

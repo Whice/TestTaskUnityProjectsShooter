@@ -176,13 +176,21 @@ public class ArenaModel : ItemModel
         Int32 choice = UnityEngine.Random.Range(1, 101);
 
         GameObject enemy = null;
-        if (choice>100)
+        if (choice>85)
         {
-            enemy = Instantiate(this.arenaView.enemiesPrefabs[0]);
+            enemy = Instantiate(this.arenaView.enemiesPrefabs[1]);//Ускоряется раз в какое-то время
+        }
+        else if(choice > 75)
+        {
+            enemy = Instantiate(this.arenaView.enemiesPrefabs[2]);//Ускоряется за спиной игрока
+        }
+        else if(choice > 60)
+        {
+            enemy = Instantiate(this.arenaView.enemiesPrefabs[3]);//Уклоняется раз в какое-то время
         }
         else
         {
-            enemy = Instantiate(this.arenaView.enemiesPrefabs[1]);
+            enemy = Instantiate(this.arenaView.enemiesPrefabs[0]);//Обычный противник
         }
 
 

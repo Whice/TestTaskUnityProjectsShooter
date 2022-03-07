@@ -89,8 +89,8 @@ MonoBehaviour:
   enemiesPrefabs:
   - {fileID: 7758724683995552829, guid: 7e4f0eb8fc28b904c836a59f29136d65, type: 3}
   - {fileID: 7684211691955115884, guid: dc51b9d43b269974985c8c03530cbe15, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 7684211691955115884, guid: 3a9d096836b50424babb51197c26e5d0, type: 3}
+  - {fileID: 7758724683995552829, guid: d05972e91937aa848b33603692141cdc, type: 3}
   gameBoxPrefab: {fileID: 6623746695824381820, guid: 601cb1141f4d2904a8aa67b6b774456c,
     type: 3}
   fogOnFloor: {fileID: 5531946027678944020}

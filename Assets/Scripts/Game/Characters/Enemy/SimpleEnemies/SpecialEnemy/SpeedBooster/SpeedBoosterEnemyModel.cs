@@ -22,7 +22,7 @@ public class SpeedBoosterEnemyModel : SimpleEnemyModel
     }
 
     /// <summary>
-    /// Интервад между ускорениями.
+    /// Интервал между ускорениями.
     /// </summary>
     [SerializeField]
     private Single intervalBetweenAccelerations = 6f;
