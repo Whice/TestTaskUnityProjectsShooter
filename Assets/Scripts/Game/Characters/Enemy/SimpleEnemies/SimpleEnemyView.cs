@@ -50,18 +50,6 @@ public class SimpleEnemyView : EnemyView
         this.enemiesAudioSource.clip = this.EnemyHeadJumpSound;
         this.enemiesAudioSource.Play();
     }
-    /// <summary>
-    /// Звук, с которым вращается голова.
-    /// </summary>
-    public AudioClip EnemyHeadRotateSound = null;
-    /// <summary>
-    /// Проиграть звук, с которым вращается голова.
-    /// </summary>
-    private void PlayEnemyHeadRotateSound()
-    {
-        this.enemiesAudioSource.clip = this.EnemyHeadRotateSound;
-        this.enemiesAudioSource.Play();
-    }
 
     #endregion Звуки, которые издают враги.
 
