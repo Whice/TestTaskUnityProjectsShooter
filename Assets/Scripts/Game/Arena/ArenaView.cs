@@ -13,7 +13,7 @@ public class ArenaView : ItemView
     /// <summary>
     /// Заготовка врага.
     /// </summary>
-    public GameObject enemyPrefab = null;
+    public List<GameObject> enemiesPrefabs = new List<GameObject>();
     /// <summary>
     /// Заготовка ящика.
     /// </summary>

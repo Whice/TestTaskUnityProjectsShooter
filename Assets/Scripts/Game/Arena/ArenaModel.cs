@@ -124,7 +124,7 @@ public class ArenaModel : ItemModel
     /// <summary>
     /// Количество простых врагов нужное, чтобы появился босс.
     /// </summary>
-    private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 1;
+    private const UInt64 DEAD_SIMPLE_ENEMY_FOR_CREATE_BOSS = 41;
     /// <summary>
     /// Количество простых убитых врагов.
     /// </summary>
@@ -173,7 +173,19 @@ public class ArenaModel : ItemModel
     /// <returns></returns>
     public EnemyModel CreateNewDeadEnemy()
     {
-        GameObject enemy = Instantiate(this.arenaView.enemyPrefab);
+        Int32 choice = UnityEngine.Random.Range(1, 101);
+
+        GameObject enemy = null;
+        if (choice>100)
+        {
+            enemy = Instantiate(this.arenaView.enemiesPrefabs[0]);
+        }
+        else
+        {
+            enemy = Instantiate(this.arenaView.enemiesPrefabs[1]);
+        }
+
+
         EnemyModel enemyModel = enemy.GetComponent<EnemyModel>();
         enemy.SetActive(false);
         this.deadEnemies.Add(enemyModel);

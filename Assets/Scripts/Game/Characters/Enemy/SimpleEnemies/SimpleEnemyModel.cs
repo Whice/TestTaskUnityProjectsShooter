@@ -18,22 +18,16 @@ public class SimpleEnemyModel : EnemyModel
 
     private void Update()
     {
+        OnUpdate();
+    }
+
+    /// <summary>
+    /// Действия при обновлении кадра.
+    /// </summary>
+    protected virtual void OnUpdate()
+    {
         //Если этот враг жив, то он может стремиться к убийству игрока.
-        //Двигаться к игроку
-        if (!IsNearWithPlayer)
-        {
-            this.transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, this.speed * Time.deltaTime);
-        }
-        //Либо атаковать раз в секунду
-        else
-        {
-            if (this.timerAtack > 1)
-            {
-                KickPlayer();
-                this.timerAtack = 0;
-            }
-        }
-        this.timerAtack += Time.deltaTime;
+        MoveToOrKickPlayer();
 
         //Убить снеговика, который упал слишком низко.
         KillEnemyWithoutArena();
@@ -285,6 +279,29 @@ public class SimpleEnemyModel : EnemyModel
         }
 
         StepBack();
+    }
+    /// <summary>
+    /// Если этот враг жив, то он может стремиться к убийству игрока. 
+    /// Либо атаковать раз в секунду
+    /// </summary>
+    protected void MoveToOrKickPlayer()
+    {
+        //Если этот враг жив, то он может стремиться к убийству игрока.
+        //Двигаться к игроку
+        if (!IsNearWithPlayer)
+        {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, targetPosition, this.speed * Time.deltaTime);
+        }
+        //Либо атаковать раз в секунду
+        else
+        {
+            if (this.timerAtack > 1)
+            {
+                KickPlayer();
+                this.timerAtack = 0;
+            }
+        }
+        this.timerAtack += Time.deltaTime;
     }
 
     #endregion
