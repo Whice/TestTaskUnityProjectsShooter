@@ -38,6 +38,10 @@ public class ArenaView : ItemView
     /// Сердечко - трофей. Увеличивает здоровье игроку.
     /// </summary>
     public GameObject heartForHealthTrophy = null;
+    /// <summary>
+    /// Объект для хранения всех подвижных заготовок, которые создаются в больших количествах.
+    /// </summary>
+    public GameObject DinamycPrefabs = null;
 
     #endregion
 

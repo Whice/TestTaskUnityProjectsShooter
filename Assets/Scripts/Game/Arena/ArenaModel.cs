@@ -11,6 +11,15 @@ public class ArenaModel : ItemModel
     {
         get => this.view as ArenaView;
     }
+    /// <summary>
+    /// Объект для хранения всех подвижных заготовок, которые создаются в больших количествах.
+    /// </summary>
+    public GameObject DinamycPrefabs
+    {
+        get => arenaView.DinamycPrefabs;
+    }
+
+    #region Пауза.
 
     private Boolean pauseField = false;
     private Boolean pause
@@ -30,6 +39,8 @@ public class ArenaModel : ItemModel
         this.pause = !isActive;
         this.OnChangeEnableObject?.Invoke(isActive);
     }
+
+    #endregion Пауза.
 
     #region Босс.
 
@@ -201,6 +212,7 @@ public class ArenaModel : ItemModel
 
         EnemyModel enemyModel = enemy.GetComponent<EnemyModel>();
         enemy.SetActive(false);
+        enemy.transform.parent = this.DinamycPrefabs.transform;
         this.deadEnemies.Add(enemyModel);
         return enemyModel;
     }
@@ -267,6 +279,7 @@ public class ArenaModel : ItemModel
         BoxModel boxModel = box.GetComponent<BoxModel>();
         this.withoutArenaBoxes.Add(boxModel);
         box.SetActive(false);
+        box.transform.parent = this.DinamycPrefabs.transform;
     }
     /// <summary>
     /// Получить последний неактивный ящик.
@@ -302,6 +315,7 @@ public class ArenaModel : ItemModel
         newBullet.SetActive(false);
         BulletModel newBulletModel = newBullet.GetComponent<BulletModel>();
         this.notActiveBullets.Add(newBulletModel);
+        newBullet.transform.parent = this.DinamycPrefabs.transform;
     }
     /// <summary>
     /// Добавить несколько пуль в список неактивных.
