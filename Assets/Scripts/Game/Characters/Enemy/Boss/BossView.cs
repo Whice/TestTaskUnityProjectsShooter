@@ -10,5 +10,24 @@ public class BossView : EnemyView
     {
         get => ArenaModel.instance.arenaView.heartForHealthTrophy;
     }
-    public Image dynamicFrontHP = null;
+
+    #region полоска HP босса.
+
+    /// <summary>
+    /// Картинка, которая должна динамически
+    /// уменьшаться при нанесении урона боссу.
+    /// </summary>
+    public Image dynamicFrontHP
+    {
+        get => CameraModel.instance.cameraView.dynamicFrontHP;
+    }
+    /// <summary>
+    /// Вся полоска ХП босса.
+    /// </summary>
+    public GameObject bossHPBar
+    {
+        get => CameraModel.instance.cameraView.bossHPBar;
+    }
+
+    #endregion полоска HP босса.
 }

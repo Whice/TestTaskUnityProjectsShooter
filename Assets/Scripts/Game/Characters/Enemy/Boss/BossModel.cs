@@ -79,6 +79,11 @@ public class BossModel : EnemyModel
 
     #endregion
 
+    private void Awake()
+    {
+        SetHealth();
+    }
+
     #region Действия при создании объекта.
 
     protected override void SetDamage()
@@ -166,6 +171,7 @@ public class BossModel : EnemyModel
     /// </summary>
     public override void Deactivate()
     {
+        this.bossView.bossHPBar.SetActive(false);
         LevelUp();
         this.isActivePrivate = false;
         base.Deactivate();
@@ -179,6 +185,7 @@ public class BossModel : EnemyModel
     /// </summary>
     public override void Activate()
     {
+        this.bossView.bossHPBar.SetActive(true);
         this.isActivePrivate = true;
         base.Activate();
         this.yHeight = 0;
