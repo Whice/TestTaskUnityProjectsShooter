@@ -709,6 +709,7 @@ MonoBehaviour:
   mainCamera: {fileID: 2013100}
   dynamicFrontHP: {fileID: 3470540040206906839}
   bossHPBar: {fileID: 1174723752083934604}
+  canvasBossHPBarRectTransform: {fileID: 0}
 --- !u!1 &110064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,8 +2511,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -190, y: 0}
-  m_SizeDelta: {x: 380, y: 0}
+  m_AnchoredPosition: {x: -400, y: 0}
+  m_SizeDelta: {x: 800, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &22265756
 CanvasRenderer:
@@ -3769,6 +3770,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 454936}
     m_Modifications:
+    - target: {fileID: 323762370682193353, guid: d65a68ed124d6434cb5eb443ee2eb9fa,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1163602407988260347, guid: d65a68ed124d6434cb5eb443ee2eb9fa,
         type: 3}
       propertyPath: m_Name

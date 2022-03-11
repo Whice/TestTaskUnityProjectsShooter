@@ -31,5 +31,13 @@ public class CameraModel : ItemModel
 
     #endregion
 
-
+    /// <summary>
+    /// Проверить находится ли точка в зоне видимости камеры камеры.
+    /// </summary>
+    /// <param name="position">Местоположение точки.</param>
+    /// <returns></returns>
+    public Boolean InViewportCamera(Vector3 position)
+    {
+        return this.cameraView.InViewportCamera(position);
+    }
 }

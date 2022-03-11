@@ -114,12 +114,7 @@ public class SimpleEnemyModel : EnemyModel
     /// <returns></returns>
     protected Boolean InViewportCamera(Vector3 position)
     {
-        Vector3 viewPosition = this.mainCamera.WorldToViewportPoint(position);
-        if (viewPosition.x > -0.1 && viewPosition.x < 1.1 && viewPosition.z > 0)
-        {
-            return true;
-        }
-        return false;
+        return CameraModel.instance.InViewportCamera(position);
     }
     public override void SetRandomPositionWithoutCameraVision()
     {

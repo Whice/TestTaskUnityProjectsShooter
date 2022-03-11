@@ -210,6 +210,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 565382755}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &474998098 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5531946027678944020, guid: 7aefcdd390270ac4d973ce361ea095c8,
+    type: 3}
+  m_PrefabInstance: {fileID: 1286134856}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &565382755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -553,7 +559,7 @@ PrefabInstance:
         type: 3}
       propertyPath: fogOnFloor
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 474998098}
     - target: {fileID: 3417546007880714472, guid: 7aefcdd390270ac4d973ce361ea095c8,
         type: 3}
       propertyPath: gameBoxPrefab

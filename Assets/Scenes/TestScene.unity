@@ -494,6 +494,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!224 &815859821 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 179913049028269427, guid: 667984764a9168d4697a7dff5b399301,
+    type: 3}
+  m_PrefabInstance: {fileID: 1194812839}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1016249313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -501,6 +507,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6495432807938654917, guid: 18019794343f32242a7b59807ba4f10a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3230485025825708712, guid: 18019794343f32242a7b59807ba4f10a,
         type: 3}
       propertyPath: m_Name
@@ -914,6 +925,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 14.559998
       objectReference: {fileID: 0}
+    - target: {fileID: 1174723752083934604, guid: 667984764a9168d4697a7dff5b399301,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2465810387775469751, guid: 667984764a9168d4697a7dff5b399301,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -924,6 +940,16 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 4305726928835411986, guid: 667984764a9168d4697a7dff5b399301,
+        type: 3}
+      propertyPath: bossHPBarRectTransform
+      value: 
+      objectReference: {fileID: 815859821}
+    - target: {fileID: 4305726928835411986, guid: 667984764a9168d4697a7dff5b399301,
+        type: 3}
+      propertyPath: canvasBossHPBarRectTransform
+      value: 
+      objectReference: {fileID: 1814200946}
     - target: {fileID: 5662946181482551562, guid: 667984764a9168d4697a7dff5b399301,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -1247,3 +1273,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e4f0eb8fc28b904c836a59f29136d65, type: 3}
+--- !u!224 &1814200946 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8851711864606226947, guid: 667984764a9168d4697a7dff5b399301,
+    type: 3}
+  m_PrefabInstance: {fileID: 1194812839}
+  m_PrefabAsset: {fileID: 0}
