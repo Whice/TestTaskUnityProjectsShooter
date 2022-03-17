@@ -31,9 +31,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb3e5d7d5d6bc454198f13b70bcab41a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dynamicFrontHP: {fileID: 0}
-  bossHPBar: {fileID: 2925328153174199824, guid: f021e8c13769a744d8cfc0fa00ac3b43,
-    type: 3}
 --- !u!114 &1746979515357821127
 MonoBehaviour:
   m_ObjectHideFlags: 0
