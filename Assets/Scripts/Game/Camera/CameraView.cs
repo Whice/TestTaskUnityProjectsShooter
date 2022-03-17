@@ -44,4 +44,18 @@ public class CameraView : ItemView
     public GameObject bossHPBar = null;
 
     #endregion полоска HP босса.
+
+    #region Skybox rotate
+
+    /// <summary>
+    /// Скорость вращения неба.
+    /// </summary>
+    private const Single speedRaotateSkybox = 0.08f;
+    private void Update()
+    {
+        //Вращение неба.
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time * speedRaotateSkybox);
+    }
+
+    #endregion Skybox rotate
 }
