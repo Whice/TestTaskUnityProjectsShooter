@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class ArenaModel : ItemModel
 {
+    public bool isInGame = false;
     public GameUI gameUI;
     public ArenaView arenaView
     {
@@ -37,8 +38,11 @@ public class ArenaModel : ItemModel
     }
     public void ActivateAllDinamicObjectsOnArena(Boolean isActive)
     {
-        this.pause = !isActive;
-        this.OnChangeEnableObject?.Invoke(isActive);
+        if (isInGame)
+        {
+            this.pause = !isActive;
+            this.OnChangeEnableObject?.Invoke(isActive);
+        }
     }
 
     #endregion Пауза.
@@ -107,6 +111,31 @@ public class ArenaModel : ItemModel
     /// Объект главного класса приложения.
     /// </summary>
     public static ArenaModel instance = null;
+    private GameObject dynamicPrefabsCreatable;
+    private GameObject dynamicPrefabs
+    {
+        get
+        {
+            if (dynamicPrefabsCreatable == null)
+            {
+                dynamicPrefabsCreatable = Instantiate(DinamycPrefabs, this.transform);
+            }
+            return dynamicPrefabsCreatable;
+        }
+    }
+    public void SetInGame(bool isInGame)
+    {
+        this.isInGame = isInGame;
+        if (isInGame && dynamicPrefabsCreatable == null)
+        {
+            dynamicPrefabsCreatable = Instantiate(DinamycPrefabs, this.transform);
+        }
+        if (!isInGame && dynamicPrefabsCreatable != null)
+        {
+            DestroyImmediate(dynamicPrefabsCreatable);
+            dynamicPrefabsCreatable = null;
+        }
+    }
     private void Awake()
     {
         //организация синглтона
@@ -131,7 +160,7 @@ public class ArenaModel : ItemModel
 
     private void Update()
     {
-        if (!pause)
+        if (!pause && isInGame)
         {
             CreateNewEnemy();
         }
@@ -214,7 +243,7 @@ public class ArenaModel : ItemModel
 
         EnemyModel enemyModel = enemy.GetComponent<EnemyModel>();
         enemy.SetActive(false);
-        enemy.transform.parent = this.DinamycPrefabs.transform;
+        enemy.transform.parent = this.dynamicPrefabs.transform;
         this.deadEnemies.Add(enemyModel);
         return enemyModel;
     }
@@ -281,7 +310,7 @@ public class ArenaModel : ItemModel
         BoxModel boxModel = box.GetComponent<BoxModel>();
         this.withoutArenaBoxes.Add(boxModel);
         box.SetActive(false);
-        box.transform.parent = this.DinamycPrefabs.transform;
+        box.transform.parent = this.dynamicPrefabs.transform;
     }
     /// <summary>
     /// Получить последний неактивный ящик.
@@ -313,11 +342,14 @@ public class ArenaModel : ItemModel
     /// </summary>
     private void CreateNewNotActiveBullet()
     {
-        GameObject newBullet = Instantiate(this.arenaView.bulletPrefab);
-        newBullet.SetActive(false);
-        BulletModel newBulletModel = newBullet.GetComponent<BulletModel>();
-        this.notActiveBullets.Add(newBulletModel);
-        newBullet.transform.parent = this.DinamycPrefabs.transform;
+        if (dynamicPrefabs != null)
+        {
+            GameObject newBullet = Instantiate(this.arenaView.bulletPrefab);
+            newBullet.SetActive(false);
+            BulletModel newBulletModel = newBullet.GetComponent<BulletModel>();
+            this.notActiveBullets.Add(newBulletModel);
+            newBullet.transform.parent = this.dynamicPrefabs.transform;
+        }
     }
     /// <summary>
     /// Добавить несколько пуль в список неактивных.

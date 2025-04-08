@@ -76,9 +76,15 @@ public class MainApplicationClass : MonoBehaviour
     private void SetActiveAllSingletons(Boolean isActive)
     {
         SetActiveForAddiitionalCamera(!isActive);
-        CameraModel.instance.gameObject.SetActive(isActive);
-        ArenaModel.instance.gameObject.SetActive(isActive);
-        PlayerModel.instance.gameObject.SetActive(isActive);
+        if (!CameraModel.instance.isDestroyed)
+        {
+            CameraModel.instance?.gameObject?.SetActive(isActive);
+        }
+        ArenaModel.instance?.gameObject?.SetActive(isActive);
+        if (!PlayerModel.instance.isDestroyed)
+        {
+            PlayerModel.instance?.gameObject?.SetActive(isActive);
+        }
     }
     /// <summary>
     /// Включить/отключить дополнительную камеру.

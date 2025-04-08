@@ -40,19 +40,26 @@ public class PlayerModel : GameCharacterModel
 	/// Объект главного класса приложения.
 	/// </summary>
 	public static PlayerModel instance = null;
+	public bool isDestroyed = false;
 	private void Awake()
 	{
 		if (PlayerModel.instance == null)
 		{
 			PlayerModel.instance = this;
 			DontDestroyOnLoad(this);
+			this.isDestroyed = false;
 		}
 		else
 		{
 			Destroy(this.gameObject);
+			this.isDestroyed = true;
 		}
 	}
 
+	void OnDestroy()
+	{
+		this.isDestroyed = true;
+	}
 	#endregion
 
 	#region Цвета кубиков и снарядов.
@@ -154,6 +161,10 @@ public class PlayerModel : GameCharacterModel
 	public void LoadMainMenu()
 	{
 		SceneManager.LoadSceneAsync("MainMenu");
+		if (ArenaModel.instance != null)
+		{
+			ArenaModel.instance.SetInGame(false);
+		}
 	}
 	protected override void OnChanged(string propertyName, object oldValue, object newValue)
 	{

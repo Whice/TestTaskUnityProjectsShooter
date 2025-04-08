@@ -84,6 +84,10 @@ public class FP_CameraLook : MonoBehaviour
 
         prevPosition = transform.position;
         audioSource = GetComponent<AudioSource>();
+        if (ArenaModel.instance != null)
+        {
+            ArenaModel.instance.SetInGame(true);
+        }
     }
 
     void Update()

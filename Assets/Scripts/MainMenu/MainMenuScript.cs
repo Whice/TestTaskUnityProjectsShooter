@@ -4,14 +4,14 @@ using UnityEngine.SceneManagement;
 public class MainMenuScript : MonoBehaviour
 {
     /// <summary>
-    /// Загрузить игровую сцену с ареной.
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
     /// </summary>
     public void LoadGameScene()
     {
         SceneManager.LoadSceneAsync("Arena");
     }
     /// <summary>
-    /// Выйти из игры.
+    /// пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ.
     /// </summary>
     public void ExitGame()
     {
