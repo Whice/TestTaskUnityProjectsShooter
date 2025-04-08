@@ -31,7 +31,7 @@ public class PlayerView : GameCharacterView
 	/// <summary>
 	/// Начало текста для отображения количества пуль.
 	/// </summary>
-	private const String titleTextAmmoCount = "Запас пуль: ";
+	private const String titleTextAmmoCount = "Bullets: ";
 	/// <summary>
 	/// Текст для отображения количества пуль.
 	/// </summary>
@@ -39,7 +39,7 @@ public class PlayerView : GameCharacterView
 	/// <summary>
 	/// Начало текста для отображения очков жизни.
 	/// </summary>
-	private const String titleTextHealth = "Очки жизни: ";
+	private const String titleTextHealth = "HP: ";
 	/// <summary>
 	/// Текст для отображения очков жизни.
 	/// </summary>
@@ -47,7 +47,7 @@ public class PlayerView : GameCharacterView
 	/// <summary>
 	/// Начало текста для отображения количества красных кубов.
 	/// </summary>
-	private const String titleTextRedCubesCount = "Красных кубов: ";
+	private const String titleTextRedCubesCount = "Red cubes: ";
 	/// <summary>
 	/// Текст для отображения количества красных кубов.
 	/// </summary>
@@ -55,7 +55,7 @@ public class PlayerView : GameCharacterView
 	/// <summary>
 	/// Начало текста для отображения количества зеленых кубов.
 	/// </summary>
-	private const String titleTextGreenCubesCount = "Зеленых кубов: ";
+	private const String titleTextGreenCubesCount = "Green cubes: ";
 	/// <summary>
 	/// Текст для отображения количества зеленых кубов.
 	/// </summary>
@@ -63,7 +63,7 @@ public class PlayerView : GameCharacterView
 	/// <summary>
 	/// Начало текста для отображения количества желтых кубов.
 	/// </summary>
-	private const String titleTextYellowCubesCount = "Желтых кубов: ";
+	private const String titleTextYellowCubesCount = "Yellow cubes: ";
 	/// <summary>
 	/// Текст для отображения количества желтых кубов.
 	/// </summary>
@@ -116,17 +116,17 @@ public class PlayerView : GameCharacterView
 	/// Звук всасывания трофея.
 	/// </summary>
 	public AudioSource suckTrophy
-    {
-        get
-        {
+	{
+		get
+		{
 			String name = "SuckTrophy";
-			if (this.suckTrophyPrivate.clip.name!=name)
-            {
+			if (this.suckTrophyPrivate.clip.name != name)
+			{
 				this.suckTrophyPrivate.clip = ArenaModel.instance.arenaView.GetAudioClip(name);
 			}
 			return this.suckTrophyPrivate;
-        }
-    }
+		}
+	}
 
 	/// <summary>
 	/// Страшная музыка.
@@ -149,10 +149,10 @@ public class PlayerView : GameCharacterView
 
 	#endregion
 
-    private void Start()
-    {
+	private void Start()
+	{
 		this.lastPosition = this.transform.position;
-    }
+	}
 
 	private void Update()
 	{
@@ -162,7 +162,7 @@ public class PlayerView : GameCharacterView
 		{
 			this.horrorBackground.volume += horrorBackgroundChangeVolumeSpeed;
 		}
-		else 
+		else
 		{
 			if (this.horrorBackground.volume > 0.1f)
 				this.horrorBackground.volume -= horrorBackgroundChangeVolumeSpeed;

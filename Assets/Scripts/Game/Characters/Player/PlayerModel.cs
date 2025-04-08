@@ -32,6 +32,7 @@ public class PlayerModel : GameCharacterModel
 	{
 		get => this.view as PlayerView;
 	}
+	public GameUI gameUI;
 
 	#region Реализация синглтона
 
@@ -148,8 +149,13 @@ public class PlayerModel : GameCharacterModel
 		this.ammoCountPrivate = 47;
 		//Обновить текст в интерфейсе
 		this.playerView.UpdateText();
+		gameUI.mainMenuButton.onClick.AddListener(LoadMainMenu);
 	}
-    protected override void OnChanged(string propertyName, object oldValue, object newValue)
+	public void LoadMainMenu()
+	{
+		SceneManager.LoadSceneAsync("MainMenu");
+	}
+	protected override void OnChanged(string propertyName, object oldValue, object newValue)
 	{
 		base.OnChanged(propertyName, oldValue, newValue);
 
@@ -159,7 +165,7 @@ public class PlayerModel : GameCharacterModel
 				{
 					if (isDead)
 					{
-						SceneManager.LoadSceneAsync("MainMenu");
+						LoadMainMenu();
 						MainApplicationClass.instance.DeactivateAllSingletons();
 					}
 

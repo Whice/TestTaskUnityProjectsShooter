@@ -7,6 +7,7 @@ using System.Collections;
 
 public class FP_CameraLook : MonoBehaviour
 {
+    public GameUI gameUI;
     public Transform PlayerHead;                //Player head transform;
     public float LookSensitivity = 2.0F;        //Look senstivity;
     public float ShootSensitivity = 1.0F;       //Shoot sensetivity, used when shoot button is pressed;
@@ -87,11 +88,11 @@ public class FP_CameraLook : MonoBehaviour
 
     void Update()
     {
-        if (!playerController.canControl)
-            return;
+        if (gameUI != null && gameUI.IsPause()) return;
+        if (!playerController.canControl) return;
 
-                InputX = Input.GetAxis("Mouse X") * 10;
-                InputY = Input.GetAxis("Mouse Y") * 10;
+        InputX = Input.GetAxis("Mouse X") * 10;
+        InputY = Input.GetAxis("Mouse Y") * 10;
         sensitivity = playerInput.Shoot() ? ShootSensitivity : LookSensitivity;
 
         PlayerHead.localPosition = Vector3.Lerp(PlayerHead.localPosition, new Vector3(

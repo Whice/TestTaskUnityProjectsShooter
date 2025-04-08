@@ -44,8 +44,8 @@ public class WeaponExample : MonoBehaviour
     {
         PlayerModel playerModel = PlayerModel.instance;
         PlayerView playerView = playerModel.playerView;
-        playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
-        PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
+        playerView.textAmmoCount.text = "Bullets: " + this.ammoCount.ToString();
+        PlayerModel.instance.playerView.textAmmoCount.text = "Bullets: " + this.ammoCount.ToString();
         this.controller = gameObject.GetComponent<FP_Controller>();
     }
 
@@ -53,8 +53,8 @@ public class WeaponExample : MonoBehaviour
     public KeyCode reloadKey = KeyCode.R;
     void Update()
     {
-                bool isShoot = Input.GetKey(shootKey);
-                bool isReload = Input.GetKey(reloadKey);
+        bool isShoot = Input.GetKey(shootKey);
+        bool isReload = Input.GetKey(reloadKey);
         if (isShoot)                         //IF SHOOT BUTTON IS PRESSED (Replace your mouse input)
             if (Time.time > delay)
                 Shoot();
@@ -108,7 +108,7 @@ public class WeaponExample : MonoBehaviour
                 bulletView.SetColor(PlayerModel.instance.bulletColor);
 
                 this.ammoCount--;
-                PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
+                PlayerModel.instance.playerView.textAmmoCount.text = "Bullets: " + this.ammoCount.ToString();
             }
         }
 
@@ -131,7 +131,7 @@ public class WeaponExample : MonoBehaviour
         get
         {
             String name = "ReloadBullets";
-            if (this.reloadBulletSoundField.name!=name)
+            if (this.reloadBulletSoundField.name != name)
             {
                 this.reloadBulletSoundField.clip = ArenaModel.instance.arenaView.GetAudioClip(name);
             }
@@ -143,13 +143,13 @@ public class WeaponExample : MonoBehaviour
         this.reloading = true;
         this.reloadBulletSound.Play();
         this.ammoCount = this.maxAmmoCount;
-        PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
+        PlayerModel.instance.playerView.textAmmoCount.text = "Bullets: " + this.ammoCount.ToString();
         yield return new WaitForSeconds(reloadTime);
         reloading = false;
     }
 
     void OnGUI()
     {
-       // GUILayout.Label("AMMO: " + ammoCount);
+        // GUILayout.Label("AMMO: " + ammoCount);
     }
 }

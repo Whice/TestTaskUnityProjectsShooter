@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
-[RequireComponent (typeof (CharacterController))]
+[RequireComponent(typeof(CharacterController))]
 [RequireComponent(typeof(FP_Input))]
 [RequireComponent(typeof(FP_CameraLook))]
 [RequireComponent(typeof(FP_FootSteps))]
@@ -45,9 +45,9 @@ public class FP_Controller : MonoBehaviour
     private Vector3 hitNormal;
     private AudioSource JumpLandSource;
     private FP_FootSteps footSteps;
-	private Transform myTransform;
+    private Transform myTransform;
     private FP_Input playerInput;
-	private RaycastHit hit;
+    private RaycastHit hit;
 
 
     private bool playerControl = false;
@@ -98,7 +98,7 @@ public class FP_Controller : MonoBehaviour
         set
         {
             this.enableRunField = value;
-            if(value)
+            if (value)
             {
                 this.speed = this.runSpeed;
                 this.runButtonCircle.color = FP_Controller.enableRunColor;
@@ -116,7 +116,7 @@ public class FP_Controller : MonoBehaviour
     #endregion Бег.
 
     private int antiBunnyHopFactor = 1;
-	private int jumpTimer;
+    private int jumpTimer;
     private int landTimer;
     private int jumpState;
     private int runState;
@@ -152,70 +152,72 @@ public class FP_Controller : MonoBehaviour
         JumpLandSource = gameObject.AddComponent<AudioSource>();
     }
 
-	
-	void FixedUpdate()
+
+    void FixedUpdate()
     {
-		// If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
-		inputModifyFactor = (inputX != 0.0F && inputZ != 0.0F)? 0.7071F : 1.0F;
-		
-		if (grounded)
+        // If both horizontal and vertical are used simultaneously, limit speed (if allowed), so the total doesn't exceed normal move speed
+        inputModifyFactor = (inputX != 0.0F && inputZ != 0.0F) ? 0.7071F : 1.0F;
+
+        if (grounded)
         {
-			sliding = false;
-			// See if surface immediately below should be slid down. We use this normally rather than a ControllerColliderHit point,
-			// because that interferes with step climbing amongst other annoyances
-			if (Physics.Raycast(myTransform.position, -Vector3.up, out hit, rayDistance)) {
-				if (Vector3.Angle(hit.normal, Vector3.up) > slideLimit && CanSlide())
-					sliding = true;
-			}
-			// However, just raycasting straight down from the center can fail when on steep slopes
-			// So if the above raycast didn't catch anything, raycast down from the stored ControllerColliderHit point instead
-			else {
-				Physics.Raycast(contactPoint + Vector3.up, -Vector3.up, out hit);
-				if (Vector3.Angle(hit.normal, Vector3.up) > slideLimit && CanSlide())
-					sliding = true;
-			}
-			
-			// If sliding (and it's allowed), or if we're on an object tagged "Slide", get a vector pointing down the slope we're on
-			if (sliding) 
+            sliding = false;
+            // See if surface immediately below should be slid down. We use this normally rather than a ControllerColliderHit point,
+            // because that interferes with step climbing amongst other annoyances
+            if (Physics.Raycast(myTransform.position, -Vector3.up, out hit, rayDistance))
             {
-				hitNormal = hit.normal;
-				moveDirection = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
-				Vector3.OrthoNormalize (ref hitNormal, ref moveDirection);
-				moveDirection *= slideSpeed;
-				playerControl = false;
-			}
-			// Otherwise recalculate moveDirection directly from axes, adding a bit of -y to avoid bumping down inclines
-			else
+                if (Vector3.Angle(hit.normal, Vector3.up) > slideLimit && CanSlide())
+                    sliding = true;
+            }
+            // However, just raycasting straight down from the center can fail when on steep slopes
+            // So if the above raycast didn't catch anything, raycast down from the stored ControllerColliderHit point instead
+            else
             {
-				moveDirection = new Vector3(inputX * inputModifyFactor, -antiBumpFactor, inputZ * inputModifyFactor);
-				moveDirection = myTransform.TransformDirection(moveDirection) * speed;
-				playerControl = true;
-			}
-			
-			// Jump! But only if canJump, the jump button has been released and player has been grounded for a given number of frames
-			if (!jump)
-				jumpTimer++;
-			else if (canJump && jumpTimer >= antiBunnyHopFactor) 
+                Physics.Raycast(contactPoint + Vector3.up, -Vector3.up, out hit);
+                if (Vector3.Angle(hit.normal, Vector3.up) > slideLimit && CanSlide())
+                    sliding = true;
+            }
+
+            // If sliding (and it's allowed), or if we're on an object tagged "Slide", get a vector pointing down the slope we're on
+            if (sliding)
             {
-				moveDirection.y = jumpForce;
-				jumpTimer = 0;
-			}
-		}
-		else 
+                hitNormal = hit.normal;
+                moveDirection = new Vector3(hitNormal.x, -hitNormal.y, hitNormal.z);
+                Vector3.OrthoNormalize(ref hitNormal, ref moveDirection);
+                moveDirection *= slideSpeed;
+                playerControl = false;
+            }
+            // Otherwise recalculate moveDirection directly from axes, adding a bit of -y to avoid bumping down inclines
+            else
+            {
+                moveDirection = new Vector3(inputX * inputModifyFactor, -antiBumpFactor, inputZ * inputModifyFactor);
+                moveDirection = myTransform.TransformDirection(moveDirection) * speed;
+                playerControl = true;
+            }
+
+            // Jump! But only if canJump, the jump button has been released and player has been grounded for a given number of frames
+            if (!jump)
+                jumpTimer++;
+            else if (canJump && jumpTimer >= antiBunnyHopFactor)
+            {
+                moveDirection.y = jumpForce;
+                jumpTimer = 0;
+            }
+        }
+        else
         {
-			// If air control is allowed, check movement but don't touch the y component
-			if (airControl && playerControl)
+            // If air control is allowed, check movement but don't touch the y component
+            if (airControl && playerControl)
             {
-				moveDirection.x = inputX * speed * inputModifyFactor;
-				moveDirection.z = inputZ * speed * inputModifyFactor;
-				moveDirection = myTransform.TransformDirection(moveDirection);
-			}
-		}
-		
-		// Apply gravity
-		moveDirection.y -= gravity * Time.deltaTime;
-		// Move the controller, and set grounded true or false depending on whether we're standing on something
-		grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
+                moveDirection.x = inputX * speed * inputModifyFactor;
+                moveDirection.z = inputZ * speed * inputModifyFactor;
+                moveDirection = myTransform.TransformDirection(moveDirection);
+            }
+        }
+
+        // Apply gravity
+        moveDirection.y -= gravity * Time.deltaTime;
+        // Move the controller, and set grounded true or false depending on whether we're standing on something
+        grounded = (controller.Move(moveDirection * Time.deltaTime) & CollisionFlags.Below) != 0;
     }
 
     void Update()
@@ -223,13 +225,13 @@ public class FP_Controller : MonoBehaviour
         if (!canControl)
             return;
 
-                inputX = Input.GetAxis("Horizontal");
-                inputZ = Input.GetAxis("Vertical");
-                crouch = Input.GetKey(crouchKey);
-                run = Input.GetKey(runKey);
-                jump = Input.GetKey(jumpKey);
+        inputX = Input.GetAxis("Horizontal");
+        inputZ = Input.GetAxis("Vertical");
+        crouch = Input.GetKey(crouchKey);
+        run = Input.GetKey(runKey);
+        jump = Input.GetKey(jumpKey);
 
-            this.enableRun = this.run;
+        this.enableRun = this.run;
 
         if (jumpState == 0 && CanStand() && jump && jumpTimer >= antiBunnyHopFactor)
         {
@@ -247,7 +249,7 @@ public class FP_Controller : MonoBehaviour
             if (isCrouching)
             {
                 ArenaModel.instance.ActivateAllDinamicObjectsOnArena(false);
-               //controller.center = Vector3.Lerp(controller.center, new Vector3(controller.center.x, -(defaultHeight - minCrouchHeight) / 2, controller.center.z), 15 * Time.deltaTime);
+                //controller.center = Vector3.Lerp(controller.center, new Vector3(controller.center.x, -(defaultHeight - minCrouchHeight) / 2, controller.center.z), 15 * Time.deltaTime);
                 //controller.height = Mathf.Lerp(controller.height, minCrouchHeight, 15 * Time.deltaTime);
             }
             else
@@ -262,25 +264,26 @@ public class FP_Controller : MonoBehaviour
         }
     }
 
-	void OnControllerColliderHit (ControllerColliderHit hit) {
-		if (!IsGrounded () && landTimer == 1)
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (!IsGrounded() && landTimer == 1)
             PlaySound(footSteps.landSound, JumpLandSource);
-		landTimer = 0;
+        landTimer = 0;
         jumpState = 0;
-		contactPoint = hit.point;
+        contactPoint = hit.point;
         surfaceTag = hit.collider.tag;
-	}
+    }
 
-	void PlaySound(AudioClip audio, AudioSource source)
-	{
-		source.clip = audio;
-		if (audio)
-			source.Play ();
-	}
-	public bool IsGrounded()
-	{
-		return grounded;
-	}
+    void PlaySound(AudioClip audio, AudioSource source)
+    {
+        source.clip = audio;
+        if (audio)
+            source.Play();
+    }
+    public bool IsGrounded()
+    {
+        return grounded;
+    }
     public bool IsCrouching()
     {
         return crouch;
@@ -289,16 +292,16 @@ public class FP_Controller : MonoBehaviour
     {
         return run;
     }
-	private bool CanStand()
-	{
+    private bool CanStand()
+    {
         RaycastHit hitAbove = new RaycastHit();
         return !Physics.SphereCast(controller.bounds.center, controller.radius, Vector3.up, out hitAbove,
                                    controller.height / 2 + 0.5F);
-	}
-	private bool CanSlide()
-	{
-		return new Vector3 (controller.velocity.x, 0, controller.velocity.z).magnitude < walkSpeed/2;
-	}
+    }
+    private bool CanSlide()
+    {
+        return new Vector3(controller.velocity.x, 0, controller.velocity.z).magnitude < walkSpeed / 2;
+    }
     public string SurfaceTag()
     {
         return surfaceTag;

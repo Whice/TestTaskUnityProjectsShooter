@@ -31,10 +31,6 @@ public class ArenaView : ItemView
     /// </summary>
     public GameObject[] walls = new GameObject[0];
     /// <summary>
-    /// Текст для вывода слова "пауза".
-    /// </summary>
-    public GameObject textPause = null;
-    /// <summary>
     /// Сердечко - трофей. Увеличивает здоровье игроку.
     /// </summary>
     public GameObject heartForHealthTrophy = null;

@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class ArenaModel : ItemModel
 {
+    public GameUI gameUI;
     public ArenaView arenaView
     {
         get => this.view as ArenaView;
@@ -58,11 +59,11 @@ public class ArenaModel : ItemModel
     /// <returns></returns>
     public BossModel CreateNewBoss()
     {
-        if(this.bossModel==null)
+        if (this.bossModel == null)
         {
             this.bossModel = Instantiate(this.boss).GetComponent<BossModel>();
         }
-        if(!this.bossModel.isActive)
+        if (!this.bossModel.isActive)
         {
             this.bossModel.Activate();
         }
@@ -123,6 +124,7 @@ public class ArenaModel : ItemModel
         this.notActiveBullets = new List<BulletModel>(BulletController.countOfBulletInStart);
         this.activeBullets = new List<BulletModel>(BulletController.countOfBulletInStart);
         this.AddNotActiveBullets(BulletController.countOfBulletInStart);
+        this.gameUI.pauseChanged += ActivateAllDinamicObjectsOnArena;
     }
 
     #endregion
@@ -192,15 +194,15 @@ public class ArenaModel : ItemModel
         Int32 choice = UnityEngine.Random.Range(1, 101);
 
         GameObject enemy = null;
-        if (choice>90)
+        if (choice > 90)
         {
             enemy = Instantiate(this.arenaView.enemiesPrefabs[1]);//Ускоряется раз в какое-то время
         }
-        else if(choice > 83)
+        else if (choice > 83)
         {
             enemy = Instantiate(this.arenaView.enemiesPrefabs[2]);//Ускоряется за спиной игрока
         }
-        else if(choice > 70)
+        else if (choice > 70)
         {
             enemy = Instantiate(this.arenaView.enemiesPrefabs[3]);//Уклоняется раз в какое-то время
         }
@@ -288,9 +290,9 @@ public class ArenaModel : ItemModel
     public BoxModel GetLastNotActiveBoxModel()
     {
         Int32 lastNumber = this.withoutArenaBoxes.Count - 1;
-        if (lastNumber<0)
+        if (lastNumber < 0)
         {
-            for(Int32 i=0;i<BOXES_COUNT_ON_START;i++)
+            for (Int32 i = 0; i < BOXES_COUNT_ON_START; i++)
             {
                 CreateNewGameBoxWithoutArena();
             }
@@ -361,11 +363,6 @@ public class ArenaModel : ItemModel
 
         switch (propertyName)
         {
-            case nameof(this.pause):
-                {
-                    this.arenaView.textPause.SetActive(this.pause);
-                    break;
-                }
             case nameof(countOfKilledSimpleEnemy):
                 {
 
@@ -374,7 +371,7 @@ public class ArenaModel : ItemModel
                         ArenaModel.instance.CreateNewBoss();
                         PlayerModel.instance.playerView.endBossText.SetActive(true);
                     }
-                break;
+                    break;
                 }
         }
     }
