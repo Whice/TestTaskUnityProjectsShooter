@@ -136,7 +136,6 @@ public class WeaponExample : MonoBehaviour
     }
     IEnumerator Reload()
     {
-		Debug.LogError("Reload!");
         this.reloadBulletSound.Play();
         this.reloading = true;
         this.ammoCount = this.maxAmmoCount;
