@@ -223,28 +223,13 @@ public class FP_Controller : MonoBehaviour
         if (!canControl)
             return;
 
-        switch (playerInput.UseMobileInput)
-        {
-            case true:
-                runState = 1;
-                inputX = playerInput.MoveInput().x;
-                inputZ = playerInput.MoveInput().z;
-                crouch = playerInput.Crouch();
-                run = playerInput.Run();
-                jump = playerInput.Jump();
-            break;
-            case false:
                 inputX = Input.GetAxis("Horizontal");
                 inputZ = Input.GetAxis("Vertical");
                 crouch = Input.GetKey(crouchKey);
                 run = Input.GetKey(runKey);
                 jump = Input.GetKey(jumpKey);
-            break;
-        }
-        if (this.run)
-        {
-            this.enableRun = !enableRun;
-        }
+
+            this.enableRun = this.run;
 
         if (jumpState == 0 && CanStand() && jump && jumpTimer >= antiBunnyHopFactor)
         {

@@ -90,18 +90,8 @@ public class FP_CameraLook : MonoBehaviour
         if (!playerController.canControl)
             return;
 
-        switch (playerInput.UseMobileInput)
-        {
-            case true:
-                InputX = playerInput.LookInput().x + playerInput.ShotInput().x;
-                InputY = playerInput.LookInput().y + playerInput.ShotInput().y;
-                break;
-            case false:
                 InputX = Input.GetAxis("Mouse X") * 10;
                 InputY = Input.GetAxis("Mouse Y") * 10;
-                break;
-        }
-
         sensitivity = playerInput.Shoot() ? ShootSensitivity : LookSensitivity;
 
         PlayerHead.localPosition = Vector3.Lerp(PlayerHead.localPosition, new Vector3(

@@ -49,13 +49,17 @@ public class WeaponExample : MonoBehaviour
         this.controller = gameObject.GetComponent<FP_Controller>();
     }
 
+    public KeyCode shootKey = KeyCode.Mouse0;
+    public KeyCode reloadKey = KeyCode.R;
     void Update()
     {
-        if (playerInput.Shoot())                         //IF SHOOT BUTTON IS PRESSED (Replace your mouse input)
+                bool isShoot = Input.GetKey(shootKey);
+                bool isReload = Input.GetKey(reloadKey);
+        if (isShoot)                         //IF SHOOT BUTTON IS PRESSED (Replace your mouse input)
             if (Time.time > delay)
                 Shoot();
 
-        if (playerInput.Reload())                        //IF RELOAD BUTTON WAS PRESSED (Replace your keyboard input)
+        if (isReload)                        //IF RELOAD BUTTON WAS PRESSED (Replace your keyboard input)
             if (!reloading && ammoCount < maxAmmoCount)
             {
                 StartCoroutine(Reload());
@@ -136,12 +140,12 @@ public class WeaponExample : MonoBehaviour
     }
     IEnumerator Reload()
     {
-        this.reloadBulletSound.Play();
         this.reloading = true;
+        this.reloadBulletSound.Play();
         this.ammoCount = this.maxAmmoCount;
-        reloading = false;
         PlayerModel.instance.playerView.textAmmoCount.text = "Запас пуль: " + this.ammoCount.ToString();
         yield return new WaitForSeconds(reloadTime);
+        reloading = false;
     }
 
     void OnGUI()
